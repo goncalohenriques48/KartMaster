@@ -16,25 +16,25 @@ namespace KartMaster.Models
         /// <summary>
         /// Nome do autódromo.
         /// </summary>
-        public required string Nome { get; set; }
+        public string Nome { get; set; } = string.Empty;
 
         /// <summary>
         /// Localização do autódromo.
         /// </summary>
-        public required string Localizacao { get; set; }
+        public string Localizacao { get; set; } = string.Empty;
 
         /// <summary>
         /// Número de telefone do autódromo.
         /// </summary>
-        public required string Telemovel { get; set; }
+        public string Telemovel { get; set; } = string.Empty;
 
         /// <summary>
         /// Email do autódromo.
         /// </summary>
-        public required string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         /// <summary>
-        /// Capacidade do autódromo.
+        /// Número de karks que podem participar, em simultâneo, numa corrida, no autódromo.
         /// </summary>
         public int Capacidade { get; set; }
 
@@ -48,7 +48,7 @@ namespace KartMaster.Models
         /// <summary>
         /// Lista das corridas realizadas no autódromo.
         /// </summary>
-        public ICollection<Corrida>? Corridas { get; set; }
+        public ICollection<Corrida> Corridas { get; set; } = [];
     }
 }
 

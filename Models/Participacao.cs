@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,6 +7,7 @@ namespace KartMaster.Models
     /// <summary>
     /// Representa a participação de um utilizador em uma corrida.
     /// </summary>
+    [PrimaryKey(nameof(UtilizadorId), nameof(CorridaId))]
     public class Participacao
     {
         /* *************************
@@ -24,7 +26,7 @@ namespace KartMaster.Models
         /// <summary>
         /// Utilizador que participou da corrida.
         /// </summary>
-        public Utilizador Utilizador { get; set; }
+        public Utilizador Utilizador { get; set; } = new Utilizador();
 
         /// <summary>
         /// FK para referenciar a corrida.
@@ -35,24 +37,19 @@ namespace KartMaster.Models
         /// <summary>
         /// Corrida em que o utilizador participou.
         /// </summary>
-        public Corrida Corrida { get; set; }
+        public Corrida Corrida { get; set; } = new Corrida();
 
         /// <summary>
         /// Posição final do utilizador na corrida.
         /// </summary>
-        public string PosicaoFinal { get; set; }
+        public string PosicaoFinal { get; set; } = string.Empty;
 
         /// <summary>
         /// Tempo final do utilizador na corrida.
         /// </summary>
         public TimeSpan TempoFinal { get; set; }
 
-        /// <summary>
-        /// Chave primária composta para a participação.
-        /// </summary>
-        [Key]
-        [Column(Order = 0)]
-        public int ParticipacaoId { get; set; }
+
     }
 }
 

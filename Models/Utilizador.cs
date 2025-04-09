@@ -16,22 +16,15 @@ namespace KartMaster.Models
         /// <summary>
         /// Nome do utilizador.
         /// </summary>
-        public string Nome { get; set; }
+        public string Nome { get; set; } = string.Empty;
 
         /// <summary>
         /// Email do utilizador.
         /// </summary>
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Senha do utilizador.
-        /// </summary>
-        public string Password { get; set; }
 
-        /// <summary>
-        /// Tipo de utilizador (Anonimo, Piloto, Admin).
-        /// </summary>
-        public string Tipo { get; set; }
+
 
         /* *************************
         * Definção dos relacionamentos
@@ -41,9 +34,9 @@ namespace KartMaster.Models
         // Relacionamentos 1-N
 
         /// <summary>
-        /// Lista das participações do utilizador.
+        /// Lista das participações do utilizador, em corridas.
         /// </summary>
-        public ICollection<Participacao> Participacoes { get; set; }
+        public ICollection<Participacao> Participacoes { get; set; } = [];
     }
 }
 
