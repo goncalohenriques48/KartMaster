@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,6 +7,7 @@ namespace KartMaster.Models
     /// <summary>
     /// Representa a participação de um utilizador em uma corrida.
     /// </summary>
+    [PrimaryKey(nameof(UtilizadorId),nameof(CorridaId))]
     public class Participacao
     {
         /* *************************
@@ -47,12 +49,7 @@ namespace KartMaster.Models
         /// </summary>
         public TimeSpan TempoFinal { get; set; }
 
-        /// <summary>
-        /// Chave primária composta para a participação.
-        /// </summary>
-        [Key]
-        [Column(Order = 0)]
-        public int ParticipacaoId { get; set; }
+       
     }
 }
 
