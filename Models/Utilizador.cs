@@ -16,15 +16,15 @@ namespace KartMaster.Models
         /// <summary>
         /// Nome do utilizador.
         /// </summary>
-        public string Nome { get; set; }
+        public string Nome { get; set; } = string.Empty;
 
         /// <summary>
         /// Email do utilizador.
         /// </summary>
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
 
-      
+
 
         /* *************************
         * Definção dos relacionamentos

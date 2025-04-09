@@ -17,7 +17,7 @@ namespace KartMaster.Models
         /// <summary>
         /// Nome da corrida.
         /// </summary>
-        public string Nome { get; set; }=string.Empty;
+        public string Nome { get; set; } = string.Empty;
 
         /// <summary>
         /// Data da corrida.
@@ -40,7 +40,7 @@ namespace KartMaster.Models
         /// <summary>
         /// Autódromo onde a corrida será realizada.
         /// </summary>
-        public Autodromo Autodromo { get; set; }= new Autodromo();
+        public Autodromo Autodromo { get; set; } = new Autodromo();
 
         /// <summary>
         /// Lista das participações na corrida.
