@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace KartMaster.Migrations
+namespace KartMaster.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Modelo : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,9 +35,7 @@ namespace KartMaster.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,8 +67,6 @@ namespace KartMaster.Migrations
                 name: "Participacoes",
                 columns: table => new
                 {
-                    ParticipacaoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     UtilizadorId = table.Column<int>(type: "int", nullable: false),
                     CorridaId = table.Column<int>(type: "int", nullable: false),
                     PosicaoFinal = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -78,7 +74,7 @@ namespace KartMaster.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Participacoes", x => x.ParticipacaoId);
+                    table.PrimaryKey("PK_Participacoes", x => new { x.UtilizadorId, x.CorridaId });
                     table.ForeignKey(
                         name: "FK_Participacoes_Corridas_CorridaId",
                         column: x => x.CorridaId,
@@ -102,11 +98,6 @@ namespace KartMaster.Migrations
                 name: "IX_Participacoes_CorridaId",
                 table: "Participacoes",
                 column: "CorridaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Participacoes_UtilizadorId",
-                table: "Participacoes",
-                column: "UtilizadorId");
         }
 
         /// <inheritdoc />
