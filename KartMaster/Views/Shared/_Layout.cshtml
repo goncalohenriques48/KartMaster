@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var isIdentityArea = ViewContext.RouteData.Values["area"]?.ToString() == "Identity";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,41 +11,84 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/KartMaster.styles.css" asp-append-version="true" />
+    <link rel="icon" type="image/x-icon" href="/images/Logo_Karts.ico" />
+
+    <style>
+        .container {
+        background-color: transparent; /* Remove o fundo branco */
+        border-radius: 0; /* Remove os cantos arredondados */
+        padding: 20px; /* Mantém o espaçamento interno */
+        color: white; /* Garante que o texto fique visível no fundo preto */
+        }
+
+        .logo-icon {
+        height: 40px; /* Ajuste o tamanho conforme necessário */
+        margin-right: 10px; /* Espaço entre o ícone e o texto */
+        vertical-align: middle;
+        }
+
+        .user-icon {
+        height: 30px; /* Ajuste o tamanho conforme necessário */
+        width: 30px;
+        border-radius: 50%; /* Torna o ícone circular */
+        cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">KartMaster</a>
+                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="/images/Karts_Logo_Png.png" class="logo-icon" />
+                    <span>KartMaster</span>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                     </ul>
-                    <partial name="_LoginPartial" />
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="/images/user.png" alt="User Icon" class="user-icon" />
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li>
+                                <partial name="_LoginPartial" />
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - KartMaster - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    @if (!isIdentityArea)
+    {
+        <div class="hero-section">
+            <div class="container">
+                <div class="hero-overlay">
+                    <h1>Entra na corrida.<br />A aventura começa agora!</h1>
+                    <p>
+                        Sente a adrenalina e a emoção da velocidade!<br />
+                        Os nossos kartódromos são o destino ideal para os apaixonados por corridas, diversão e desafios.
+                        Prepare-se para acelerar, competir com amigos e viver uma experiência inesquecível na pista!
+                    </p>
+                </div>
+            </div>
         </div>
-    </footer>
+    }
+    <main class="main-content flex-grow-1">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

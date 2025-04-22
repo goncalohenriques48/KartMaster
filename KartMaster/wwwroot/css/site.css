@@ -1,7 +1,3 @@
-html {
-  font-size: 14px;
-}
-
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -12,11 +8,200 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.main-content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 20px;
+    background-color: transparent;
+    color: white;
 }
 
 body {
-  margin-bottom: 60px;
+    overflow-y: auto;
+}
+
+html, body {
+    min-height: 100vh; /* Garante que o HTML e o body ocupem toda a altura da janela */
+    margin: 0;
+    display: flex;
+    padding: 0;
+    flex-direction: column; /* Permite organizar o conteúdo em colunas */
+    background: linear-gradient(to bottom, #1a1a1a 0%, #1a1a1a 40%, #333333 100%); /* Fundo preto */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.container {
+    background-color: transparent; /* Remove o fundo branco */
+    border-radius: 0; /* Remove os cantos arredondados */
+    padding: 20px; /* Mantém o espaçamento interno */
+    color: white; /* Garante que o texto fique visível no fundo preto */
+    flex: 1 1 auto;
+    /*border: 1px solid red;*/
+    overflow: visible; /* mostra o que estiver fora */
+    min-height: 300px; /* ou outro valor, só pra garantir que cresça */
+}
+
+.logo-icon {
+    height: 40px; /* Adjust the height as needed */
+    margin-right: 10px; /* Space between the icon and the text */
+    vertical-align: middle;
+}
+
+.user-icon {
+    height: 30px; /* Adjust the size as needed */
+    width: 30px;
+    border-radius: 50%; /* Optional: Makes the icon circular */
+    cursor: pointer;
+    filter: invert(1); /* Torna o ícone branco */
+}
+
+.navbar {
+    background: linear-gradient(to bottom, #1a1a1a 0%, #1a1a1a 40%, #333333 100%); /* Fundo preto */
+    border: none; /* Remove a borda inferior */
+    box-shadow: none; /* Remove a sombra */
+}
+
+.navbar-brand,
+.nav-link {
+    color: white !important; /* Define a cor do texto como branco */
+}
+
+.navbar-brand:hover,
+.nav-link:hover {
+    color: #cccccc !important; /*  Define uma cor mais clara ao passar o rato */
+}
+
+.dropdown-menu .btn {
+    background-color: black;
+    color: white;
+    border: none;
+}
+
+.dropdown-menu .btn:hover {
+    background-color: #333333; /* Cor mais clara ao passar o mouse */
+}
+
+.text-black {
+    color: black !important;
+}
+
+.hero-section {
+    /*position: relative;  Se estava como absolute, muda para relative */
+    background-image: url('/images/Karts_Home_Image.png'); /* se estiver a usar imagem */
+    background-size: cover;
+    background-position: center;
+    padding: 100px 20px; /* altura generosa */
+    color: white;
+    /*border: 1px solid red;*/
+    /*margin-bottom: 40px;  ou mais, conforme visual */
+    margin-top: -20px; /* sobe a imagem */
+}
+
+.hero-overlay {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));
+    padding: 40px;
+    border-radius: 90px;
+    /*display: inline-block;*/
+    max-width: 800px;
+    margin-left: -90px; /* Encosta mais à esquerda */
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: -20px; /* Sobe o conteúdo */
+    color: #f1f1f1;
+}
+
+.hero-overlay h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 6rem;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.hero-overlay p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+/* Estilo para a seção "Todas as informações que tu precisas!" */
+.info-section {
+    background: linear-gradient(to bottom, #1a1a1a 0%, #1a1a1a 40%, #333333 100%); /* Fundo preto */
+    color: white; /* Garante que o texto seja visível */
+    padding: 10px 20px 40px 20px; /* Espaçamento interno */
+    text-align: center; /* Centraliza o texto */
+    margin-top: 10px;
+    padding-top: 0px; /* Remove o espaçamento superior */
+}
+
+/* Estilo para o título principal */
+.info-section h2 {
+   color: red; /* Cor do título */
+   margin-bottom: 55px;
+}
+
+/* Estilo para as colunas */
+.info-columns {
+    display: flex;
+    justify-content: space-around; /* Espaço uniforme entre as colunas */
+    flex-wrap: wrap; /* Permite que as colunas quebrem linha em telas menores */
+    gap: 20px; /* Espaçamento entre as colunas */
+}
+
+/* Estilo para cada coluna */
+.info-columns div {
+    max-width: 300px; /* Limita a largura de cada coluna */
+    text-align: left; /* Alinha o texto à esquerda */
+}
+
+/* Estilo para os títulos das colunas */
+.info-columns h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: white; /* Garante que o texto seja visível */
+}
+
+.footer {
+    background-color: #1a1a1a; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    padding: 10px 0;
+    font-size: 0.9rem; /* Tamanho pequeno */
+    text-align: center;
+    width: 100%;
+}
+
+.footer-link {
+    color: white;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+.about-contact-section {
+    display: flex;
+    justify-content: space-around; /* Espaço uniforme entre as colunas */
+    padding: 40px 5%; /* Ajuste o espaçamento interno */
+    background-color: transparent; /* Remova o fundo cinzento */
+    color: white;
+}
+
+.about-contact-section > div {
+     max-width: 300px; /* Limite a largura das colunas */
+     text-align: left; /* Alinhe o texto à esquerda */
+}
+
+#about {
+    text-align: left; /* Alinha o texto à esquerda */
+}
+
+#contactos {
+    text-align: left; /* Alinha o texto à esquerda */
 }
