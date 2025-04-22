@@ -34,7 +34,7 @@ namespace KartMaster.Models
         public string Email { get; set; } = string.Empty;
 
         /// <summary>
-        /// Número de karks que podem participar, em simultâneo, numa corrida, no autódromo.
+        /// Número de karts que podem participar, em simultâneo, numa corrida, no autódromo.
         /// </summary>
         public int Capacidade { get; set; }
 
