@@ -1,67 +1,115 @@
 ﻿@page
 @model RegisterModel
+
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Registo";
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    body {
+        background: url('/images/Login_Registo.png') no-repeat center center fixed;
+        background-size: cover;
+        color: white;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
 
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
+    .register-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 50vh;
+        text-align: center;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+        width: 300px;
+    }
+
+    .form-group input {
+            width: 100%;
+            padding: 10px 40px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 1rem;
+        }
+
+    .form-group input::placeholder {
+        color: #ccc;
             }
-        </section>
-    </div>
+
+        .form-group i {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 1.2rem;
+        }
+
+    .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+        .button-group button,
+        .button-group a {
+            width: 120px;
+            padding: 10px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .button-group button:hover,
+        .button-group a:hover {
+             background: rgba(0, 0, 0, 0.9);
+            }
+
+	.register-container h1 {
+		color: black;
+	}
+</style>
+
+<div class="register-container">
+    <h1>Registo</h1>
+    <form method="post">
+        <div class="form-group">
+            <i class="fas fa-user"></i>
+            <input asp-for="Input.Email" placeholder="E - Mail" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <i class="fas fa-lock"></i>
+            <input asp-for="Input.Password" type="password" placeholder="Password" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <i class="fas fa-lock"></i>
+            <input asp-for="Input.ConfirmPassword" type="password" placeholder="Confirmar Password" />
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="button-group">
+            <a asp-page="/Account/Login">Login</a>
+            <button type="submit">Registar</button>
+        </div>
+    </form>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
