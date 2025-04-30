@@ -131,7 +131,7 @@ html, body {
 
 /* Estilo para a seção "Todas as informações que tu precisas!" */
 .info-section {
-    background: linear-gradient(to bottom, #1a1a1a 0%, #1a1a1a 40%, #333333 100%); /* Fundo preto */
+    background: transparent;
     color: white; /* Garante que o texto seja visível */
     padding: 10px 20px 40px 20px; /* Espaçamento interno */
     text-align: center; /* Centraliza o texto */
