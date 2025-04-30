@@ -33,7 +33,56 @@
         border-radius: 50%; /* Torna o ícone circular */
         cursor: pointer;
         }
+
+        .drawer {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        width: 300px;
+        height: 100%;
+        background-color: #1a1a1a;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+        transition: right 0.3s ease;
+        z-index: 1000;
+        }
+
+        .drawer.open {
+        right: 0;
+			}
+
+        .drawer-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.89rem;
+        background-color: #1a1a1a;
+        border-bottom: 1px solid #ddd;
+        }
+
+        .drawer-content {
+        padding: 1rem;
+        }
+
+        .drawer-header h4 {
+        color: #ffffff; 
+        }
+
+        .close-btn {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: white;
+        }
+
     </style>
+
+    <script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('userDrawer');
+            drawer.classList.toggle('open');
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -53,15 +102,21 @@
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                     </ul>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" id="userIcon" onclick="toggleDrawer()">
                             <img src="/images/user.png" alt="User Icon" class="user-icon" />
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li>
-                                <partial name="_LoginPartial" />
-                            </li>
-                        </ul>
+                    </div>
+
+                    <!-- Gaveta -->
+                    <div id="userDrawer" class="drawer">
+                        <div class="drawer-header">
+                            <h4>Bem-vindo!</h4>
+                            <button class="close-btn" onclick="toggleDrawer()">×</button>
+                        </div>
+                        <div class="drawer-content">
+                            <partial name="_LoginPartial" />
+                        </div>
                     </div>
                 </div>
             </div>

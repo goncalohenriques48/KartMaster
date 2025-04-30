@@ -1,0 +1,146 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<style>
+    body {
+        background: url('/images/Login_Registo.png') no-repeat center center fixed;
+        background-size: cover;
+        color: white;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .login-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 50vh;
+        text-align: center;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+        width: 300px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px 40px;
+        border: none;
+        border-radius: 25px;
+        background: rgba(0, 0, 0, 0.5);
+           color: white;
+            font-size: 1rem;
+        }
+
+            .form-group input::placeholder {
+                color: #ccc;
+            }
+
+        .form-group i {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 1.2rem;
+        }
+
+    .forgot-password,
+    .resend-confirmation {
+        font-size: 0.9rem;
+        color: #ccc;
+        margin-top: 1rem;
+    }
+
+        .forgot-password a,
+        .resend-confirmation a {
+            color: #ccc;
+            text-decoration: none;
+        }
+
+            .forgot-password a:hover,
+            .resend-confirmation a:hover {
+                text-decoration: underline;
+            }
+
+    .remember-me {
+        margin-bottom: -0.5rem;
+        font-size: 0.9rem;
+        color: black;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 0.5rem;
+    }
+
+        .button-group button,
+        .button-group a {
+            width: 120px;
+            padding: 10px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .button-group button:hover,
+    .button-group a:hover {
+        background: rgba(0, 0, 0, 0.9);
+    }
+
+	.login-container h1 {
+		color: black;
+	}
+
+</style>
+
+<div class="login-container">
+    <h1>Login</h1>
+    <form id="account" method="post">
+        <div class="form-group">
+            <i class="fas fa-envelope"></i>
+            <input asp-for="Input.Email" placeholder="E - Mail" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <i class="fas fa-lock"></i>
+            <input asp-for="Input.Password" type="password" placeholder="Password" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="remember-me">
+            <label asp-for="Input.RememberMe">
+                <input class="form-check-input" asp-for="Input.RememberMe" />
+                @Html.DisplayNameFor(m => m.Input.RememberMe)
+            </label>
+        </div>
+        <div class="forgot-password">
+            <a asp-page="./ForgotPassword">Esqueceu-se da password</a>
+        </div>
+        <div class="button-group">
+            <button type="submit">Login</button>
+            <a asp-page="/Account/Register">Registo</a>
+        </div>
+        <div class="resend-confirmation">
+            <a asp-page="./ResendEmailConfirmation">Reenviar confirmação de email</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
