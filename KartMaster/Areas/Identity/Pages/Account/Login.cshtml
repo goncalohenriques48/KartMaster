@@ -36,9 +36,11 @@
         border: none;
         border-radius: 25px;
         background: rgba(0, 0, 0, 0.5);
-           color: white;
-            font-size: 1rem;
-        }
+        color: white;
+        font-size: 1rem;
+        text-align: center; /* Centraliza o texto horizontalmente */
+        line-height: normal;
+    }
 
             .form-group input::placeholder {
                 color: #ccc;
@@ -55,27 +57,41 @@
 
     .forgot-password,
     .resend-confirmation {
-        font-size: 0.9rem;
-        color: #ccc;
-        margin-top: 1rem;
+        font-size: 1rem; /* Aumente o tamanho da fonte */
+        color: white; /* Cor vibrante para destacar */
+        font-weight: bold; /* Negrito para maior visibilidade */
+        margin-top: 1.5rem; /* Espaçamento adicional */
+        text-shadow: 1px 1px 2px black; /* Adicione um leve contorno */
     }
 
         .forgot-password a,
         .resend-confirmation a {
-            color: #ccc;
-            text-decoration: none;
+            color: white; /* Cor vibrante para os links */
+            text-decoration: underline; /* Adicione sublinhado */
         }
 
             .forgot-password a:hover,
             .resend-confirmation a:hover {
-                text-decoration: underline;
+                color: #ffcc00; /* Mude a cor ao passar o mouse */
+                text-decoration: none; /* Remova o sublinhado ao passar o mouse */
             }
 
     .remember-me {
-        margin-bottom: -0.5rem;
-        font-size: 0.9rem;
-        color: black;
+        font-size: 1rem; /* Aumente o tamanho da fonte */
+        color: white; /* Cor vibrante para destacar */
+        font-weight: bold; /* Negrito para maior visibilidade */
+        margin-top: 1rem; /* Espaçamento adicional */
+        text-shadow: 1px 1px 2px black; /* Adicione um leve contorno */
     }
+
+        .remember-me input {
+            margin-right: 0.5rem; /* Espaçamento entre o checkbox e o texto */
+        }
+
+        .remember-me label:hover {
+            color: #ffcc00; /* Mude a cor ao passar o mouse */
+            cursor: pointer; /* Adicione um cursor de ponteiro */
+        }
 
     .button-group {
         display: flex;
@@ -107,6 +123,7 @@
 		color: black;
 	}
 
+
 </style>
 
 <div class="login-container">
@@ -123,10 +140,8 @@
             <span asp-validation-for="Input.Password" class="text-danger"></span>
         </div>
         <div class="remember-me">
-            <label asp-for="Input.RememberMe">
-                <input class="form-check-input" asp-for="Input.RememberMe" />
-                @Html.DisplayNameFor(m => m.Input.RememberMe)
-            </label>
+            <input class="form-check-input" asp-for="Input.RememberMe" />
+            <span>@Html.DisplayNameFor(m => m.Input.RememberMe)</span>
         </div>
         <div class="forgot-password">
             <a asp-page="./ForgotPassword">Esqueceu-se da password</a>
