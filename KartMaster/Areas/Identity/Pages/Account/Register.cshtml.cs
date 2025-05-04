@@ -118,9 +118,9 @@ namespace KartMaster.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User created a new account with password.");
+                // Adicionando logs para verificar o resultado da criação do utilizador
+                if (result.Succeeded) {
+                    _logger.LogInformation("User created successfully with email: {Email}", Input.Email);
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -134,19 +134,20 @@ namespace KartMaster.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
+                    if (_userManager.Options.SignIn.RequireConfirmedAccount) {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }
-                    else
-                    {
+                    else {
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
                 }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                else {
+                    _logger.LogWarning("Failed to create user with email: {Email}", Input.Email);
+                    foreach (var error in result.Errors) {
+                        _logger.LogError("Error creating user: {Error}", error.Description);
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
 

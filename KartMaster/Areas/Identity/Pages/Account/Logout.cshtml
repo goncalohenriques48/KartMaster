@@ -1,0 +1,67 @@
+﻿@page
+@model LogoutModel
+@{
+    ViewData["Title"] = "Log out";
+}
+
+<style>
+    body {
+        background: url('/images/logout.jpg') no-repeat center center fixed;
+        background-size: cover;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: white;
+        text-align: center;
+    }
+
+    .logout-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5); /* Fundo semitransparente */
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .logout-button {
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .logout-button:hover {
+            background-color: #ff1a1a;
+        }
+
+    p {
+        font-size: 1.2rem;
+        margin-top: 1rem;
+    }
+</style>
+
+<div class="logout-container">
+    <h1>@ViewData["Title"]</h1>
+    @if (User.Identity?.IsAuthenticated ?? false) {
+        <form asp-area="Identity" asp-page="/Account/Logout" method="post">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    }
+    else {
+        <p>You have successfully logged out of the application.</p>
+        <a href="/" class="logout-button">Go to Home Page</a>
+    }
+</div>

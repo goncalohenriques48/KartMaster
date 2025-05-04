@@ -59,9 +59,18 @@
         border-bottom: 1px solid #ddd;
         }
 
-        .drawer-content {
-        padding: 1rem;
+        .drawer-content .btn-danger {
+            background-color: #ff4d4d; /* Cor de destaque */
+            border: none;
+            font-size: 1rem;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
+
+            .drawer-content .btn-danger:hover {
+                background-color: #ff1a1a; /* Cor ao passar o mouse */
+            }
 
         .drawer-header h4 {
         color: #ffffff; 
@@ -111,11 +120,23 @@
                     <!-- Gaveta -->
                     <div id="userDrawer" class="drawer">
                         <div class="drawer-header">
-                            <h4>Bem-vindo!</h4>
+                            @if (User.Identity != null && User.Identity.IsAuthenticated) {
+                                <h4>Olá, @User.Identity.Name?.Split('@')[0]!</h4>
+                            }
+                            else {
+                                <h4>Bem-vindo!</h4>
+                            }
                             <button class="close-btn" onclick="toggleDrawer()">×</button>
                         </div>
                         <div class="drawer-content">
-                            <partial name="_LoginPartial" />
+                            @if (User.Identity != null && User.Identity.IsAuthenticated) {
+                                <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" method="post" class="mt-3">
+                                    <button type="submit" class="btn btn-danger w-100">Logout</button>
+                                </form>
+                            }
+                            else {
+                                <partial name="_LoginPartial" />
+                            }
                         </div>
                     </div>
                 </div>
