@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KartMaster.Models
 {
@@ -39,6 +41,10 @@ namespace KartMaster.Models
         /// </summary>
         [StringLength(50)]
         public string UserName { get; set; } = string.Empty;
+
+        [ForeignKey("IdentityUser")]
+        public string? IdentityUserId { get; set; }
+        public IdentityUser? IdentityUser { get; set; }
 
 
         /* *************************
