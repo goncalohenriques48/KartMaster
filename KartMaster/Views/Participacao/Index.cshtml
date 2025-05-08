@@ -1,0 +1,54 @@
+﻿@model IEnumerable<KartMaster.Models.Participacao>
+
+@{
+    ViewData["Title"] = "Participações";
+    ViewData["BodyClass"] = "bg-participacao";
+}
+
+<h1>Participações</h1>
+
+<p>
+    <a asp-action="Create">Criar Nova Participação</a>
+</p>
+<table class="table-dark-custom">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Utilizador)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Corrida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PosicaoFinal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TempoFinal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Utilizador.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Corrida.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PosicaoFinal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TempoFinal)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.UtilizadorId, corridaId = item.CorridaId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.UtilizadorId, corridaId = item.CorridaId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.UtilizadorId, corridaId = item.CorridaId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

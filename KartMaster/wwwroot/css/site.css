@@ -205,3 +205,69 @@ html, body {
 #contactos {
     text-align: left; /* Alinha o texto à esquerda */
 }
+
+.table-dark-custom {
+    width: 100%;
+    border-collapse: collapse;
+    color: #f1f1f1;
+    background-color: #1e1e1e;
+    margin-top: 20px;
+}
+
+    .table-dark-custom th,
+    .table-dark-custom td {
+        padding: 12px 15px;
+        border: 1px solid #444;
+        text-align: left;
+    }
+
+    .table-dark-custom thead {
+        background-color: #333;
+        font-weight: bold;
+    }
+
+    .table-dark-custom tbody tr:hover {
+        background-color: #2a2a2a;
+        transition: background-color 0.3s ease;
+    }
+
+    .table-dark-custom a {
+        color: #4da6ff;
+        text-decoration: none;
+    }
+
+        .table-dark-custom a:hover {
+            text-decoration: underline;
+        }
+
+.bg-autodromo {
+    background-image: url('/images/fundoAutodromo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.bg-corrida {
+    background-image: url('/images/fundoCorrida2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.bg-participacao {
+    background-image: url('/images/fundoParticipacao2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.bg-utilizador {
+    background-image: url('/images/fundoUtilizador.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
