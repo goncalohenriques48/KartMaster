@@ -1,5 +1,9 @@
 ﻿@{
     var isIdentityArea = ViewContext.RouteData.Values["area"]?.ToString() == "Identity";
+
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+    var isHomePage = controller == "Home" && action == "Index";
 }
 
 <!DOCTYPE html>
@@ -68,9 +72,9 @@
             transition: background-color 0.3s ease;
         }
 
-            .drawer-content .btn-danger:hover {
-                background-color: #ff1a1a; /* Cor ao passar o mouse */
-            }
+        .drawer-content .btn-danger:hover {
+            background-color: #ff1a1a; /* Cor ao passar o mouse */
+        }
 
         .drawer-header h4 {
         color: #ffffff; 
@@ -93,7 +97,7 @@
         }
     </script>
 </head>
-<body>
+<body class="@ViewData["BodyClass"]">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -109,6 +113,10 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Autodromo" asp-action="Index">Autódromos</a>
                         </li>
                     </ul>
                     <div class="nav-item">
@@ -144,8 +152,7 @@
         </nav>
     </header>
 
-    @if (!isIdentityArea)
-    {
+    @if (isHomePage) {
         <div class="hero-section">
             <div class="container">
                 <div class="hero-overlay">

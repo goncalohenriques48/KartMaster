@@ -1,0 +1,67 @@
+﻿@model KartMaster.Models.Participacao
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Participacao</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UtilizadorId" class="control-label"></label>
+                <select asp-for="UtilizadorId" class ="form-control" asp-items="ViewBag.UtilizadorId"></select>
+                <span asp-validation-for="UtilizadorId" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="CorridaId" class="control-label"></label>
+                <select asp-for="CorridaId" class ="form-control" asp-items="ViewBag.CorridaId"></select>
+                <span asp-validation-for="CorridaId" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="PosicaoFinal" class="control-label"></label>
+                <input asp-for="PosicaoFinal" class="form-control" oninput="formatPosicaoFinal(this)" pattern="^\d+º?$" title="Insira apenas números. O sistema adicionará o símbolo º automaticamente." />
+                <small class="form-text text-muted">Insira apenas números. O sistema adicionará o símbolo º automaticamente.</small>
+                <span asp-validation-for="PosicaoFinal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TempoFinal" class="control-label"></label>
+                <input asp-for="TempoFinal" class="form-control" placeholder="Exemplo: 10:30:45 (hh:mm:ss)" pattern="^([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$" title="Insira o tempo no formato hh:mm:ss (exemplo: 10:30:45)" />
+                <small class="form-text text-muted">Insira o tempo no formato hh:mm:ss (exemplo: 10:30:45).</small>
+                <span asp-validation-for="TempoFinal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+    function formatPosicaoFinal(input) {
+        // Remove qualquer caractere que não seja número
+        let value = input.value.replace(/[^0-9]/g, '');
+
+        // Adiciona o símbolo º ao final, se houver um número
+        if (value) {
+            input.value = value + 'º';
+        } else {
+            input.value = ''; // Limpa o campo se não houver número
+        }
+    }
+</script>
+

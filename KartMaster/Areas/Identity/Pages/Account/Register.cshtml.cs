@@ -10,6 +10,8 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using KartMaster.Data;
+using KartMaster.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -70,6 +72,11 @@ namespace KartMaster.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+            [Required(ErrorMessage = "O campo Nome é obrigatório.")]
+            [StringLength(50, ErrorMessage = "O Nome não pode ter mais do que {1} caracteres.")]
+            [Display(Name = "Nome")]
+            public string Nome { get; set;}
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -106,21 +113,33 @@ namespace KartMaster.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-        {
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null) {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 var user = CreateUser();
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
-                // Adicionando logs para verificar o resultado da criação do utilizador
                 if (result.Succeeded) {
                     _logger.LogInformation("User created successfully with email: {Email}", Input.Email);
+
+                    // Criar o registro na tabela Utilizadores
+                    var utilizador = new Utilizador {
+                        Nome = Input.Email.Split('@')[0], // Exemplo: Nome baseado no email (ajuste conforme necessário)
+                        Email = Input.Email,
+                        UserName = user.UserName,
+                        IdentityUserId = user.Id // Vincula o IdentityUserId
+                    };
+
+                    // Adicionar o registro no banco de dados
+                    using (var scope = HttpContext.RequestServices.CreateScope()) {
+                        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                        dbContext.Utilizadores.Add(utilizador);
+                        await dbContext.SaveChangesAsync();
+                    }
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

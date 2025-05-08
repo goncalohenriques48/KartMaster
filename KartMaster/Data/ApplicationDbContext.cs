@@ -32,7 +32,15 @@ public class ApplicationDbContext : IdentityDbContext
     /// </summary>
     public DbSet<Participacao> Participacoes { get; set; }
 
+    protected override void OnModelCreating(ModelBuilder builder) {
+        base.OnModelCreating(builder);
 
+        // Configurar o relacionamento entre Utilizador e IdentityUser
+        builder.Entity<Utilizador>()
+            .HasOne(u => u.IdentityUser)
+            .WithOne()
+            .HasForeignKey<Utilizador>(u => u.IdentityUserId);
+    }
 
 
 

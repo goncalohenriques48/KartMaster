@@ -89,6 +89,11 @@
     <h1>Registo</h1>
     <form method="post">
         <div class="form-group">
+           <i class="fas fa-user"></i>
+            <input asp-for="Input.Nome" placeholder="Nome"  />
+            <span asp-validation-for="Input.Nome" class="text-danger"></span>
+        </div>
+        <div class="form-group">
             <i class="fas fa-user"></i>
             <input asp-for="Input.Email" placeholder="E - Mail" />
             <span asp-validation-for="Input.Email" class="text-danger"></span>
