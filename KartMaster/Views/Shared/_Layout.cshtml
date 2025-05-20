@@ -73,7 +73,7 @@
         }
 
         .drawer-content .btn-danger:hover {
-            background-color: #ff1a1a; /* Cor ao passar o mouse */
+            background-color: #ff1a1a; /* Cor ao passar o rato */
         }
 
         .drawer-header h4 {
@@ -87,6 +87,19 @@
         cursor: pointer;
         color: white;
         }
+
+        .drawer-content .btn-info {
+            background-color: #4da6ff; /* Azul personalizado */
+            border: none;
+            font-size: 1rem;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+            .drawer-content .btn-info:hover {
+                background-color: #1a75ff; /* Azul mais escuro ao passar o rato */
+            }
 
     </style>
 
@@ -118,6 +131,18 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Autodromo" asp-action="Index">Autódromos</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Corrida" asp-action="Index">Corridas</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Participacao" asp-action="Index">Participações</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Utilizador" asp-action="Index">Utilizadores</a>
+                        </li>
                     </ul>
                     <div class="nav-item">
                         <a href="#" class="nav-link" id="userIcon" onclick="toggleDrawer()">
@@ -138,6 +163,7 @@
                         </div>
                         <div class="drawer-content">
                             @if (User.Identity != null && User.Identity.IsAuthenticated) {
+                                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-info text-white w-100 mb-2">Perfil</a><!-- Botão Perfil -->
                                 <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" method="post" class="mt-3">
                                     <button type="submit" class="btn btn-danger w-100">Logout</button>
                                 </form>

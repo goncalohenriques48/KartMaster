@@ -90,10 +90,9 @@ namespace KartMaster.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "A Password é obrigatória.")]
+            [StringLength(100, ErrorMessage = "A {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
             public string Password { get; set; }
 
             /// <summary>
@@ -128,7 +127,7 @@ namespace KartMaster.Areas.Identity.Pages.Account
 
                     // Criar o registro na tabela Utilizadores
                     var utilizador = new Utilizador {
-                        Nome = Input.Email.Split('@')[0], // Exemplo: Nome baseado no email (ajuste conforme necessário)
+                        Nome = Input.Nome, // Usa o nome fornecido pelo usuário no formulário
                         Email = Input.Email,
                         UserName = user.UserName,
                         IdentityUserId = user.Id // Vincula o IdentityUserId
@@ -163,9 +162,10 @@ namespace KartMaster.Areas.Identity.Pages.Account
                 }
                 else {
                     _logger.LogWarning("Failed to create user with email: {Email}", Input.Email);
+                    // Adicionar os erros ao ModelState para exibição ao utilizador
                     foreach (var error in result.Errors) {
                         _logger.LogError("Error creating user: {Error}", error.Description);
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        ModelState.AddModelError("Input.Password", error.Description);
                     }
                 }
             }
