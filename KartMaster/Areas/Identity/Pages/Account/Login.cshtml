@@ -123,12 +123,36 @@
 		color: black;
 	}
 
+    .custom-error {
+        background-color: rgba(255, 0, 0, 0.1);
+        color: #ff3333;
+        border: 1px solid #ff3333;
+        border-radius: 10px;
+        padding: 10px 15px;
+        margin-bottom: 1rem;
+        max-width: 400px;
+        text-align: center;
+    }
+
 
 </style>
 
 <div class="login-container">
     <h1>Login</h1>
+    @{
+        var generalErrors = ViewData.ModelState.TryGetValue(string.Empty, out var entry) ? entry : null;
+    }
+
+    @if (generalErrors?.Errors.Count > 0) {
+        <div class="custom-error">
+            @foreach (var error in generalErrors.Errors) {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
     <form id="account" method="post">
+  
+        
         <div class="form-group">
             <i class="fas fa-envelope"></i>
             <input asp-for="Input.Email" placeholder="E - Mail" />
@@ -144,7 +168,7 @@
             <span>@Html.DisplayNameFor(m => m.Input.RememberMe)</span>
         </div>
         <div class="forgot-password">
-            <a asp-page="./ForgotPassword">Esqueceu-se da password</a>
+            <a asp-page="./ForgotPassword">Esqueceu-se da palavra-passe?</a>
         </div>
         <div class="button-group">
             <button type="submit">Login</button>
