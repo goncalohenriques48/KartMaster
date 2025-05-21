@@ -3,7 +3,9 @@
 #nullable disable
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,13 +14,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace KartMaster.Areas.Identity.Pages.Account {
+namespace KartMaster.Areas.Identity.Pages.Account
+{
     [AllowAnonymous]
-    public class RegisterConfirmationModel : PageModel {
+    public class ResendEmailConfirmationModel : PageModel
+    {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _emailSender;
 
-        public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender emailSender) {
+        public ResendEmailConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender emailSender)
+        {
             _userManager = userManager;
             _emailSender = emailSender;
         }
@@ -27,51 +32,56 @@ namespace KartMaster.Areas.Identity.Pages.Account {
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public string Email { get; set; }
+        [BindProperty]
+        public InputModel Input { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public bool DisplayConfirmAccountLink { get; set; }
+        public class InputModel
+        {
+            /// <summary>
+            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     directly from your code. This API may change or be removed in future releases.
+            /// </summary>
+            [Required]
+            [EmailAddress]
+            public string Email { get; set; }
+        }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public string EmailConfirmationUrl { get; set; }
+        public void OnGet()
+        {
+        }
 
-        public async Task<IActionResult> OnGetAsync(string email, string returnUrl = null) {
-            if (email == null) {
-                return RedirectToPage("/Index");
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
             }
-            returnUrl = returnUrl ?? Url.Content("~/");
 
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null) {
-                return NotFound($"Unable to load user with email '{email}'.");
+            var user = await _userManager.FindByEmailAsync(Input.Email);
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+                return Page();
             }
-
-            Email = email;
 
             var userId = await _userManager.GetUserIdAsync(user);
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            EmailConfirmationUrl = Url.Page(
+            var callbackUrl = Url.Page(
                 "/Account/ConfirmEmail",
                 pageHandler: null,
-                values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+                values: new { userId = userId, code = code },
                 protocol: Request.Scheme);
-
-            // Enviar email de confirmação
             await _emailSender.SendEmailAsync(
-                email,
+                Input.Email,
                 "Confirm your email",
-                $"Please confirm your account by <a href='{EmailConfirmationUrl}'>clicking here</a>.");
+                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-            // Mostrar o link de confirmação apenas em ambientes de desenvolvimento
-            DisplayConfirmAccountLink = false; // Alteramos para true se quisermos mostrar o link diretamente na página
-
+            ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
             return Page();
         }
     }

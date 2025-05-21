@@ -1,23 +1,56 @@
 ﻿@page
 @model RegisterConfirmationModel
 @{
-    ViewData["Title"] = "Register confirmation";
+    ViewData["Title"] = "Confirmação de Registo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@ViewData["Title"]</h1>
-@{
-    if (@Model.DisplayConfirmAccountLink)
-    {
-<p>
-    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
-    Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
-</p>
+<style>
+    .confirmation-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 80vh;
+        text-align: center;
+        color: white;
+        background: linear-gradient(to bottom, rgba(26, 26, 26, 0.8), rgba(51, 51, 51, 0.8)), url('/images/fundoRegistoEmail.jpg') no-repeat center center;
+        background-size: cover;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     }
-    else
-    {
-<p>
-        Please check your email to confirm your account.
-</p>
-    }
-}
 
+        .confirmation-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #4da6ff;
+        }
+
+        .confirmation-container p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .confirmation-container a {
+            color: #4da6ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+            .confirmation-container a:hover {
+                text-decoration: underline;
+            }
+</style>
+
+<div class="confirmation-container">
+    <h1>@ViewData["Title"]</h1>
+    <p>Obrigado por ter feito o seu registo. Verifique agora o seu e-mail para confirmar a sua conta!</p>
+    @if (Model.DisplayConfirmAccountLink) {
+        <p>
+            Caso não tenha recebido o email, clique no link abaixo para confirmar sua conta:
+            <br />
+            <a href="@Model.EmailConfirmationUrl">Confirmar Conta</a>
+        </p>
+    }
+</div>

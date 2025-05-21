@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using KartMaster.Data;
 using KartMaster.Models;
+using KartMaster.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -82,7 +83,7 @@ namespace KartMaster.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [EmailAddress]
+            [EmailAddress(ErrorMessage = "Por favor, insira um email válido.")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
@@ -115,7 +116,14 @@ namespace KartMaster.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null) {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid) {
+                // Verificar se o email já está registado
+                if (await _userManager.FindByEmailAsync(Input.Email) != null) {
+                    ModelState.AddModelError("Input.Email", "Este email já está em uso.");
+                    return Page();
+                }
+
                 var user = CreateUser();
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
@@ -127,10 +135,10 @@ namespace KartMaster.Areas.Identity.Pages.Account
 
                     // Criar o registro na tabela Utilizadores
                     var utilizador = new Utilizador {
-                        Nome = Input.Nome, // Usa o nome fornecido pelo usuário no formulário
+                        Nome = Input.Nome,
                         Email = Input.Email,
                         UserName = user.UserName,
-                        IdentityUserId = user.Id // Vincula o IdentityUserId
+                        IdentityUserId = user.Id
                     };
 
                     // Adicionar o registro no banco de dados
@@ -162,7 +170,6 @@ namespace KartMaster.Areas.Identity.Pages.Account
                 }
                 else {
                     _logger.LogWarning("Failed to create user with email: {Email}", Input.Email);
-                    // Adicionar os erros ao ModelState para exibição ao utilizador
                     foreach (var error in result.Errors) {
                         _logger.LogError("Error creating user: {Error}", error.Description);
                         ModelState.AddModelError("Input.Password", error.Description);
@@ -173,6 +180,8 @@ namespace KartMaster.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
+
 
         private IdentityUser CreateUser()
         {
