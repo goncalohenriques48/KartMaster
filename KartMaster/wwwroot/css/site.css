@@ -8,278 +8,300 @@
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-.main-content {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-    padding: 40px 20px;
-    background-color: transparent;
-    color: white;
+/* --- Layout base com flex para fixar footer --- */
+html, body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #1a1a1a 0%, #1a1a1a 40%, #333333 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 body {
-    overflow-y: auto;
+  overflow-y: auto;
 }
 
-html, body {
-    min-height: 100vh; /* Garante que o HTML e o body ocupem toda a altura da janela */
-    margin: 0;
-    display: flex;
-    padding: 0;
-    flex-direction: column; /* Permite organizar o conteúdo em colunas */
-    background: linear-gradient(to bottom, #1a1a1a 0%, #1a1a1a 40%, #333333 100%); /* Fundo preto */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+/* Container principal do conteúdo */
+.main-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 20px;
+  background-color: transparent;
+  color: white;
 }
 
 .container {
-    background-color: transparent; /* Remove o fundo branco */
-    border-radius: 0; /* Remove os cantos arredondados */
-    padding: 20px; /* Mantém o espaçamento interno */
-    color: white; /* Garante que o texto fique visível no fundo preto */
-    flex: 1 1 auto;
-    /*border: 1px solid red;*/
-    overflow: visible; /* mostra o que estiver fora */
-    min-height: 300px; /* ou outro valor, só pra garantir que cresça */
+  background-color: transparent;
+  border-radius: 0;
+  padding: 20px;
+  color: white;
+  flex: 1 1 auto;
+  overflow: visible;
+  min-height: 300px;
 }
 
 .logo-icon {
-    height: 40px; /* Adjust the height as needed */
-    margin-right: 10px; /* Space between the icon and the text */
-    vertical-align: middle;
+  height: 40px;
+  margin-right: 10px;
+  vertical-align: middle;
 }
 
 .user-icon {
-    height: 30px; /* Adjust the size as needed */
-    width: 30px;
-    border-radius: 50%; /* Optional: Makes the icon circular */
-    cursor: pointer;
-    filter: invert(1); /* Torna o ícone branco */
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  filter: invert(1);
 }
 
 .navbar {
-    background: linear-gradient(to bottom, #1a1a1a 0%, #1a1a1a 40%, #333333 100%); /* Fundo preto */
-    border: none; /* Remove a borda inferior */
-    box-shadow: none; /* Remove a sombra */
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, #1a1a1a 0%, #1a1a1a 40%, #333333 100%);
+    border: none;
+    box-shadow: none;
 }
 
-.navbar-brand,
-.nav-link {
-    color: white !important; /* Define a cor do texto como branco */
+.navbar-brand, .nav-link {
+  color: white !important;
 }
 
-.navbar-brand:hover,
-.nav-link:hover {
-    color: #cccccc !important; /*  Define uma cor mais clara ao passar o rato */
+.navbar-brand:hover, .nav-link:hover {
+  color: #cccccc !important;
 }
 
 .dropdown-menu .btn {
-    background-color: black;
-    color: white;
-    border: none;
+  background-color: black;
+  color: white;
+  border: none;
 }
 
 .dropdown-menu .btn:hover {
-    background-color: #333333; /* Cor mais clara ao passar o mouse */
+  background-color: #333333;
 }
 
 .text-black {
-    color: black !important;
+  color: black !important;
 }
 
+/* --- HERO --- */
 .hero-section {
-    /*position: relative;  Se estava como absolute, muda para relative */
-    background-image: url('/images/Karts_Home_Image.png'); /* se estiver a usar imagem */
-    background-size: cover;
-    background-position: center;
-    padding: 100px 20px; /* altura generosa */
-    color: white;
-    /*border: 1px solid red;*/
-    /*margin-bottom: 40px;  ou mais, conforme visual */
-    margin-top: -20px; /* sobe a imagem */
+  background-image: url('/images/Karts_Home_Image.png');
+  background-size: cover;
+  background-position: center;
+  padding: 100px 20px;
+  color: white;
+  margin-top: -20px;
 }
 
 .hero-overlay {
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));
-    padding: 40px;
-    border-radius: 90px;
-    /*display: inline-block;*/
-    max-width: 800px;
-    margin-left: -90px; /* Encosta mais à esquerda */
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    margin-top: -20px; /* Sobe o conteúdo */
-    color: #f1f1f1;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));
+  padding: 40px;
+  border-radius: 90px;
+  max-width: 800px;
+  margin-left: -90px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: -20px;
+  color: #f1f1f1;
 }
 
 .hero-overlay h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 6rem;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 6rem;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
 .hero-overlay p {
-    font-size: 1.2rem;
-    line-height: 1.5;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+  font-size: 1.2rem;
+  line-height: 1.5;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
 }
 
-/* Estilo para a seção "Todas as informações que tu precisas!" */
+/* --- INFORMAÇÕES --- */
 .info-section {
-    background: transparent;
-    color: white; /* Garante que o texto seja visível */
-    padding: 10px 20px 40px 20px; /* Espaçamento interno */
-    text-align: center; /* Centraliza o texto */
-    margin-top: 10px;
-    padding-top: 0px; /* Remove o espaçamento superior */
+  background: transparent;
+  color: white;
+  padding: 10px 20px 40px 20px;
+  text-align: center;
+  margin-top: 10px;
+  padding-top: 0;
 }
 
-/* Estilo para o título principal */
 .info-section h2 {
-   color: red; /* Cor do título */
-   margin-bottom: 55px;
+  color: red;
+  margin-bottom: 55px;
 }
 
-/* Estilo para as colunas */
 .info-columns {
-    display: flex;
-    justify-content: space-around; /* Espaço uniforme entre as colunas */
-    flex-wrap: wrap; /* Permite que as colunas quebrem linha em telas menores */
-    gap: 20px; /* Espaçamento entre as colunas */
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-/* Estilo para cada coluna */
 .info-columns div {
-    max-width: 300px; /* Limita a largura de cada coluna */
-    text-align: left; /* Alinha o texto à esquerda */
+  max-width: 300px;
+  text-align: left;
 }
 
-/* Estilo para os títulos das colunas */
-.info-columns h3 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: white; /* Garante que o texto seja visível */
-}
-
-.footer {
-    background-color: #1a1a1a; /* Cor de fundo */
-    color: white; /* Cor do texto */
-    padding: 10px 0;
-    font-size: 0.9rem; /* Tamanho pequeno */
-    text-align: center;
-    width: 100%;
-}
-
-.footer-link {
-    color: white;
-    text-decoration: none;
-    margin: 0 5px;
-}
-
-.footer-link:hover {
-    text-decoration: underline;
-}
-
+/* --- SOBRE E CONTACTOS --- */
 .about-contact-section {
-    display: flex;
-    justify-content: space-around; /* Espaço uniforme entre as colunas */
-    padding: 40px 5%; /* Ajuste o espaçamento interno */
-    background-color: transparent; /* Remova o fundo cinzento */
-    color: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 40px 5%;
+  background-color: transparent;
+  color: white;
 }
 
 .about-contact-section > div {
-     max-width: 300px; /* Limite a largura das colunas */
-     text-align: left; /* Alinhe o texto à esquerda */
+  max-width: 300px;
+  text-align: left;
 }
 
-#about {
-    text-align: left; /* Alinha o texto à esquerda */
+#about, #contactos {
+  text-align: left;
 }
 
-#contactos {
-    text-align: left; /* Alinha o texto à esquerda */
-}
-
+/* --- TABELAS ESCURAS --- */
 .table-dark-custom {
-    width: 100%;
-    border-collapse: collapse;
-    color: #f1f1f1;
-    background-color: #1e1e1e;
-    margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  color: #f1f1f1;
+  background-color: #1e1e1e;
+  margin-top: 20px;
 }
 
-    .table-dark-custom th,
-    .table-dark-custom td {
-        padding: 12px 15px;
-        border: 1px solid #444;
-        text-align: left;
-    }
-
-    .table-dark-custom thead {
-        background-color: #333;
-        font-weight: bold;
-    }
-
-    .table-dark-custom tbody tr:hover {
-        background-color: #2a2a2a;
-        transition: background-color 0.3s ease;
-    }
-
-    .table-dark-custom a {
-        color: #4da6ff;
-        text-decoration: none;
-    }
-
-        .table-dark-custom a:hover {
-            text-decoration: underline;
-        }
-
-.bg-autodromo {
-    background-image: url('/images/fundoAutodromo.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+.table-dark-custom th, .table-dark-custom td {
+  padding: 12px 15px;
+  border: 1px solid #444;
+  text-align: left;
 }
 
-.bg-corrida {
-    background-image: url('/images/fundoCorrida2.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+.table-dark-custom thead {
+  background-color: #333;
+  font-weight: bold;
 }
 
-.bg-participacao {
-    background-image: url('/images/fundoParticipacao2.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+.table-dark-custom tbody tr:hover {
+  background-color: #2a2a2a;
+  transition: background-color 0.3s ease;
 }
 
-.bg-utilizador {
-    background-image: url('/images/fundoUtilizador.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+.table-dark-custom a {
+  color: #4da6ff;
+  text-decoration: none;
 }
 
+.table-dark-custom a:hover {
+  text-decoration: underline;
+}
+
+/* --- BACKGROUNDS COM IMAGENS --- */
+.bg-autodromo, .bg-corrida, .bg-participacao, .bg-utilizador {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.bg-autodromo { background-image: url('/images/fundoAutodromo.jpg'); }
+.bg-corrida { background-image: url('/images/fundoCorrida2.jpg'); }
+.bg-participacao { background-image: url('/images/fundoParticipacao2.jpg'); }
+.bg-utilizador { background-image: url('/images/fundoUtilizador.jpg'); }
+
+/* --- SEGURANÇA --- */
+.safety-section {
+  padding: 40px 20px;
+  background: transparent;
+  color: white;
+  text-align: center;
+}
+
+.safety-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.safety-section li {
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+
+/* --- FESTAS E CONTACTOS --- */
+.festa-section, .team-section, .contact-section {
+  padding: 40px 20px;
+  color: white;
+  text-align: center;
+  background: transparent;
+}
+
+.festa-columns, .contact-methods {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.festa-columns div, .contact-methods div {
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  color: white;
+}
+
+/* --- FOOTER FIXADO --- */
+.footer {
+  flex-shrink: 0;
+  background-color: transparent;
+  color: #ccc;
+  padding: 20px 0;
+  text-align: center;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.footer nav a {
+  margin: 0 10px;
+  color: #ccc;
+  text-decoration: none;
+}
+
+.footer nav a:hover {
+  text-decoration: underline;
+}
+
+.footer .social-icons a {
+  margin: 0 8px;
+  color: #ccc;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+.footer .social-icons a:hover {
+  color: white;
+}
+
+/* --- ANIMAÇÕES --- */
 @keyframes pop {
-    0% {
-        transform: scale(0.5);
-        opacity: 0;
-    }
-
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
