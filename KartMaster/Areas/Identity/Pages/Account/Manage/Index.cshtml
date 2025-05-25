@@ -1,9 +1,95 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "Perfil";
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
+<style>
+
+    body {
+        background-color: #121212;
+        color: #fff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow: hidden;
+    }
+
+    .profile-card {
+        background-color: #1e1e1e;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+        transition: all 0.3s ease-in-out;
+    }
+
+        .profile-card:hover {
+            box-shadow: 0 0 35px rgba(0, 0, 0, 0.6);
+        }
+
+    .profile-title {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+        color: #fff; 
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.25rem;
+        font-weight: 500;
+        color: #ddd; 
+    }
+
+    .form-control {
+        background-color: transparent;
+        border: 1px solid #444;
+        color: #eee;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        width: 100%;
+        box-sizing: border-box;
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+
+        .form-control::placeholder {
+            color: #888;
+            opacity: 1;
+        }
+
+        .form-control:focus {
+            background-color: transparent;
+            border-color: #6c757d;
+            outline: none;
+            color: #fff;
+            box-shadow: none;
+        }
+
+    #update-profile-button {
+        background-color: aquamarine;
+        border: none;
+        padding: 0.6rem 2rem;
+        color: black;
+        cursor: pointer;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+        width: 100%;
+        font-size: 1.1rem;
+    }
+
+    #update-profile-button:hover {
+            box-shadow: 0 6px 20px rgba(60, 179, 113);
+        }
+
+    .text-danger {
+        color: #ff6b6b;
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+
+</style>
 
 <h3>@ViewData["Title"]</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
@@ -55,4 +141,3 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-

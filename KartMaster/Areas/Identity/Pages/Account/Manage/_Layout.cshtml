@@ -1,0 +1,78 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
+    {
+        Layout = parentLayout.ToString();
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+
+<style>
+    body {
+        background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('/images/ResendEmailConfirmation.jpg') no-repeat center center fixed;
+       
+    }
+
+    .account-container {
+        background-color: rgba(0, 0, 0, 0.75);
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+        margin-top: 2rem;
+    }
+
+    h1, h2 {
+        color: #ffffff;
+    }
+
+    hr {
+        border-top: 1px solid #555;
+    }
+
+    .nav-pills .nav-link {
+        background-color: #222;
+        border: 1px solid #444;
+        color: #ccc;
+        margin-bottom: 0.5rem;
+    }
+
+        .nav-pills .nav-link.active {
+            background-color: black;
+            color: #fff;
+            border-color: aquamarine;
+        }
+
+    .form-control, .form-control:focus {
+        background-color: #2a2a2a;
+        border: 1px solid #555;
+        color: #fff;
+    }
+
+    .text-danger {
+        color: #ff6b6b;
+    }
+
+</style>
+
+<div class="container account-container">
+    <h1 class="text-center">Gerir Conta</h1>
+
+    <div>
+        <h2 class="mb-3">Definições da Conta</h2>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <partial name="_ManageNav" />
+            </div>
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}
