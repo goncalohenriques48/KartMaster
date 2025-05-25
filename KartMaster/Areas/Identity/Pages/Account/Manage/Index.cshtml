@@ -114,22 +114,22 @@
 
             <!-- Senha Atual -->
             <div class="form-floating mb-3">
-                <input asp-for="Input.CurrentPassword" type="password" class="form-control" placeholder="Digite a sua senha atual" />
-                <label asp-for="Input.CurrentPassword" class="form-label"></label>
+                <input asp-for="Input.CurrentPassword" type="password" class="form-control"/>
+                <label asp-for="Input.CurrentPassword" class="form-label">Insira a sua palavra-passe</label>
                 <span asp-validation-for="Input.CurrentPassword" class="text-danger"></span>
             </div>
 
             <!-- Nova Senha -->
             <div class="form-floating mb-3">
-                <input asp-for="Input.NewPassword" type="password" class="form-control" placeholder="Digite a nova senha" />
-                <label asp-for="Input.NewPassword" class="form-label"></label>
+                <input asp-for="Input.NewPassword" type="password" class="form-control"/>
+                <label asp-for="Input.NewPassword" class="form-label">Insira a sua nova palavra-passe</label>
                 <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
             </div>
 
             <!-- Confirmar Nova Senha -->
             <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" type="password" class="form-control" placeholder="Confirme a nova senha" />
-                <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                <input asp-for="Input.ConfirmPassword" type="password" class="form-control"/>
+                <label asp-for="Input.ConfirmPassword" class="form-label">Confirme a sua nova palavra-passe</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
 
