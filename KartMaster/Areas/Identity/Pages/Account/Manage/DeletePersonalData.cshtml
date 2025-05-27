@@ -4,7 +4,32 @@
     ViewData["Title"] = "Delete Personal Data";
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
+<style>
+    .form-control {
+        background-color: transparent;
+        border: 1px solid #444;
+        color: #eee;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        width: 100%;
+        box-sizing: border-box;
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
 
+        .form-control::placeholder {
+            color: #888;
+            opacity: 1;
+        }
+
+        .form-control:focus {
+            background-color: transparent;
+            border-color: #6c757d;
+            outline: none;
+            color: #fff;
+            box-shadow: none;
+        }
+</style>
 <h3>@ViewData["Title"]</h3>
 
 <div class="alert alert-warning" role="alert">
@@ -19,7 +44,7 @@
         @if (Model.RequirePassword)
         {
             <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Insira a sua palavra-passe" />
+                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="" />
                 <label asp-for="Input.Password" class="form-label"></label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>

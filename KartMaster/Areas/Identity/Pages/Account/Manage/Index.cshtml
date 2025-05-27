@@ -98,42 +98,43 @@
         <form id="profile-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
-            <!-- Nome -->
             <div class="form-floating mb-3">
-                <input asp-for="Input.Nome" class="form-control" placeholder="Digite o seu nome" />
+                <input asp-for="Input.Nome" class="form-control" placeholder="" />
                 <label asp-for="Input.Nome" class="form-label"></label>
                 <span asp-validation-for="Input.Nome" class="text-danger"></span>
             </div>
 
-            <!-- Email -->
+            
             <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" placeholder="Digite o seu email" />
+                <input asp-for="Input.Email" class="form-control" placeholder="" />
                 <label asp-for="Input.Email" class="form-label"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
 
-            <!-- Senha Atual -->
+            <!--
+            
             <div class="form-floating mb-3">
-                <input asp-for="Input.CurrentPassword" type="password" class="form-control"/>
-                <label asp-for="Input.CurrentPassword" class="form-label">Insira a sua palavra-passe</label>
+                <input asp-for="Input.CurrentPassword" type="password" class="form-control" placeholder="" />
+                <label asp-for="Input.CurrentPassword" class="form-label"></label>
                 <span asp-validation-for="Input.CurrentPassword" class="text-danger"></span>
             </div>
 
-            <!-- Nova Senha -->
+           
             <div class="form-floating mb-3">
-                <input asp-for="Input.NewPassword" type="password" class="form-control"/>
-                <label asp-for="Input.NewPassword" class="form-label">Insira a sua nova palavra-passe</label>
+                <input asp-for="Input.NewPassword" type="password" class="form-control" placeholder="" />
+                <label asp-for="Input.NewPassword" class="form-label"></label>
                 <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
             </div>
 
-            <!-- Confirmar Nova Senha -->
+            
             <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" type="password" class="form-control"/>
-                <label asp-for="Input.ConfirmPassword" class="form-label">Confirme a sua nova palavra-passe</label>
+                <input asp-for="Input.ConfirmPassword" type="password" class="form-control" placeholder="" />
+                <label asp-for="Input.ConfirmPassword" class="form-label"></label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Salvar</button>
+            
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Guardar</button>
+            -->
         </form>
     </div>
 </div>

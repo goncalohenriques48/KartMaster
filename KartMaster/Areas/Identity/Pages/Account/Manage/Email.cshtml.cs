@@ -69,7 +69,7 @@ namespace KartMaster.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Required]
             [EmailAddress]
-            [Display(Name = "New email")]
+            [Display(Name = "Insira o seu novo email")]
             public string NewEmail { get; set; }
         }
 
@@ -115,6 +115,13 @@ namespace KartMaster.Areas.Identity.Pages.Account.Manage
             var email = await _userManager.GetEmailAsync(user);
             if (Input.NewEmail != email)
             {
+                var existingUser = await _userManager.FindByEmailAsync(Input.NewEmail);
+                if (existingUser != null && existingUser.Id != user.Id)
+                {
+                    ModelState.AddModelError(string.Empty, "Esse e-mail já está a ser utilizado por outra conta.");
+                    await LoadAsync(user);
+                    return Page();
+                }
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

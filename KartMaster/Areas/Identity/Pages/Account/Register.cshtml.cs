@@ -73,10 +73,10 @@ namespace KartMaster.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
-            [Required(ErrorMessage = "O campo Nome é obrigatório.")]
-            [StringLength(50, ErrorMessage = "O Nome não pode ter mais do que {1} caracteres.")]
-            [Display(Name = "Nome")]
-            public string Nome { get; set;}
+
+            [Required]
+            [Display(Name = "Nome de utilizador")]
+            public string UserName { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -126,7 +126,7 @@ namespace KartMaster.Areas.Identity.Pages.Account
 
                 var user = CreateUser();
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -135,7 +135,7 @@ namespace KartMaster.Areas.Identity.Pages.Account
 
                     // Criar o registro na tabela Utilizadores
                     var utilizador = new Utilizador {
-                        Nome = Input.Nome,
+                        Nome = Input.UserName,
                         Email = Input.Email,
                         UserName = user.UserName,
                         IdentityUserId = user.Id

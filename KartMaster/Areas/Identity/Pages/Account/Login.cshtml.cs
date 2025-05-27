@@ -97,42 +97,58 @@ namespace KartMaster.Areas.Identity.Pages.Account {
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null) {
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        {
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            if (ModelState.IsValid) {
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+            if (ModelState.IsValid)
+            {
+                // Procura o utilizador pelo e-mail
+                var user = await _userManager.FindByEmailAsync(Input.Email);
 
-                if (result.Succeeded) {
-                    _logger.LogInformation("User logged in.");
-                    return RedirectToPage("/Index");
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "E-mail ou palavra-passe inválidos.");
+                    return Page();
                 }
 
-                if (result.RequiresTwoFactor) {
+                // Verifica se o e-mail está confirmado
+                if (!await _userManager.IsEmailConfirmedAsync(user))
+                {
+                    ModelState.AddModelError(string.Empty, "Ainda não confirmou o seu e-mail. Verifique a sua caixa de entrada.");
+                    return Page();
+                }
+
+                // Faz login com o nome de utilizador (requerido internamente)
+                var result = await _signInManager.PasswordSignInAsync(
+                    user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false
+                );
+
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("Utilizador autenticado com sucesso.");
+                    return LocalRedirect(returnUrl);
+                }
+
+                if (result.RequiresTwoFactor)
+                {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
                 }
 
-                if (result.IsLockedOut) {
-                    _logger.LogWarning("User account locked out.");
+                if (result.IsLockedOut)
+                {
+                    _logger.LogWarning("Conta bloqueada.");
                     return RedirectToPage("./Lockout");
                 }
 
-                // Verifica se o utilizador existe e se ainda não confirmou o email
-                var user = await _userManager.FindByEmailAsync(Input.Email);
-                if (user != null && !await _userManager.IsEmailConfirmedAsync(user)) {
-                    ModelState.AddModelError(string.Empty, "Ainda não confirmou o seu email. Verifique a sua caixa de entrada.");
-                }
-                else {
-                    ModelState.AddModelError(string.Empty, "Tentativa de login inválida.");
-                }
-
-                return Page();
+                ModelState.AddModelError(string.Empty, "E-mail ou palavra-passe inválidos.");
             }
 
-            // Se chegarmos aqui, algo falhou; redisplay do formulário
+            // Se chegarmos aqui, algo falhou
             return Page();
         }
+
     }
 }

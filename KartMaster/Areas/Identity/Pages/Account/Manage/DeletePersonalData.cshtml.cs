@@ -5,9 +5,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using KartMaster.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace KartMaster.Areas.Identity.Pages.Account.Manage
@@ -17,15 +19,18 @@ namespace KartMaster.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
+        private readonly ApplicationDbContext _context;
 
         public DeletePersonalDataModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
-            ILogger<DeletePersonalDataModel> logger)
+    UserManager<IdentityUser> userManager,
+    SignInManager<IdentityUser> signInManager,
+    ILogger<DeletePersonalDataModel> logger,
+    ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         /// <summary>
@@ -47,6 +52,7 @@ namespace KartMaster.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Insira a sua palavra-passe")]
             public string Password { get; set; }
         }
 
@@ -86,8 +92,17 @@ namespace KartMaster.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            // Apaga o utilizador associado na tua tabela 'Utilizadores'
+            var utilizador = await _context.Utilizadores
+                .FirstOrDefaultAsync(u => u.IdentityUserId == user.Id);
+
+            if (utilizador != null)
+            {
+                _context.Utilizadores.Remove(utilizador);
+                await _context.SaveChangesAsync(); // necessário antes de apagar o IdentityUser
+            }
+
             var result = await _userManager.DeleteAsync(user);
-            var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
             {
                 throw new InvalidOperationException($"Unexpected error occurred deleting user.");
@@ -95,9 +110,10 @@ namespace KartMaster.Areas.Identity.Pages.Account.Manage
 
             await _signInManager.SignOutAsync();
 
-            _logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
+            _logger.LogInformation("User with ID '{UserId}' deleted themselves.", user.Id);
 
             return Redirect("~/");
         }
+
     }
 }
