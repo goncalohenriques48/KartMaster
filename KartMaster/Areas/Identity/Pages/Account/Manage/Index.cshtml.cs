@@ -43,16 +43,16 @@ namespace KartMaster.Areas.Identity.Pages.Account.Manage {
             public string PhoneNumber { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Senha Atual")]
+            [Display(Name = "Insira a sua palavra-passe")]
             public string CurrentPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Nova Senha")]
+            [Display(Name = "Insira a sua nova palavra-passe")]
             [StringLength(100, ErrorMessage = "A {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirmar Nova Senha")]
+            [Display(Name = "Confirme a sua nova palavra-passe")]
             [Compare("NewPassword", ErrorMessage = "A nova senha e a confirmação não coincidem.")]
             public string ConfirmPassword { get; set; }
         }

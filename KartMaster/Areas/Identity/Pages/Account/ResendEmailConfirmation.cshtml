@@ -5,18 +5,15 @@
 }
 
 <style>
-    html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
     body {
         background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/ResendEmailConfirmation.jpg') no-repeat center center fixed;
-        background-size: cover;
+    }
+
+    .center-wrapper {
+        display: flex;
         align-items: center;
         justify-content: center;
+        min-height: 100vh;
     }
 
     .resend-container {
@@ -55,22 +52,23 @@
         color: #ff6b6b !important;
     }
 </style>
+<div class="center-wrapper">
+    <div class="resend-container">
+        <h1>@ViewData["Title"]</h1>
+        <h2>Digite o seu e-mail</h2>
 
-<div class="resend-container">
-    <h1>@ViewData["Title"]</h1>
-    <h2>Digite o seu e-mail</h2>
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger" role="alert"></div>
 
-    <form method="post">
-        <div asp-validation-summary="All" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" aria-required="true" placeholder="name@example.com" />
+                <label asp-for="Input.Email" class="form-label"></label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
 
-        <div class="form-floating mb-3">
-            <input asp-for="Input.Email" class="form-control" aria-required="true" placeholder="name@example.com" />
-            <label asp-for="Input.Email" class="form-label"></label>
-            <span asp-validation-for="Input.Email" class="text-danger"></span>
-        </div>
-
-        <button type="submit" class="w-100 btn btn-lg btn-primary">Reenviar</button>
-    </form>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Reenviar</button>
+        </form>
+    </div>
 </div>
 
 @section Scripts {
