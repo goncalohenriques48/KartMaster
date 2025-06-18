@@ -46,8 +46,8 @@ namespace KartMaster.Controllers
         // GET: Participacao/Create
         public IActionResult Create()
         {
-            ViewData["CorridaId"] = new SelectList(_context.Corridas, "Id", "Id");
-            ViewData["UtilizadorId"] = new SelectList(_context.Utilizadores, "Id", "Id");
+            ViewData["CorridaId"] = new SelectList(_context.Corridas, "Id", "Nome");
+            ViewData["UtilizadorId"] = new SelectList(_context.Utilizadores, "Id", "Nome");
             return View();
         }
 
@@ -68,8 +68,8 @@ namespace KartMaster.Controllers
 
             if (!ModelState.IsValid) {
                 // Recarregar os dados para os dropdowns
-                ViewData["CorridaId"] = new SelectList(_context.Corridas, "Id", "Id", participacao.CorridaId);
-                ViewData["UtilizadorId"] = new SelectList(_context.Utilizadores, "Id", "Id", participacao.UtilizadorId);
+                ViewData["CorridaId"] = new SelectList(_context.Corridas, "Id", "Nome", participacao.CorridaId);
+                ViewData["UtilizadorId"] = new SelectList(_context.Utilizadores, "Id", "Nome", participacao.UtilizadorId);
                 return View(participacao);
             }
 
@@ -91,8 +91,8 @@ namespace KartMaster.Controllers
                 return NotFound();
             }
 
-            ViewData["CorridaId"] = new SelectList(_context.Corridas, "Id", "Id", participacao.CorridaId);
-            ViewData["UtilizadorId"] = new SelectList(_context.Utilizadores, "Id", "Id", participacao.UtilizadorId);
+            ViewData["CorridaId"] = new SelectList(_context.Corridas, "Id", "Nome", participacao.CorridaId);
+            ViewData["UtilizadorId"] = new SelectList(_context.Utilizadores, "Id", "Nome", participacao.UtilizadorId);
             return View(participacao);
         }
 
@@ -122,8 +122,8 @@ namespace KartMaster.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["CorridaId"] = new SelectList(_context.Corridas, "Id", "Id", participacao.CorridaId);
-            ViewData["UtilizadorId"] = new SelectList(_context.Utilizadores, "Id", "Id", participacao.UtilizadorId);
+            ViewData["CorridaId"] = new SelectList(_context.Corridas, "Id", "Nome", participacao.CorridaId);
+            ViewData["UtilizadorId"] = new SelectList(_context.Utilizadores, "Id", "Nome", participacao.UtilizadorId);
             return View(participacao);
         }
 

@@ -41,6 +41,7 @@ namespace KartMaster.Models
         /// <summary>
         /// FK para referenciar o autódromo onde a corrida será realizada.
         /// </summary>
+        [Display(Name = "Autódromo")]
         [ForeignKey(nameof(Autodromo))]
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
         public int AutodromoId { get; set; }
