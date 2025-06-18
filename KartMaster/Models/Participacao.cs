@@ -21,6 +21,7 @@ namespace KartMaster.Models
         /// <summary>
         /// FK para referenciar o utilizador.
         /// </summary>
+        [Display(Name = "Utilizador")]
         [ForeignKey(nameof(Utilizador))]
         public int UtilizadorId { get; set; }
 
@@ -34,6 +35,7 @@ namespace KartMaster.Models
         /// <summary>
         /// FK para referenciar a corrida.
         /// </summary>
+        [Display(Name = "Corrida")]
         [ForeignKey(nameof(Corrida))]
         public int CorridaId { get; set; }
 
