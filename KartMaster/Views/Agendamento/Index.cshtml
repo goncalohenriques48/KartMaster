@@ -1,0 +1,74 @@
+﻿@model IEnumerable<KartMaster.Models.Autodromo>
+
+@{
+    ViewData["Title"] = "Escolha um Autódromo";
+}
+
+<h2>Escolha um Autódromo</h2>
+
+<div class="autodromos-container">
+    @if (TempData["Mensagem"] != null)
+    {
+        <div class="alert alert-success text-center">
+            @TempData["Mensagem"]
+        </div>
+    }
+    @foreach (var autodromo in Model)
+    {
+        <div class="autodromo-card"
+             style="background: linear-gradient(to bottom, rgba(26, 26, 26, 0.8), rgba(51, 51, 51, 0.8)), url('/images/Autodromo_de_Algarve.png') no-repeat center center;
+                    background-size: cover;">
+            <div class="info">
+                <h3>@autodromo.Nome</h3>
+                <p><strong>Localização:</strong> @autodromo.Localizacao</p>
+                <p><strong>Capacidade:</strong> @autodromo.Capacidade pessoas</p>
+                <p><strong>Contacto:</strong> @autodromo.Email | @autodromo.Telemovel</p>
+                <a class="btn-agendar" asp-action="EscolherData" asp-route-id="@autodromo.Id">Agendar</a>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .autodromos-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin-top: 20px;
+        justify-content: center;
+    }
+
+    .autodromo-card {
+        color: white;
+        border-radius: 10px;
+        width: 350px;
+        height: 320px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 20px;
+        text-shadow: 1px 1px 2px black;
+    }
+
+    .btn-agendar {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-agendar:hover {
+            background-color: #218838;
+        }
+
+    h2 {
+        text-align: center;
+        color: white;
+        margin-bottom: 30px;
+    }
+</style>

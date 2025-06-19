@@ -176,6 +176,7 @@
                         <div class="drawer-content">
                             @if (User.Identity != null && User.Identity.IsAuthenticated) {
                                 <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn-profile">Perfil</a><!-- Botão Perfil -->
+                                <a asp-controller="Agendamento" asp-action="Index" class="btn-agendar">Agendar Corrida</a>
                                 <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" method="post" >
                                     <button type="submit" class="btn-logout">Logout</button>
                                 </form>
