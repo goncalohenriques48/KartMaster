@@ -19,6 +19,22 @@ namespace KartMaster.Controllers
             _context = context;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> MinhasReservas()
+        {
+            var userId = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+            if (userId == null)
+                return Unauthorized();
+
+            var minhasReservas = await _context.Reservas
+                .Include(r => r.Autodromo)
+                .Where(r => r.UtilizadorId == userId)
+                .ToListAsync();
+
+            return View(minhasReservas);
+        }
+
+
         // GET: Reserva
         public async Task<IActionResult> Index()
         {

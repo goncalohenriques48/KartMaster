@@ -1,0 +1,38 @@
+﻿@model IEnumerable<KartMaster.Models.Reserva>
+
+@{
+    ViewData["Title"] = "As Minhas Reservas";
+}
+
+<h2 class="text-white text-center">As Minhas Reservas</h2>
+
+@if (!Model.Any())
+{
+    <p class="text-center text-light">Ainda não efetuaste nenhuma reserva.</p>
+}
+else
+{
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Autódromo</th>
+                <th>Nome</th>
+                <th>Nº Pessoas</th>
+                <th>Data</th>
+                <th>Hora</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Autodromo?.Nome</td>
+                    <td>@item.NomeReservante</td>
+                    <td>@item.NumeroPessoas</td>
+                    <td>@item.Data.ToShortDateString()</td>
+                    <td>@item.Hora.ToString(@"hh\:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
