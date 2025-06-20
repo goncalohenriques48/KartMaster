@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using KartMaster.Data;
 using Microsoft.EntityFrameworkCore;
+using KartMaster.Models;
 
 namespace KartMaster.Controllers
 {
@@ -32,11 +33,30 @@ namespace KartMaster.Controllers
 
         // POST: /Agendamento/ConfirmarReserva
         [HttpPost]
-        public IActionResult ConfirmarReserva(int autodromoId, DateTime data, TimeSpan hora)
+        [HttpPost]
+        public async Task<IActionResult> ConfirmarReserva(int AutodromoId, string NomeReservante, int NumeroPessoas, DateTime Data, TimeSpan Hora)
         {
-            // Simulação: no futuro pode guardar numa tabela 'Reserva' ou 'Participacao'
-            TempData["Mensagem"] = $"Reserva feita com sucesso para o autódromo ID {autodromoId} no dia {data:dd/MM/yyyy} às {hora}.";
+            var userId = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+
+            if (userId == null)
+                return Unauthorized();
+
+            var reserva = new Reserva
+            {
+                AutodromoId = AutodromoId,
+                NomeReservante = NomeReservante,
+                NumeroPessoas = NumeroPessoas,
+                Data = Data,
+                Hora = Hora,
+                UtilizadorId = userId
+            };
+
+            _context.Reservas.Add(reserva);
+            await _context.SaveChangesAsync();
+
+            TempData["Mensagem"] = "Reserva efetuada com sucesso!";
             return RedirectToAction("Index");
         }
+
     }
 }

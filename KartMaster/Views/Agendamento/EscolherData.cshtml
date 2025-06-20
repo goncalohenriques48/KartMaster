@@ -16,19 +16,28 @@
         <h2>Reserva - @autodromo.Nome</h2>
         <p><strong>Localização:</strong> @autodromo.Localizacao</p>
         <p><strong>Capacidade:</strong> @autodromo.Capacidade pessoas</p>
-        <p><strong>Contacto:</strong> @autodromo.Email | @autodromo.Telemovel</p>
 
         <form method="post" asp-action="ConfirmarReserva">
-            <input type="hidden" name="autodromoId" value="@autodromo.Id" />
+            <input type="hidden" name="AutodromoId" value="@autodromo.Id" />
 
             <div class="form-group">
-                <label for="data">Data:</label>
-                <input type="date" name="data" required class="form-control" />
+                <label for="NomeReservante">Nome:</label>
+                <input type="text" name="NomeReservante" required class="form-control" />
             </div>
 
             <div class="form-group">
-                <label for="hora">Hora:</label>
-                <input type="time" name="hora" required class="form-control" />
+                <label for="NumeroPessoas">Número de Pessoas:</label>
+                <input type="number" name="NumeroPessoas" min="1" max="20" required class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="Data">Data:</label>
+                <input type="date" name="Data" required class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="Hora">Hora:</label>
+                <input type="time" name="Hora" required class="form-control" />
             </div>
 
             <button type="submit" class="btn-confirmar">Confirmar Reserva</button>
@@ -46,10 +55,6 @@
         max-width: 600px;
         margin: 30px auto;
         text-shadow: 1px 1px 2px black;
-    }
-
-    .reserva-info h2 {
-        margin-bottom: 20px;
     }
 
     .form-group {

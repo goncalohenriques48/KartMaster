@@ -32,6 +32,9 @@ public class ApplicationDbContext : IdentityDbContext
     /// </summary>
     public DbSet<Participacao> Participacoes { get; set; }
 
+    public DbSet<Reserva> Reservas { get; set; }
+
+
     protected override void OnModelCreating(ModelBuilder builder) {
         base.OnModelCreating(builder);
 
