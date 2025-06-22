@@ -10,6 +10,22 @@ namespace KartMaster.Models
     public class Corrida
     {
         /// <summary>
+        /// Hora de início da corrida.
+        /// </summary>
+        [Display(Name = "Hora")]
+        [Required(ErrorMessage = "A {0} é obrigatória")]
+        [DataType(DataType.Time)]
+        public TimeSpan Hora { get; set; }
+
+        /// <summary>
+        /// Duração estimada da corrida.
+        /// </summary>
+        [Display(Name = "Duração")]
+        [Required(ErrorMessage = "A {0} é obrigatória")]
+        [DataType(DataType.Time)]
+        public TimeSpan Duracao { get; set; }
+
+        /// <summary>
         /// Identificador único da corrida.
         /// </summary>
         [Key]

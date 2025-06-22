@@ -19,6 +19,18 @@ namespace KartMaster.Controllers
             _context = context;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Disponiveis()
+        {
+            var corridas = await _context.Corridas
+                .Include(c => c.Autodromo) // <- Isto é essencial
+                .Where(c => c.Data > DateTime.Now)
+                .ToListAsync();
+
+            return View(corridas);
+        }
+
+
         // GET: Corrida
         public async Task<IActionResult> Index()
         {
@@ -57,22 +69,31 @@ namespace KartMaster.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Data,AutodromoId")] Corrida corrida)
+        public async Task<IActionResult> Create(string Nome, DateTime Data, int HoraHoras, int HoraMinutos, int DuracaoHoras, int DuracaoMinutos, int DuracaoSegundos, int AutodromoId)
         {
-            if (!ModelState.IsValid) {
-                // Log dos erros de validação
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors)) {
-                    Console.WriteLine(error.ErrorMessage);
-                }
+            var hora = new TimeSpan(HoraHoras, HoraMinutos, 0);
+            var duracao = new TimeSpan(DuracaoHoras, DuracaoMinutos, DuracaoSegundos);
 
-                ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Nome", corrida.AutodromoId);
-                return View(corrida);
+            var corrida = new Corrida
+            {
+                Nome = Nome,
+                Data = Data,
+                Hora = hora,
+                Duracao = duracao,
+                AutodromoId = AutodromoId
+            };
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(corrida);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
 
-            _context.Add(corrida);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Nome", AutodromoId);
+            return View(corrida);
         }
+
 
         // GET: Corrida/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -87,7 +108,7 @@ namespace KartMaster.Controllers
             {
                 return NotFound();
             }
-            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Email", corrida.AutodromoId);
+            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Nome", corrida.AutodromoId);
             return View(corrida);
         }
 
@@ -96,7 +117,8 @@ namespace KartMaster.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Data,AutodromoId")] Corrida corrida)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Data,Hora,Duracao,AutodromoId")] Corrida corrida)
+
         {
             if (id != corrida.Id)
             {
@@ -123,7 +145,7 @@ namespace KartMaster.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Email", corrida.AutodromoId);
+            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Nome", corrida.AutodromoId);
             return View(corrida);
         }
 

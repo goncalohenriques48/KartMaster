@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Escolher Data";
     var autodromo = ViewBag.Autodromo as KartMaster.Models.Autodromo;
+    var corridas = ViewBag.Corridas as List<KartMaster.Models.Corrida>;
 }
 
 @if (autodromo == null)
@@ -20,6 +21,29 @@
         <form method="post" asp-action="ConfirmarReserva">
             <input type="hidden" name="AutodromoId" value="@autodromo.Id" />
 
+            <!-- ✅ Corridas disponíveis neste autódromo -->
+            @if (corridas != null && corridas.Any())
+            {
+                <div class="form-group">
+                    <label for="corridaSelecionada">Escolher Corrida:</label>
+                    <select id="corridaSelecionada" class="form-control" name="CorridaId">
+                        @foreach (var corrida in corridas)
+                        {
+                            var dur = corrida.Duracao;
+                            var partes = new List<string>();
+                            if (dur.Hours > 0) partes.Add($"{dur.Hours}h");
+                            if (dur.Minutes > 0) partes.Add($"{dur.Minutes}min");
+                            if (dur.Seconds > 0) partes.Add($"{dur.Seconds}s");
+                            var duracaoFormatada = string.Join(" ", partes);
+
+                            <option value="@corrida.Id">
+                                @corrida.Nome - @corrida.Data.ToShortDateString() @corrida.Hora.ToString(@"hh\:mm") - Duração: @duracaoFormatada
+                            </option>
+                        }
+                    </select>
+                </div>
+            }
+
             <div class="form-group">
                 <label for="NomeReservante">Nome:</label>
                 <input type="text" name="NomeReservante" required class="form-control" />
@@ -30,20 +54,11 @@
                 <input type="number" name="NumeroPessoas" min="1" max="20" required class="form-control" />
             </div>
 
-            <div class="form-group">
-                <label for="Data">Data:</label>
-                <input type="date" name="Data" required class="form-control" />
-            </div>
-
-            <div class="form-group">
-                <label for="Hora">Hora:</label>
-                <input type="time" name="Hora" required class="form-control" />
-            </div>
-
             <button type="submit" class="btn-confirmar">Confirmar Reserva</button>
         </form>
     </div>
 </div>
+
 
 <style>
     .autodromo-reserva {

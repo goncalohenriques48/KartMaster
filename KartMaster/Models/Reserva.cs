@@ -20,6 +20,9 @@ namespace KartMaster.Models
         [Required]
         public TimeSpan Hora { get; set; }
 
+        [Required]
+        public TimeSpan Duracao { get; set; }
+
         // Autódromo relacionado
         public int AutodromoId { get; set; }
         public Autodromo Autodromo { get; set; }

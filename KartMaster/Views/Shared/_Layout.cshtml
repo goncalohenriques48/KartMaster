@@ -80,7 +80,7 @@
         color: white;
         }
 
-        .drawer-content .btn-profile,
+        .drawer-content .btn-profilenav,
         .drawer-content .btn-logout {
         width: 220px;
         height: 56px;
@@ -101,14 +101,14 @@
         letter-spacing: 0.5px;
         }
 
-        .drawer-content .btn-profile:hover,
+        .drawer-content .btn-profilenav:hover,
         .drawer-content .btn-logout:hover {
         background-color: #222;
         color: #fff; /* Garante que a cor não mude ao passar o rato */
         text-decoration: solid; /* Garante que não fique sublinhado */
         }
 
-        .drawer-content .btn-profile {
+        .drawer-content .btn-profilenav {
         border: 2px solid #4da6ff;
         }
 
@@ -142,6 +142,10 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Corrida" asp-action="Disponiveis">Corridas Disponíveis</a>
                         </li>
 
                         @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
@@ -186,10 +190,10 @@
                         </div>
                         <div class="drawer-content">
                             @if (User.Identity != null && User.Identity.IsAuthenticated) {
-                                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn-profile">Perfil</a><!-- Botão Perfil -->
-                                <a asp-controller="Agendamento" asp-action="Index" class="btn-agendar">Agendar Corrida</a>
-                                <a asp-controller="Reserva" asp-action="MinhasReservas" class="auth-link">As Minhas Reservas</a>
-                                <a asp-controller="Participacao" asp-action="MinhasParticipacoes" class="auth-link">As Minhas Participações</a>
+                                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn-profilenav">Perfil</a><!-- Botão Perfil -->
+                                <a asp-controller="Agendamento" asp-action="Index" class="btn-profilenav">Agendar Corrida</a>
+                                <a asp-controller="Reserva" asp-action="MinhasReservas" class="btn-profilenav">As Minhas Reservas</a>
+                                <a asp-controller="Participacao" asp-action="MinhasParticipacoes" class="btn-profilenav">As Minhas Participações</a>
                                 <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" method="post" >
                                     <button type="submit" class="btn-logout">Logout</button>
                                 </form>

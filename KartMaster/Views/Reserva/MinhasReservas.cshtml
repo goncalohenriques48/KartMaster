@@ -6,33 +6,35 @@
 
 <h2 class="text-white text-center">As Minhas Reservas</h2>
 
-@if (!Model.Any())
-{
-    <p class="text-center text-light">Ainda não efetuaste nenhuma reserva.</p>
-}
-else
-{
-    <table class="table table-dark table-striped">
-        <thead>
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>Autódromo</th>
+            <th>Nome</th>
+            <th>Nº Pessoas</th>
+            <th>Data</th>
+            <th>Hora</th>
+            <th>Duração</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var dur = item.Duracao;
+            var partes = new List<string>();
+            if (dur.Hours > 0) partes.Add($"{dur.Hours}h");
+            if (dur.Minutes > 0) partes.Add($"{dur.Minutes}min");
+            if (dur.Seconds > 0) partes.Add($"{dur.Seconds}s");
+            var duracaoFormatada = string.Join(" ", partes);
+
             <tr>
-                <th>Autódromo</th>
-                <th>Nome</th>
-                <th>Nº Pessoas</th>
-                <th>Data</th>
-                <th>Hora</th>
+                <td>@item.Autodromo?.Nome</td>
+                <td>@item.NomeReservante</td>
+                <td>@item.NumeroPessoas</td>
+                <td>@item.Data.ToShortDateString()</td>
+                <td>@item.Hora.ToString(@"hh\:mm")</td>
+                <td>@duracaoFormatada</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Autodromo?.Nome</td>
-                    <td>@item.NomeReservante</td>
-                    <td>@item.NumeroPessoas</td>
-                    <td>@item.Data.ToShortDateString()</td>
-                    <td>@item.Hora.ToString(@"hh\:mm")</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+        }
+    </tbody>
+</table>

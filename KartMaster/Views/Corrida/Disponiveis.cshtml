@@ -1,0 +1,49 @@
+﻿@model IEnumerable<KartMaster.Models.Corrida>
+
+@{
+    ViewData["Title"] = "Corridas Disponíveis";
+}
+
+<h1>Corridas Disponíveis</h1>
+
+@if (!Model.Any())
+{
+    <p>Não há corridas disponíveis de momento.</p>
+}
+else
+{
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Autódromo</th>  
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Duração</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var corrida in Model)
+            {
+                <tr>
+                    <td>@corrida.Nome</td>
+                    <td>@corrida.Autodromo?.Nome</td>
+                    <td>@corrida.Data.ToShortDateString()</td>
+                    <td>@corrida.Hora.ToString(@"hh\:mm")</td>
+                    <td>
+                        @{
+                            var dur = corrida.Duracao;
+                            var partes = new List<string>();
+                            if (dur.Hours > 0) { partes.Add($"{dur.Hours}h"); }
+                            if (dur.Minutes > 0) { partes.Add($"{dur.Minutes}min"); }
+                            if (dur.Seconds > 0) { partes.Add($"{dur.Seconds}s"); }
+                            var duracaoFormatada = string.Join(" ", partes);
+                        }
+                        @duracaoFormatada
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

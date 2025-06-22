@@ -65,7 +65,7 @@ namespace KartMaster.Controllers
         // GET: Reserva/Create
         public IActionResult Create()
         {
-            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Email");
+            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Nome");
             ViewData["UtilizadorId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
@@ -101,7 +101,7 @@ namespace KartMaster.Controllers
             {
                 return NotFound();
             }
-            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Email", reserva.AutodromoId);
+            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Nome", reserva.AutodromoId);
             ViewData["UtilizadorId"] = new SelectList(_context.Users, "Id", "Id", reserva.UtilizadorId);
             return View(reserva);
         }
@@ -111,7 +111,7 @@ namespace KartMaster.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeReservante,NumeroPessoas,Data,Hora,AutodromoId,UtilizadorId")] Reserva reserva)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeReservante,NumeroPessoas,Data,Hora,Duracao,AutodromoId,UtilizadorId")] Reserva reserva)
         {
             if (id != reserva.Id)
             {
@@ -138,7 +138,7 @@ namespace KartMaster.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Email", reserva.AutodromoId);
+            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Nome", reserva.AutodromoId);
             ViewData["UtilizadorId"] = new SelectList(_context.Users, "Id", "Id", reserva.UtilizadorId);
             return View(reserva);
         }
