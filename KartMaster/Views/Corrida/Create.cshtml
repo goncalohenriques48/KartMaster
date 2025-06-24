@@ -12,22 +12,70 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="Nome" class="control-label"></label>
                 <input asp-for="Nome" class="form-control" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Data" class="control-label"></label>
-                <input asp-for="Data" class="form-control" />
+                <input asp-for="Data" class="form-control" id="dataCorrida" />
                 <span asp-validation-for="Data" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label for="Hora">Hora:</label>
+                <div style="display: flex; gap: 10px;">
+                    <select id="horaHoras" name="HoraHoras" class="form-control">
+                        @for (int h = 0; h < 24; h++)
+                        {
+                            <option value="@h">@h.ToString("D2") h</option>
+                        }
+                    </select>
+
+                    <select id="horaMinutos" name="HoraMinutos" class="form-control">
+                        @for (int m = 0; m < 60; m += 5)
+                        {
+                            <option value="@m">@m.ToString("D2") min</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Duracao">Duração:</label>
+                <div style="display: flex; gap: 10px;">
+                    <select id="duracaoHoras" name="DuracaoHoras" class="form-control">
+                        @for (int h = 0; h < 6; h++)
+                        {
+                            <option value="@h">@h.ToString("D2") h</option>
+                        }
+                    </select>
+
+                    <select id="duracaoMinutos" name="DuracaoMinutos" class="form-control">
+                        @for (int m = 0; m < 60; m += 5)
+                        {
+                            <option value="@m">@m.ToString("D2") min</option>
+                        }
+                    </select>
+
+                    <select id="duracaoSegundos" name="DuracaoSegundos" class="form-control">
+                        @for (int s = 0; s < 60; s += 10)
+                        {
+                            <option value="@s">@s.ToString("D2") s</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label asp-for="AutodromoId" class="control-label"></label>
-                <select asp-for="AutodromoId" class ="form-control" asp-items="ViewBag.AutodromoId"></select>
+                <select asp-for="AutodromoId" class="form-control" asp-items="ViewBag.AutodromoId"></select>
                 <span asp-validation-for="AutodromoId" class="text-danger"></span>
-
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Criar" class="btn btn-primary" />
             </div>
@@ -40,5 +88,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

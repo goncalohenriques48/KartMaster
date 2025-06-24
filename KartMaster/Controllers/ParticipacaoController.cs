@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KartMaster.Data;
 using KartMaster.Models;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace KartMaster.Controllers
 {
@@ -18,6 +20,36 @@ namespace KartMaster.Controllers
         {
             _context = context;
         }
+
+        /// <summary>
+        /// Mostra apenas as participações do utilizador autenticado.
+        /// </summary>
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> MinhasParticipacoes()
+        {
+            var identityUserId = _context.Users
+                .FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+
+            if (identityUserId == null)
+                return Unauthorized();
+
+            var utilizador = await _context.Utilizadores
+                .FirstOrDefaultAsync(u => u.IdentityUserId == identityUserId);
+
+            if (utilizador == null)
+                return Unauthorized();
+
+            var participacoes = await _context.Participacoes
+                .Include(p => p.Corrida)
+                .Where(p => p.UtilizadorId == utilizador.Id)
+                .ToListAsync();
+
+            return View(participacoes);
+        }
+
+
+
 
         // GET: Participacao
         public async Task<IActionResult> Index()

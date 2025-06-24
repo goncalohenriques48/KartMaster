@@ -10,35 +10,39 @@ using KartMaster.Models;
 
 namespace KartMaster.Controllers
 {
-    public class CorridaController : Controller
+    public class ReservaController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CorridaController(ApplicationDbContext context)
+        public ReservaController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Disponiveis()
+        public async Task<IActionResult> MinhasReservas()
         {
-            var corridas = await _context.Corridas
-                .Include(c => c.Autodromo) // <- Isto é essencial
-                .Where(c => c.Data > DateTime.Now)
+            var userId = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+            if (userId == null)
+                return Unauthorized();
+
+            var minhasReservas = await _context.Reservas
+                .Include(r => r.Autodromo)
+                .Where(r => r.UtilizadorId == userId)
                 .ToListAsync();
 
-            return View(corridas);
+            return View(minhasReservas);
         }
 
 
-        // GET: Corrida
+        // GET: Reserva
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Corridas.Include(c => c.Autodromo);
+            var applicationDbContext = _context.Reservas.Include(r => r.Autodromo).Include(r => r.Utilizador);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Corrida/Details/5
+        // GET: Reserva/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,56 +50,45 @@ namespace KartMaster.Controllers
                 return NotFound();
             }
 
-            var corrida = await _context.Corridas
-                .Include(c => c.Autodromo)
+            var reserva = await _context.Reservas
+                .Include(r => r.Autodromo)
+                .Include(r => r.Utilizador)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (corrida == null)
+            if (reserva == null)
             {
                 return NotFound();
             }
 
-            return View(corrida);
+            return View(reserva);
         }
 
-        // GET: Corrida/Create
+        // GET: Reserva/Create
         public IActionResult Create()
         {
             ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Nome");
+            ViewData["UtilizadorId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        // POST: Corrida/Create
+        // POST: Reserva/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string Nome, DateTime Data, int HoraHoras, int HoraMinutos, int DuracaoHoras, int DuracaoMinutos, int DuracaoSegundos, int AutodromoId)
+        public async Task<IActionResult> Create([Bind("Id,NomeReservante,NumeroPessoas,Data,Hora,AutodromoId,UtilizadorId")] Reserva reserva)
         {
-            var hora = new TimeSpan(HoraHoras, HoraMinutos, 0);
-            var duracao = new TimeSpan(DuracaoHoras, DuracaoMinutos, DuracaoSegundos);
-
-            var corrida = new Corrida
-            {
-                Nome = Nome,
-                Data = Data,
-                Hora = hora,
-                Duracao = duracao,
-                AutodromoId = AutodromoId
-            };
-
             if (ModelState.IsValid)
             {
-                _context.Add(corrida);
+                _context.Add(reserva);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
-            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Nome", AutodromoId);
-            return View(corrida);
+            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Email", reserva.AutodromoId);
+            ViewData["UtilizadorId"] = new SelectList(_context.Users, "Id", "Id", reserva.UtilizadorId);
+            return View(reserva);
         }
 
-
-        // GET: Corrida/Edit/5
+        // GET: Reserva/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -103,24 +96,24 @@ namespace KartMaster.Controllers
                 return NotFound();
             }
 
-            var corrida = await _context.Corridas.FindAsync(id);
-            if (corrida == null)
+            var reserva = await _context.Reservas.FindAsync(id);
+            if (reserva == null)
             {
                 return NotFound();
             }
-            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Nome", corrida.AutodromoId);
-            return View(corrida);
+            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Nome", reserva.AutodromoId);
+            ViewData["UtilizadorId"] = new SelectList(_context.Users, "Id", "Id", reserva.UtilizadorId);
+            return View(reserva);
         }
 
-        // POST: Corrida/Edit/5
+        // POST: Reserva/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Data,Hora,Duracao,AutodromoId")] Corrida corrida)
-
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeReservante,NumeroPessoas,Data,Hora,Duracao,AutodromoId,UtilizadorId")] Reserva reserva)
         {
-            if (id != corrida.Id)
+            if (id != reserva.Id)
             {
                 return NotFound();
             }
@@ -129,12 +122,12 @@ namespace KartMaster.Controllers
             {
                 try
                 {
-                    _context.Update(corrida);
+                    _context.Update(reserva);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CorridaExists(corrida.Id))
+                    if (!ReservaExists(reserva.Id))
                     {
                         return NotFound();
                     }
@@ -145,11 +138,12 @@ namespace KartMaster.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Nome", corrida.AutodromoId);
-            return View(corrida);
+            ViewData["AutodromoId"] = new SelectList(_context.Autodromos, "Id", "Nome", reserva.AutodromoId);
+            ViewData["UtilizadorId"] = new SelectList(_context.Users, "Id", "Id", reserva.UtilizadorId);
+            return View(reserva);
         }
 
-        // GET: Corrida/Delete/5
+        // GET: Reserva/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -157,35 +151,36 @@ namespace KartMaster.Controllers
                 return NotFound();
             }
 
-            var corrida = await _context.Corridas
-                .Include(c => c.Autodromo)
+            var reserva = await _context.Reservas
+                .Include(r => r.Autodromo)
+                .Include(r => r.Utilizador)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (corrida == null)
+            if (reserva == null)
             {
                 return NotFound();
             }
 
-            return View(corrida);
+            return View(reserva);
         }
 
-        // POST: Corrida/Delete/5
+        // POST: Reserva/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var corrida = await _context.Corridas.FindAsync(id);
-            if (corrida != null)
+            var reserva = await _context.Reservas.FindAsync(id);
+            if (reserva != null)
             {
-                _context.Corridas.Remove(corrida);
+                _context.Reservas.Remove(reserva);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CorridaExists(int id)
+        private bool ReservaExists(int id)
         {
-            return _context.Corridas.Any(e => e.Id == id);
+            return _context.Reservas.Any(e => e.Id == id);
         }
     }
 }

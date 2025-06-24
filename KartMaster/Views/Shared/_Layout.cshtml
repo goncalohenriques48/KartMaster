@@ -6,6 +6,10 @@
     var isHomePage = controller == "Home" && action == "Index";
 }
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +57,7 @@
 
         .drawer.open {
         right: 0;
-			}
+        }
 
         .drawer-header {
         display: flex;
@@ -76,49 +80,49 @@
         color: white;
         }
 
-        .drawer-content .btn-profile,
+        .drawer-content .btn-profilenav,
         .drawer-content .btn-logout {
-            width: 220px;
-            height: 56px;
-            background-color: #111;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 17px;
-            font-weight: 600;
-            text-align: center;
-            text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            margin: 12px auto;
-            letter-spacing: 0.5px;
+        width: 220px;
+        height: 56px;
+        background-color: #111;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 17px;
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        margin: 12px auto;
+        letter-spacing: 0.5px;
         }
 
-            .drawer-content .btn-profile:hover,
-            .drawer-content .btn-logout:hover {
-                background-color: #222;
-                color: #fff; /* Garante que a cor não mude ao passar o rato */
-                text-decoration: solid; /* Garante que não fique sublinhado */
-            }
+        .drawer-content .btn-profilenav:hover,
+        .drawer-content .btn-logout:hover {
+        background-color: #222;
+        color: #fff; /* Garante que a cor não mude ao passar o rato */
+        text-decoration: solid; /* Garante que não fique sublinhado */
+        }
 
-        .drawer-content .btn-profile {
-            border: 2px solid #4da6ff;
+        .drawer-content .btn-profilenav {
+        border: 2px solid #4da6ff;
         }
 
         /* Borda vermelha no botão Logout */
         .drawer-content .btn-logout {
-            border: 2px solid #ff4d4d;
+        border: 2px solid #ff4d4d;
         }
 
     </style>
 
     <script>
         function toggleDrawer() {
-            const drawer = document.getElementById('userDrawer');
-            drawer.classList.toggle('open');
+        const drawer = document.getElementById('userDrawer');
+        drawer.classList.toggle('open');
         }
     </script>
 </head>
@@ -141,20 +145,31 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Autodromo" asp-action="Index">Autódromos</a>
+                            <a class="nav-link" asp-controller="Corrida" asp-action="Disponiveis">Corridas Disponíveis</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Corrida" asp-action="Index">Corridas</a>
-                        </li>
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Autodromo" asp-action="Index">Autódromos</a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Participacao" asp-action="Index">Participações</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Corrida" asp-action="Index">Corridas</a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Utilizador" asp-action="Index">Utilizadores</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Participacao" asp-action="Index">Participações</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Utilizador" asp-action="Index">Utilizadores</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Reserva" asp-action="Index">Reservas</a>
+                            </li>
+                        }
                     </ul>
                     <div class="nav-item">
                         <a href="#" class="nav-link" id="userIcon" onclick="toggleDrawer()">
@@ -175,7 +190,10 @@
                         </div>
                         <div class="drawer-content">
                             @if (User.Identity != null && User.Identity.IsAuthenticated) {
-                                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn-profile">Perfil</a><!-- Botão Perfil -->
+                                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn-profilenav">Perfil</a> <!-- Botão Drawer -->
+                                <a asp-controller="Agendamento" asp-action="Index" class="btn-profilenav">Agendar Corrida</a> <!-- Botão Drawer -->
+                                <a asp-controller="Reserva" asp-action="MinhasReservas" class="btn-profilenav">As Minhas Reservas</a> <!-- Botão Drawer -->
+                                <a asp-controller="Participacao" asp-action="MinhasParticipacoes" class="btn-profilenav">As Minhas Participações</a> <!-- Botão Drawer -->
                                 <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" method="post" >
                                     <button type="submit" class="btn-logout">Logout</button>
                                 </form>
