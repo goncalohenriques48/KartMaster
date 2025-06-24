@@ -190,10 +190,10 @@
                         </div>
                         <div class="drawer-content">
                             @if (User.Identity != null && User.Identity.IsAuthenticated) {
-                                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn-profilenav">Perfil</a><!-- Botão Perfil -->
-                                <a asp-controller="Agendamento" asp-action="Index" class="btn-profilenav">Agendar Corrida</a>
-                                <a asp-controller="Reserva" asp-action="MinhasReservas" class="btn-profilenav">As Minhas Reservas</a>
-                                <a asp-controller="Participacao" asp-action="MinhasParticipacoes" class="btn-profilenav">As Minhas Participações</a>
+                                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn-profilenav">Perfil</a> <!-- Botão Drawer -->
+                                <a asp-controller="Agendamento" asp-action="Index" class="btn-profilenav">Agendar Corrida</a> <!-- Botão Drawer -->
+                                <a asp-controller="Reserva" asp-action="MinhasReservas" class="btn-profilenav">As Minhas Reservas</a> <!-- Botão Drawer -->
+                                <a asp-controller="Participacao" asp-action="MinhasParticipacoes" class="btn-profilenav">As Minhas Participações</a> <!-- Botão Drawer -->
                                 <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" method="post" >
                                     <button type="submit" class="btn-logout">Logout</button>
                                 </form>
