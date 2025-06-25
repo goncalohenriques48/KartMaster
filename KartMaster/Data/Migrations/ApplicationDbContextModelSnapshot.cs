@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace KartMaster.Data.Migrations
+namespace KartMaster.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -55,7 +55,7 @@ namespace KartMaster.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Autodromos", (string)null);
+                    b.ToTable("Autodromos");
                 });
 
             modelBuilder.Entity("KartMaster.Models.Corrida", b =>
@@ -87,7 +87,7 @@ namespace KartMaster.Data.Migrations
 
                     b.HasIndex("AutodromoId");
 
-                    b.ToTable("Corridas", (string)null);
+                    b.ToTable("Corridas");
                 });
 
             modelBuilder.Entity("KartMaster.Models.Participacao", b =>
@@ -110,7 +110,7 @@ namespace KartMaster.Data.Migrations
 
                     b.HasIndex("CorridaId");
 
-                    b.ToTable("Participacoes", (string)null);
+                    b.ToTable("Participacoes");
                 });
 
             modelBuilder.Entity("KartMaster.Models.Reserva", b =>
@@ -122,6 +122,9 @@ namespace KartMaster.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AutodromoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CorridaId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Data")
@@ -148,9 +151,11 @@ namespace KartMaster.Data.Migrations
 
                     b.HasIndex("AutodromoId");
 
+                    b.HasIndex("CorridaId");
+
                     b.HasIndex("UtilizadorId");
 
-                    b.ToTable("Reservas", (string)null);
+                    b.ToTable("Reservas");
                 });
 
             modelBuilder.Entity("KartMaster.Models.Utilizador", b =>
@@ -185,7 +190,7 @@ namespace KartMaster.Data.Migrations
                         .IsUnique()
                         .HasFilter("[IdentityUserId] IS NOT NULL");
 
-                    b.ToTable("Utilizadores", (string)null);
+                    b.ToTable("Utilizadores");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -424,6 +429,12 @@ namespace KartMaster.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("KartMaster.Models.Corrida", "Corrida")
+                        .WithMany()
+                        .HasForeignKey("CorridaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Utilizador")
                         .WithMany()
                         .HasForeignKey("UtilizadorId")
@@ -431,6 +442,8 @@ namespace KartMaster.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Autodromo");
+
+                    b.Navigation("Corrida");
 
                     b.Navigation("Utilizador");
                 });

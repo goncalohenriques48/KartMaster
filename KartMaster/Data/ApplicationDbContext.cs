@@ -43,8 +43,13 @@ public class ApplicationDbContext : IdentityDbContext
             .HasOne(u => u.IdentityUser)
             .WithOne()
             .HasForeignKey<Utilizador>(u => u.IdentityUserId);
-    }
 
+        builder.Entity<Reserva>()
+            .HasOne(r => r.Corrida)
+            .WithMany()
+            .HasForeignKey(r => r.CorridaId)
+            .OnDelete(DeleteBehavior.Restrict); // evita múltiplos caminhos de cascade delete
+    }
 
 
 }
