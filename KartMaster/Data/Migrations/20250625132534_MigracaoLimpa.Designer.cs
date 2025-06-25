@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace KartMaster.Data.Migrations
+namespace KartMaster.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250620142752_AddReserva")]
-    partial class AddReserva
+    [Migration("20250625132534_MigracaoLimpa")]
+    partial class MigracaoLimpa
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,6 +75,12 @@ namespace KartMaster.Data.Migrations
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
+                    b.Property<TimeSpan>("Duracao")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("Hora")
+                        .HasColumnType("time");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -121,8 +127,14 @@ namespace KartMaster.Data.Migrations
                     b.Property<int>("AutodromoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CorridaId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("Duracao")
+                        .HasColumnType("time");
 
                     b.Property<TimeSpan>("Hora")
                         .HasColumnType("time");
@@ -141,6 +153,8 @@ namespace KartMaster.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AutodromoId");
+
+                    b.HasIndex("CorridaId");
 
                     b.HasIndex("UtilizadorId");
 
@@ -327,12 +341,10 @@ namespace KartMaster.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -369,12 +381,10 @@ namespace KartMaster.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -422,6 +432,12 @@ namespace KartMaster.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("KartMaster.Models.Corrida", "Corrida")
+                        .WithMany()
+                        .HasForeignKey("CorridaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Utilizador")
                         .WithMany()
                         .HasForeignKey("UtilizadorId")
@@ -429,6 +445,8 @@ namespace KartMaster.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Autodromo");
+
+                    b.Navigation("Corrida");
 
                     b.Navigation("Utilizador");
                 });
