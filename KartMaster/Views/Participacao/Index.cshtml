@@ -31,12 +31,26 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Utilizador.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Corrida.Nome)
-            </td>
+                <td>
+                    @{
+                        if (item.Utilizador != null) {
+                            @item.Utilizador.Nome
+                        }
+                        else {
+                            <span class="text-muted">N/D</span>
+                        }
+                    }
+                </td>
+                <td>
+                    @{
+                        if (item.Corrida != null) {
+                            @item.Corrida.Nome
+                        }
+                        else {
+                            <span class="text-muted">N/D</span>
+                        }
+                    }
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PosicaoFinal)
             </td>

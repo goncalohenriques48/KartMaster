@@ -19,17 +19,27 @@ namespace KartMaster.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Mostra todas as reservas efetuadas pelo utilizador autenticado.
+        /// </summary>
+        /// <returns>Vista com a lista de reservas ou Unauthorized se o utilizador não estiver autenticado.</returns>
         [HttpGet]
-        public async Task<IActionResult> MinhasReservas()
-        {
-            var userId = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
-            if (userId == null)
+        public async Task<IActionResult> MinhasReservas() {
+            // Verificação segura do utilizador autenticado
+            var username = User?.Identity?.Name;
+            if (string.IsNullOrEmpty(username))
                 return Unauthorized();
 
+            // Procurar o utilizador autenticado
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
+            if (user == null)
+                return Unauthorized();
+
+            // Obter reservas associadas ao utilizador
             var minhasReservas = await _context.Reservas
                 .Include(r => r.Autodromo)
                 .Include(r => r.Corrida)
-                .Where(r => r.UtilizadorId == userId)
+                .Where(r => r.UtilizadorId == user.Id)
                 .ToListAsync();
 
             return View(minhasReservas);

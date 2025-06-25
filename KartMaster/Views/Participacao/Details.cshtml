@@ -10,28 +10,42 @@
     <h4>Participação</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Utilizador)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Utilizador.Nome)
+        <dd class="col-sm-10">
+            @{
+                if (Model.Utilizador != null) {
+                    @Model.Utilizador.Nome
+                }
+                else {
+                    <span class="text-muted">Não disponível</span>
+                }
+            }
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Corrida)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Corrida.Nome)
+        <dd class="col-sm-10">
+            @{
+                if (Model.Corrida != null) {
+                    @Model.Corrida.Nome
+                }
+                else {
+                    <span class="text-muted">Não disponível</span>
+                }
+            }
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PosicaoFinal)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PosicaoFinal)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TempoFinal)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TempoFinal)
         </dd>
     </dl>
