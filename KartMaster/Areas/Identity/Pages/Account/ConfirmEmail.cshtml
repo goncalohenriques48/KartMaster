@@ -58,5 +58,28 @@
     <div class="icon">✔️</div>
     <h1>@ViewData["Title"]</h1>
     <p>Obrigado por ter confirmado o seu email!</p>
-    <a href="/">Voltar para a página inicial</a>
+    <a href="javascript:void(0);" onclick="voltarParaOriginal()">Voltar para a página inicial</a>
 </div>
+
+<script>
+    function voltarParaOriginal() {
+        if (window.opener) {
+            try {
+                // Redirecionar o separador original
+                window.opener.location.href = "/";
+                // Enviar mensagem opcional
+                window.opener.postMessage("emailConfirmed", "*");
+            } catch (e) {
+                console.warn("Erro ao comunicar com o separador original:", e);
+            }
+        }
+
+        // Tentar fechar este separador (se foi aberto externamente)
+        window.close();
+
+        // Se não fechar (bloqueado pelo browser), redirecionar como fallback
+        setTimeout(() => {
+            window.location.href = "/";
+        }, 1000);
+    }
+</script>

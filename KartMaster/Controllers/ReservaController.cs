@@ -28,6 +28,7 @@ namespace KartMaster.Controllers
 
             var minhasReservas = await _context.Reservas
                 .Include(r => r.Autodromo)
+                .Include(r => r.Corrida)
                 .Where(r => r.UtilizadorId == userId)
                 .ToListAsync();
 

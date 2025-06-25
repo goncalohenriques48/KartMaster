@@ -6,12 +6,10 @@
 
 <h2 class="text-white text-center">As Minhas Participações</h2>
 
-@if (!Model.Any())
-{
+@if (!Model.Any()) {
     <p class="text-center text-light">Ainda não tens participações registadas.</p>
 }
-else
-{
+else {
     <table class="table table-dark table-striped">
         <thead>
             <tr>
@@ -21,8 +19,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
+            @foreach (var item in Model) {
                 <tr>
                     <td>@item.Corrida?.Nome</td>
                     <td>@item.PosicaoFinal</td>
@@ -32,3 +29,28 @@ else
         </tbody>
     </table>
 }
+
+<style>
+    body {
+        background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('/images/fundoParticipacao2.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    h2 {
+        margin-top: 40px;
+        margin-bottom: 30px;
+    }
+
+    table {
+        margin-top: 20px;
+        background-color: rgba(0, 0, 0, 0.75);
+    }
+
+    .table td, .table th {
+        color: #ffffff;
+    }
+
+    p {
+        font-size: 1.2em;
+    }
+</style>
