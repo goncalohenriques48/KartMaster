@@ -7,10 +7,9 @@
 <h2>Escolha um Autódromo</h2>
 
 <div class="autodromos-container">
-    @foreach (var autodromo in Model)
-    {
+    @foreach (var autodromo in Model) {
         <div class="autodromo-card"
-             style="background: linear-gradient(to bottom, rgba(26, 26, 26, 0.8), rgba(51, 51, 51, 0.8)), url('/images/Autodromo_de_Algarve.png') no-repeat center center;
+             style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.75)), url('/images/Autodromo_de_Algarve.png') no-repeat center center;
                     background-size: cover;">
             <div class="info">
                 <h3>@autodromo.Nome</h3>
@@ -23,17 +22,22 @@
     }
 </div>
 
-@if (TempData["Mensagem"] != null)
-{
+@if (TempData["Mensagem"] != null) {
     <div class="mensagem-sucesso">
         @TempData["Mensagem"]
     </div>
 }
 
 <style>
+    body {
+        background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('/images/fundoAutodromo.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
     h2 {
         text-align: center;
         color: white;
+        margin-top: 40px;
         margin-bottom: 30px;
     }
 

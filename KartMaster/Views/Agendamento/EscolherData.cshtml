@@ -2,6 +2,7 @@
     ViewData["Title"] = "Escolher Data";
     var autodromo = ViewBag.Autodromo as KartMaster.Models.Autodromo;
     var corridas = ViewBag.Corridas as List<KartMaster.Models.Corrida>;
+    var corridasReservadas = ViewBag.CorridasReservadas as List<int>;
 }
 
 @if (autodromo == null)
@@ -18,10 +19,16 @@
         <p><strong>Localização:</strong> @autodromo.Localizacao</p>
         <p><strong>Capacidade:</strong> @autodromo.Capacidade pessoas</p>
 
+        @if (TempData["Erro"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["Erro"]
+            </div>
+        }
+
         <form method="post" asp-action="ConfirmarReserva">
             <input type="hidden" name="AutodromoId" value="@autodromo.Id" />
 
-            <!-- ✅ Corridas disponíveis neste autódromo -->
             @if (corridas != null && corridas.Any())
             {
                 <div class="form-group">
@@ -35,10 +42,11 @@
                             if (dur.Minutes > 0) partes.Add($"{dur.Minutes}min");
                             if (dur.Seconds > 0) partes.Add($"{dur.Seconds}s");
                             var duracaoFormatada = string.Join(" ", partes);
+                            bool desativada = corridasReservadas != null && corridasReservadas.Contains(corrida.Id);
 
-                            <option value="@corrida.Id">
-                                @corrida.Nome - @corrida.Data.ToShortDateString() @corrida.Hora.ToString(@"hh\:mm") - Duração: @duracaoFormatada
-                            </option>
+                            @: <option value="@corrida.Id" @(desativada ? "disabled=\"disabled\"" : "")>
+                            @:     @corrida.Nome - @corrida.Data.ToShortDateString() @corrida.Hora.ToString(@"hh\:mm") - Duração: @duracaoFormatada @(desativada ? " (já reservada)" : "")
+                            @: </option>
                         }
                     </select>
                 </div>
@@ -58,7 +66,6 @@
         </form>
     </div>
 </div>
-
 
 <style>
     .autodromo-reserva {
@@ -93,7 +100,15 @@
         cursor: pointer;
     }
 
-        .btn-confirmar:hover {
-            background-color: #218838;
-        }
+    .btn-confirmar:hover {
+        background-color: #218838;
+    }
+
+    .alert-danger {
+        background-color: #dc3545;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
 </style>

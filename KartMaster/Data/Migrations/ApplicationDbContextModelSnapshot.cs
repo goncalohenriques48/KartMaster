@@ -55,7 +55,7 @@ namespace KartMaster.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Autodromos");
+                    b.ToTable("Autodromos", (string)null);
                 });
 
             modelBuilder.Entity("KartMaster.Models.Corrida", b =>
@@ -87,7 +87,7 @@ namespace KartMaster.Data.Migrations
 
                     b.HasIndex("AutodromoId");
 
-                    b.ToTable("Corridas");
+                    b.ToTable("Corridas", (string)null);
                 });
 
             modelBuilder.Entity("KartMaster.Models.Participacao", b =>
@@ -110,7 +110,7 @@ namespace KartMaster.Data.Migrations
 
                     b.HasIndex("CorridaId");
 
-                    b.ToTable("Participacoes");
+                    b.ToTable("Participacoes", (string)null);
                 });
 
             modelBuilder.Entity("KartMaster.Models.Reserva", b =>
@@ -150,7 +150,7 @@ namespace KartMaster.Data.Migrations
 
                     b.HasIndex("UtilizadorId");
 
-                    b.ToTable("Reservas");
+                    b.ToTable("Reservas", (string)null);
                 });
 
             modelBuilder.Entity("KartMaster.Models.Utilizador", b =>
@@ -185,7 +185,7 @@ namespace KartMaster.Data.Migrations
                         .IsUnique()
                         .HasFilter("[IdentityUserId] IS NOT NULL");
 
-                    b.ToTable("Utilizadores");
+                    b.ToTable("Utilizadores", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -30,6 +30,11 @@ namespace KartMaster.Models
         // Utilizador autenticado
         public string UtilizadorId { get; set; }
         public IdentityUser Utilizador { get; set; }
+
+        // Corrida relacionada
+        [Required]
+        public int CorridaId { get; set; }
+        public Corrida Corrida { get; set; }
     }
 }
 
