@@ -22,24 +22,34 @@ namespace KartMaster.Controllers
         }
 
         /// <summary>
-        /// Mostra apenas as participações do utilizador autenticado.
+        /// Apresenta a lista de participações do utilizador autenticado.
         /// </summary>
+        /// <returns>View com a lista de participações ou erro 401 se não autenticado.</returns>
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> MinhasParticipacoes()
         {
-            var identityUserId = _context.Users
-                .FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+            // Verifica se o utilizador está autenticado
+            var username = User?.Identity?.Name;
 
-            if (identityUserId == null)
+            if (string.IsNullOrEmpty(username))
                 return Unauthorized();
 
+            // Obtém o IdentityUser associado ao username
+            var identityUser = await _context.Users
+                .FirstOrDefaultAsync(u => u.UserName == username);
+
+            if (identityUser == null)
+                return Unauthorized();
+
+            // Obtém o utilizador personalizado associado ao IdentityUser
             var utilizador = await _context.Utilizadores
-                .FirstOrDefaultAsync(u => u.IdentityUserId == identityUserId);
+                .FirstOrDefaultAsync(u => u.IdentityUserId == identityUser.Id);
 
             if (utilizador == null)
                 return Unauthorized();
 
+            // Procura as participações do utilizador, incluindo os dados da corrida
             var participacoes = await _context.Participacoes
                 .Include(p => p.Corrida)
                 .Where(p => p.UtilizadorId == utilizador.Id)

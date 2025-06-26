@@ -44,9 +44,11 @@
                             var duracaoFormatada = string.Join(" ", partes);
                             bool desativada = corridasReservadas != null && corridasReservadas.Contains(corrida.Id);
 
-                            @: <option value="@corrida.Id" @(desativada ? "disabled=\"disabled\"" : "")>
-                            @:     @corrida.Nome - @corrida.Data.ToShortDateString() @corrida.Hora.ToString(@"hh\:mm") - Duração: @duracaoFormatada @(desativada ? " (já reservada)" : "")
-                            @: </option>
+                            var disabledAttr = desativada ? "disabled=\"disabled\"" : "";
+                            var texto = $"{corrida.Nome} - {corrida.Data.ToShortDateString()} {corrida.Hora:hh\\:mm} - Duração: {duracaoFormatada}";
+                            if (desativada) texto += " (já reservada)";
+
+                            @Html.Raw($"<option value=\"{corrida.Id}\" {disabledAttr}>{texto}</option>")
                         }
                     </select>
                 </div>
