@@ -171,10 +171,18 @@
                             </li>
                         }
                     </ul>
-                    <div class="nav-item">
-                        <a href="#" class="nav-link" id="userIcon" onclick="toggleDrawer()">
-                            <img src="/images/user.png" alt="User Icon" class="user-icon" />
-                        </a>
+
+                    <div class="d-flex align-items-center">
+                        <div class="nav-item me-2">
+                            <a class="nav-link" asp-controller="Home" asp-action="Sobre">
+                                <i class="fas fa-circle-info"></i> Sobre
+                            </a>
+                        </div>
+                        <div class="nav-item">
+                            <a href="#" class="nav-link" id="userIcon" onclick="toggleDrawer()">
+                                <img src="/images/user.png" alt="User Icon" class="user-icon" />
+                            </a>
+                        </div>
                     </div>
 
                     <!-- Gaveta -->

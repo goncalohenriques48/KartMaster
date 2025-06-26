@@ -76,22 +76,7 @@
                 text-decoration: none; /* Remova o sublinhado ao passar o mouse */
             }
 
-    .remember-me {
-        font-size: 1rem; /* Aumente o tamanho da fonte */
-        color: white; /* Cor vibrante para destacar */
-        font-weight: bold; /* Negrito para maior visibilidade */
-        margin-top: 1rem; /* Espaçamento adicional */
-        text-shadow: 1px 1px 2px black; /* Adicione um leve contorno */
-    }
-
-        .remember-me input {
-            margin-right: 0.5rem; /* Espaçamento entre o checkbox e o texto */
-        }
-
-        .remember-me label:hover {
-            color: #ffcc00; /* Mude a cor ao passar o mouse */
-            cursor: pointer; /* Adicione um cursor de ponteiro */
-        }
+    
 
     .button-group {
         display: flex;
@@ -134,7 +119,40 @@
         text-align: center;
     }
 
+    .input-wrapper {
+        position: relative;
+        width: 100%;
+    }
 
+    .icon-left {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+        color: white;
+        font-size: 1.2rem;
+        z-index: 2;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 10px 40px 10px 45px; /* espaço à esquerda para o ícone */
+        border: none;
+        border-radius: 25px;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        font-size: 1rem;
+        text-align: left; /* importante: NÃO centraliza o texto */
+        z-index: 1;
+    }
+
+    .validation-message {
+        display: block;
+        margin-top: 5px;
+        font-size: 0.85rem;
+        text-align: left;
+        color: #ff6b6b;
+    }
 </style>
 
 <div class="login-container">
@@ -154,18 +172,16 @@
   
         
         <div class="form-group">
-            <i class="fas fa-envelope"></i>
-            <input asp-for="Input.Email" placeholder="E - Mail" />
-            <span asp-validation-for="Input.Email" class="text-danger"></span>
+            <div class="input-wrapper">
+                <i class="fas fa-envelope icon-left"></i>
+                <input asp-for="Input.Email" placeholder="E - Mail" class="input-field" />
+            </div>
+            <span asp-validation-for="Input.Email" class="text-danger validation-message"></span>
         </div>
         <div class="form-group">
             <i class="fas fa-lock"></i>
             <input asp-for="Input.Password" type="password" placeholder="Password" />
             <span asp-validation-for="Input.Password" class="text-danger"></span>
-        </div>
-        <div class="remember-me">
-            <input class="form-check-input" asp-for="Input.RememberMe" />
-            <span>@Html.DisplayNameFor(m => m.Input.RememberMe)</span>
         </div>
         <div class="forgot-password">
             <a asp-page="./ForgotPassword">Esqueceu-se da palavra-passe?</a>
