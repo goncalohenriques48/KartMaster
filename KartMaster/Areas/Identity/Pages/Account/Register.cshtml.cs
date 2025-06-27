@@ -74,7 +74,7 @@ namespace KartMaster.Areas.Identity.Pages.Account
         public class InputModel
         {
 
-            [Required]
+            [Required(ErrorMessage = "Por favor, insira o nome de utilizador.")]
             [Display(Name = "Nome de utilizador")]
             public string UserName { get; set; }
 
@@ -102,7 +102,7 @@ namespace KartMaster.Areas.Identity.Pages.Account
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "A password e a password de confirmação não são iguais")]
             public string ConfirmPassword { get; set; }
         }
 

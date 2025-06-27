@@ -20,7 +20,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 50vh;
+        height: 70vh;
         text-align: center;
     }
 
@@ -151,7 +151,17 @@
         margin-top: 5px;
         font-size: 0.85rem;
         text-align: left;
-        color: #ff6b6b;
+        color: red !important; /* amarelo vibrante */
+        font-weight: bold;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.3) inset !important;
+        -webkit-text-fill-color: white !important;
+        transition: background-color 5000s ease-in-out 0s;
     }
 </style>
 
@@ -179,9 +189,11 @@
             <span asp-validation-for="Input.Email" class="text-danger validation-message"></span>
         </div>
         <div class="form-group">
-            <i class="fas fa-lock"></i>
-            <input asp-for="Input.Password" type="password" placeholder="Password" />
-            <span asp-validation-for="Input.Password" class="text-danger"></span>
+            <div class="input-wrapper">
+                <i class="fas fa-lock icon-left"></i>
+                <input asp-for="Input.Password" type="password" placeholder="Password" class="input-field" />
+            </div>
+            <span asp-validation-for="Input.Password" class="text-danger validation-message"></span>
         </div>
         <div class="forgot-password">
             <a asp-page="./ForgotPassword">Esqueceu-se da palavra-passe?</a>
