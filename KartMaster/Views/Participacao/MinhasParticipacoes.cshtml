@@ -4,12 +4,15 @@
     ViewData["Title"] = "As Minhas Participações";
 }
 
+@* Título da secção *@
 <h2 class="text-white text-center">As Minhas Participações</h2>
 
+@* Verifica se o utilizador tem participações *@
 @if (!Model.Any()) {
     <p class="text-center text-light">Ainda não tens participações registadas.</p>
 }
 else {
+    @* Tabela com as participações do utilizador atual *@
     <table class="table table-dark table-striped">
         <thead>
             <tr>
@@ -21,8 +24,11 @@ else {
         <tbody>
             @foreach (var item in Model) {
                 <tr>
+                    @* Nome da corrida (com null-safe access) *@
                     <td>@item.Corrida?.Nome</td>
+                    @* Posição obtida pelo utilizador *@
                     <td>@item.PosicaoFinal</td>
+                    @* Tempo final obtido na corrida *@
                     <td>@item.TempoFinal</td>
                 </tr>
             }
@@ -30,6 +36,7 @@ else {
     </table>
 }
 
+@* Estilos específicos para a página de participações *@
 <style>
     body {
         background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('/images/fundoParticipacao2.jpg') no-repeat center center fixed;

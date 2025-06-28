@@ -1,11 +1,20 @@
-﻿@page
+﻿@* 
+    Página: ConfirmEmail.cshtml
+    Objetivo: Mostra uma confirmação visual após o utilizador clicar no link de confirmação de email.
+    Notas:
+    - Usa um ícone de check, mensagem de sucesso e botão para voltar à página principal.
+    - Integra-se com o layout geral da aplicação.
+    - Inclui lógica JavaScript para fechar o separador ou redirecionar.
+*@
+@page
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirmar email";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Confirmar email"; // Título dinâmico da página
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Usa o layout principal do site
 }
 
 <style>
+    /* Container central com layout vertical */
     .confirmation-container {
         display: flex;
         flex-direction: column;
@@ -20,12 +29,14 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     }
 
+        /* Título estilizado */
         .confirmation-container h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
             color: #4da6ff;
         }
 
+        /* Mensagem de sucesso */
         .confirmation-container p {
             font-size: 1.2rem;
             margin-bottom: 20px;
@@ -36,12 +47,14 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
+        /* Ícone de sucesso (check verde/azul) */
         .confirmation-container .icon {
             font-size: 4rem;
             color: #4da6ff;
             margin-bottom: 20px;
         }
 
+        /* Link para voltar à página inicial */
         .confirmation-container a {
             color: #4da6ff;
             text-decoration: none;
@@ -55,9 +68,13 @@
 </style>
 
 <div class="confirmation-container">
+    <!-- Ícone de sucesso visual -->
     <div class="icon">✔️</div>
+    <!-- Título da página -->
     <h1>@ViewData["Title"]</h1>
+    <!-- Mensagem de agradecimento e confirmação -->
     <p>Obrigado por ter confirmado o seu email!</p>
+    <!-- Link que tenta fechar o separador e voltar à página original -->
     <a href="javascript:void(0);" onclick="voltarParaOriginal()">Voltar para a página inicial</a>
 </div>
 
@@ -65,9 +82,9 @@
     function voltarParaOriginal() {
         if (window.opener) {
             try {
-                // Redirecionar o separador original
+                // Redireciona a aba original (que abriu esta)
                 window.opener.location.href = "/";
-                // Enviar mensagem opcional
+                // Envia mensagem para a aba original (opcional)
                 window.opener.postMessage("emailConfirmed", "*");
             } catch (e) {
                 console.warn("Erro ao comunicar com o separador original:", e);

@@ -1,7 +1,9 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@* Injeta os serviços de autenticação do Identity *@
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
+@* Estilos personalizados para os botões de autenticação (login/registo) *@
 <style>
     .auth-buttons {
         display: flex;
@@ -38,6 +40,7 @@
 
 </style>
 <ul class="navbar-nav">
+    @* Se o utilizador estiver autenticado, mostra saudação e botão de logout *@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
@@ -51,6 +54,7 @@
     }
     else
     {
+        @* Caso contrário, mostra os botões para Registo e Login *@
         <ul class="auth-buttons">
             <li class="drawer-button">
                 <a class="auth-link" asp-area="Identity" asp-page="/Account/Register">Registo</a>

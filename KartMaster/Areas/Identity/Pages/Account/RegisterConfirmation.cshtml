@@ -1,11 +1,20 @@
-﻿@page
+﻿@* 
+    Página: RegisterConfirmation.cshtml
+    Objetivo: Exibe uma mensagem ao utilizador após o registo, indicando que deve confirmar o email.
+    Notas:
+    - Usa um fundo estilizado com imagem.
+    - Mostra link manual de confirmação se necessário.
+    - Está integrada com o layout principal da aplicação.
+*@
+@page
 @model RegisterConfirmationModel
 @{
-    ViewData["Title"] = "Confirmação de Registo";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Confirmação de Registo"; // Define o título da página dinamicamente
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Usa o layout principal da aplicação
 }
 
 <style>
+    /* Container principal centralizado, com fundo e estilo "glass effect" */
     .confirmation-container {
         display: flex;
         flex-direction: column;
@@ -21,17 +30,20 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     }
 
+        /* Título estilizado em azul claro */
         .confirmation-container h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
             color: #4da6ff;
         }
 
+        /* Texto da mensagem */
         .confirmation-container p {
             font-size: 1.2rem;
             margin-bottom: 20px;
         }
 
+        /* Estilo do link de confirmação */
         .confirmation-container a {
             color: #4da6ff;
             text-decoration: none;
@@ -43,8 +55,11 @@
             }
 </style>
 
+<!-- Bloco principal da mensagem de confirmação -->
 <div class="confirmation-container">
+    <!-- Título (vindo do ViewData["Title"]) -->
     <h1>@ViewData["Title"]</h1>
+    <!-- Mensagem de agradecimento e instrução -->
     <p>Obrigado por ter feito o seu registo. Verifique agora o seu e-mail para confirmar a sua conta!</p>
     @if (Model.DisplayConfirmAccountLink) {
         <p>

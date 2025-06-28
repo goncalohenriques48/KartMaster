@@ -5,15 +5,26 @@ using KartMaster.Models;
 
 namespace KartMaster.Controllers
 {
+    /// <summary>
+    /// Controlador responsável pela lógica de agendamento de reservas em corridas.
+    /// </summary>
     public class AgendamentoController : Controller
     {
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        /// Construtor que injeta o contexto da base de dados.
+        /// </summary>
+        /// <param name="context">Contexto da aplicação.</param>
         public AgendamentoController(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Mostra a lista de autódromos disponíveis para agendamento.
+        /// </summary>
+        /// <returns>Vista com os autódromos.</returns>
         // GET: /Agendamento/
         public async Task<IActionResult> Index()
         {

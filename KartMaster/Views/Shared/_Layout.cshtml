@@ -1,6 +1,8 @@
 ﻿@{
+    // Verifica se a área atual é "Identity" (usada para autenticação/gestão de contas)
     var isIdentityArea = ViewContext.RouteData.Values["area"]?.ToString() == "Identity";
 
+    // Obtém o controlador e a ação atuais
     var controller = ViewContext.RouteData.Values["controller"]?.ToString();
     var action = ViewContext.RouteData.Values["action"]?.ToString();
     var isHomePage = controller == "Home" && action == "Index";
@@ -13,6 +15,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    @* Metadados e links de estilo *@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - KartMaster</title>
@@ -22,6 +25,7 @@
     <link rel="icon" type="image/x-icon" href="/images/Logo_Karts.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
+    @* Estilos personalizados para o layout e gaveta lateral *@
     <style>
         .container {
         background-color: transparent; /* Remove o fundo branco */
@@ -120,6 +124,7 @@
     </style>
 
     <script>
+        // Função para abrir/fechar a gaveta lateral do utilizador
         function toggleDrawer() {
         const drawer = document.getElementById('userDrawer');
         drawer.classList.toggle('open');
@@ -128,16 +133,21 @@
 </head>
 <body class="@ViewData["BodyClass"]">
     <header>
+        @* Barra de navegação principal *@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container-fluid">
+                @* Logo e nome do site *@
                 <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="/images/Karts_Logo_Png.png" class="logo-icon" />
                     <span>KartMaster</span>
                 </a>
+                @* Botão para menu *@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                @* Navegação principal e menus *@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
@@ -148,6 +158,7 @@
                             <a class="nav-link" asp-controller="Corrida" asp-action="Disponiveis">Corridas Disponíveis</a>
                         </li>
 
+                        @* Menus específicos para administradores *@
                         @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -172,6 +183,7 @@
                         }
                     </ul>
 
+                    @* Ícones à direita: Sobre e utilizador *@
                     <div class="d-flex align-items-center">
                         <div class="nav-item me-2">
                             <a class="nav-link" asp-controller="Home" asp-action="Sobre">
@@ -185,7 +197,7 @@
                         </div>
                     </div>
 
-                    <!-- Gaveta -->
+                    @* Gaveta lateral com opções de utilizador *@
                     <div id="userDrawer" class="drawer">
                         <div class="drawer-header">
                             @if (User.Identity != null && User.Identity.IsAuthenticated) {
@@ -198,6 +210,7 @@
                         </div>
                         <div class="drawer-content">
                             @if (User.Identity != null && User.Identity.IsAuthenticated) {
+                                @* Ações para utilizadores autenticados *@
                                 <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn-profilenav">Perfil</a> <!-- Botão Drawer -->
                                 <a asp-controller="Agendamento" asp-action="Index" class="btn-profilenav">Agendar Corrida</a> <!-- Botão Drawer -->
                                 <a asp-controller="Reserva" asp-action="MinhasReservas" class="btn-profilenav">As Minhas Reservas</a> <!-- Botão Drawer -->
@@ -207,6 +220,7 @@
                                 </form>
                             }
                             else {
+                                @* Partial view para login *@
                                 <partial name="_LoginPartial" />
                             }
                         </div>
@@ -216,6 +230,7 @@
         </nav>
     </header>
 
+    @* Secção especial apenas para a homepage *@
     @if (isHomePage) {
         <div class="hero-section">
             <div class="container">
@@ -230,12 +245,14 @@
             </div>
         </div>
     }
+    @* Conteúdo principal da página *@
     <main class="main-content flex-grow-1">
         <div class="container">
             @RenderBody()
         </div>
     </main>
 
+    @* Scripts obrigatórios *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

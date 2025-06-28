@@ -4,42 +4,59 @@
     ViewData["Title"] = "Create";
 }
 
+@* Título da página *@
 <h1>Create</h1>
 
 <h4>Reserva</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
+        @* Formulário para criação de nova reserva *@
         <form asp-action="Create">
+            @* Mostra erros de validação do modelo (caso existam) *@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @* Campo: Nome do reservante *@
             <div class="form-group">
                 <label asp-for="NomeReservante" class="control-label"></label>
                 <input asp-for="NomeReservante" class="form-control" />
                 <span asp-validation-for="NomeReservante" class="text-danger"></span>
             </div>
+
+            @* Campo: Número de pessoas incluídas na reserva *@
             <div class="form-group">
                 <label asp-for="NumeroPessoas" class="control-label"></label>
                 <input asp-for="NumeroPessoas" class="form-control" />
                 <span asp-validation-for="NumeroPessoas" class="text-danger"></span>
             </div>
+
+            @* Campo: Data da reserva *@
             <div class="form-group">
                 <label asp-for="Data" class="control-label"></label>
                 <input asp-for="Data" class="form-control" />
                 <span asp-validation-for="Data" class="text-danger"></span>
             </div>
+
+            @* Campo: Hora da reserva *@
             <div class="form-group">
                 <label asp-for="Hora" class="control-label"></label>
                 <input asp-for="Hora" class="form-control" />
                 <span asp-validation-for="Hora" class="text-danger"></span>
             </div>
+
+            @* Campo: Seleção do autódromo (dropdown preenchido com ViewBag.AutodromoId) *@
             <div class="form-group">
                 <label asp-for="AutodromoId" class="control-label"></label>
                 <select asp-for="AutodromoId" class ="form-control" asp-items="ViewBag.AutodromoId"></select>
             </div>
+
+            @* Campo: Seleção do utilizador que efetuou a reserva *@
             <div class="form-group">
                 <label asp-for="UtilizadorId" class="control-label"></label>
                 <select asp-for="UtilizadorId" class ="form-control" asp-items="ViewBag.UtilizadorId"></select>
             </div>
+
+            @* Botão para submeter o formulário *@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -47,10 +64,12 @@
     </div>
 </div>
 
+@* Link para voltar à página de listagem de reservas *@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
+@* Inclusão de scripts de validação do lado do cliente *@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

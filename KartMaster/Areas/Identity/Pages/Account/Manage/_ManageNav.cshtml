@@ -1,14 +1,31 @@
-﻿@inject SignInManager<IdentityUser> SignInManager
+﻿@* 
+    Ficheiro: _ManageNav.cshtml 
+    Objetivo: Renderizar o menu lateral de navegação para a secção "Gerir Conta" 
+    Utiliza as classes auxiliares em `ManageNavPages.cs` para ativar o link correspondente
+*@
+@inject SignInManager<IdentityUser> SignInManager
 @{
+    // Verifica se o utilizador tem métodos de login externos (ex: Google, Facebook)
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
+
+<!-- Lista vertical com links para páginas de gestão de conta -->
 <ul class="nav nav-pills flex-column">
+    <!-- Link para a página do perfil -->
     <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Perfil</a></li>
+    
+    <!-- Link para a página de alteração de email -->
     <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
+    
+    <!-- Link para a página de alteração de palavra-passe -->
     <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Palavra-passe</a></li>
+    
+    @* Se o utilizador tiver logins externos disponíveis (ex: Google), mostra esta opção *@
     @if (hasExternalLogins)
     {
         <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
     }
+
+    <!-- Link para a página de gestão de dados pessoais (como eliminar conta) -->
     <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Conta</a></li>
 </ul>

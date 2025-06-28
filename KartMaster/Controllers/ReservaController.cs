@@ -10,10 +10,18 @@ using KartMaster.Models;
 
 namespace KartMaster.Controllers
 {
+    /// <summary>
+    /// Controlador responsável pela gestão das reservas de utilizadores.
+    /// Permite listar, criar, editar, visualizar e eliminar reservas.
+    /// </summary>
     public class ReservaController : Controller
     {
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        /// Construtor que recebe o contexto da base de dados.
+        /// </summary>
+        /// <param name="context">Contexto da aplicação.</param>
         public ReservaController(ApplicationDbContext context)
         {
             _context = context;
@@ -46,6 +54,10 @@ namespace KartMaster.Controllers
         }
 
 
+        /// <summary>
+        /// Mostra todas as reservas registadas no sistema.
+        /// </summary>
+        /// <returns>Vista com a lista completa de reservas.</returns>
         // GET: Reserva
         public async Task<IActionResult> Index()
         {
@@ -53,6 +65,11 @@ namespace KartMaster.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        /// <summary>
+        /// Mostra os detalhes de uma reserva específica.
+        /// </summary>
+        /// <param name="id">ID da reserva.</param>
+        /// <returns>Vista de detalhes ou erro 404 se não encontrada.</returns>
         // GET: Reserva/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -73,6 +90,10 @@ namespace KartMaster.Controllers
             return View(reserva);
         }
 
+        /// <summary>
+        /// Apresenta o formulário para criação de uma nova reserva.
+        /// </summary>
+        /// <returns>Vista com o formulário de criação.</returns>
         // GET: Reserva/Create
         public IActionResult Create()
         {
@@ -81,9 +102,12 @@ namespace KartMaster.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Submete uma nova reserva ao sistema.
+        /// </summary>
+        /// <param name="reserva">Objeto reserva a criar.</param>
+        /// <returns>Redireciona para o Index ou retorna à vista de criação com erros.</returns>
         // POST: Reserva/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,NomeReservante,NumeroPessoas,Data,Hora,AutodromoId,UtilizadorId")] Reserva reserva)
@@ -99,6 +123,11 @@ namespace KartMaster.Controllers
             return View(reserva);
         }
 
+        /// <summary>
+        /// Apresenta o formulário para editar uma reserva existente.
+        /// </summary>
+        /// <param name="id">ID da reserva.</param>
+        /// <returns>Vista de edição ou erro 404 se não encontrada.</returns>
         // GET: Reserva/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -117,9 +146,13 @@ namespace KartMaster.Controllers
             return View(reserva);
         }
 
+        /// <summary>
+        /// Submete as alterações de uma reserva.
+        /// </summary>
+        /// <param name="id">ID da reserva.</param>
+        /// <param name="reserva">Objeto reserva atualizado.</param>
+        /// <returns>Redireciona para o Index ou vista de edição com erros.</returns>
         // POST: Reserva/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,NomeReservante,NumeroPessoas,Data,Hora,Duracao,AutodromoId,UtilizadorId")] Reserva reserva)
@@ -154,6 +187,11 @@ namespace KartMaster.Controllers
             return View(reserva);
         }
 
+        /// <summary>
+        /// Apresenta a vista de confirmação de eliminação de uma reserva.
+        /// </summary>
+        /// <param name="id">ID da reserva.</param>
+        /// <returns>Vista de confirmação ou erro 404 se não encontrada.</returns>
         // GET: Reserva/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -174,6 +212,11 @@ namespace KartMaster.Controllers
             return View(reserva);
         }
 
+        /// <summary>
+        /// Confirma e executa a remoção de uma reserva do sistema.
+        /// </summary>
+        /// <param name="id">ID da reserva.</param>
+        /// <returns>Redireciona para a lista de reservas.</returns>
         // POST: Reserva/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -189,6 +232,11 @@ namespace KartMaster.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Verifica se existe uma reserva com determinado ID.
+        /// </summary>
+        /// <param name="id">ID da reserva.</param>
+        /// <returns>True se existir, false caso contrário.</returns>
         private bool ReservaExists(int id)
         {
             return _context.Reservas.Any(e => e.Id == id);

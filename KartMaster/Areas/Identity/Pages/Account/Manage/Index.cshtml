@@ -1,11 +1,17 @@
-﻿@page
+﻿@* 
+    Página do perfil do utilizador.
+    Permite visualizar e editar o nome e email do perfil.
+    A secção de alteração de password está comentada, mas preparada para uso futuro.
+*@
+@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Perfil";
-    ViewData["ActivePage"] = ManageNavPages.Index;
+    ViewData["Title"] = "Perfil"; // Título apresentado no topo da página
+    ViewData["ActivePage"] = ManageNavPages.Index; // Define qual tab está ativa na navegação lateral
 }
 <style>
 
+    /* Estilo geral da página */
     body {
         background-color: #121212;
         color: #fff;
@@ -13,6 +19,7 @@
         overflow: hidden;
     }
 
+    /* Cartão de perfil */
     .profile-card {
         background-color: #1e1e1e;
         padding: 2rem;
@@ -33,6 +40,7 @@
         color: #fff; 
     }
 
+    /* Labels e inputs */
     .form-label {
         display: block;
         margin-bottom: 0.25rem;
@@ -65,6 +73,7 @@
             box-shadow: none;
         }
 
+    /* Botão para guardar alterações */
     #update-profile-button {
         background-color: aquamarine;
         border: none;
@@ -82,6 +91,7 @@
             box-shadow: 0 6px 20px rgba(60, 179, 113);
         }
 
+    /* Estilo para mensagens de erro */
     .text-danger {
         color: #ff6b6b;
         font-size: 0.9rem;
@@ -91,54 +101,34 @@
 
 </style>
 
+<!-- Cabeçalho da página -->
 <h3>@ViewData["Title"]</h3>
+<!-- Mensagem de status (sucesso ou erro) -->
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">
+        <!-- Formulário de edição de perfil -->
         <form id="profile-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
+            <!-- Campo Nome -->
             <div class="form-floating mb-3">
                 <input asp-for="Input.Nome" class="form-control" placeholder="" />
                 <label asp-for="Input.Nome" class="form-label"></label>
                 <span asp-validation-for="Input.Nome" class="text-danger"></span>
             </div>
 
-            
+            <!-- Campo Email -->
             <div class="form-floating mb-3">
                 <input asp-for="Input.Email" class="form-control" placeholder="" />
                 <label asp-for="Input.Email" class="form-label"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-
-            <!--
-            
-            <div class="form-floating mb-3">
-                <input asp-for="Input.CurrentPassword" type="password" class="form-control" placeholder="" />
-                <label asp-for="Input.CurrentPassword" class="form-label"></label>
-                <span asp-validation-for="Input.CurrentPassword" class="text-danger"></span>
-            </div>
-
-           
-            <div class="form-floating mb-3">
-                <input asp-for="Input.NewPassword" type="password" class="form-control" placeholder="" />
-                <label asp-for="Input.NewPassword" class="form-label"></label>
-                <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
-            </div>
-
-            
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" type="password" class="form-control" placeholder="" />
-                <label asp-for="Input.ConfirmPassword" class="form-label"></label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Guardar</button>
-            -->
         </form>
     </div>
 </div>
 
 @section Scripts {
+    <!-- Scripts de validação -->
     <partial name="_ValidationScriptsPartial" />
 }

@@ -5,11 +5,15 @@
     ViewData["BodyClass"] = "bg-participacao";
 }
 
+@* Título da página *@
 <h1>Participações</h1>
 
+@* Botão para criar nova participação *@
 <p>
     <a asp-action="Create">Criar Nova Participação</a>
 </p>
+
+@* Tabela com todas as participações existentes *@
 <table class="table-dark-custom">
     <thead>
         <tr>
@@ -25,12 +29,13 @@
             <th>
                 @Html.DisplayNameFor(model => model.TempoFinal)
             </th>
-            <th></th>
+            <th></th> @* Coluna para ações (Editar, Detalhes, Apagar) *@
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+                @* Nome do utilizador (com verificação de null) *@
                 <td>
                     @{
                         if (item.Utilizador != null) {
@@ -41,6 +46,7 @@
                         }
                     }
                 </td>
+                @* Nome da corrida (com verificação de null) *@
                 <td>
                     @{
                         if (item.Corrida != null) {
@@ -51,12 +57,15 @@
                         }
                     }
                 </td>
+                @* Posição final do participante *@
             <td>
                 @Html.DisplayFor(modelItem => item.PosicaoFinal)
             </td>
+                @* Tempo final obtido na corrida *@
             <td>
                 @Html.DisplayFor(modelItem => item.TempoFinal)
             </td>
+                @* Ações disponíveis: editar, ver detalhes ou apagar a participação *@
             <td>
                 @Html.ActionLink("Editar", "Edit", new { id = item.UtilizadorId, corridaId = item.CorridaId }) |
                 @Html.ActionLink("Detalhes", "Details", new { id = item.UtilizadorId, corridaId = item.CorridaId }) |

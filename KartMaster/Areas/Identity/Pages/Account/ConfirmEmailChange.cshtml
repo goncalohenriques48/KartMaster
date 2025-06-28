@@ -1,8 +1,17 @@
-﻿@page
+﻿@* 
+    Página: ConfirmEmailChange.cshtml
+    Objetivo: Informa o utilizador sobre o resultado da tentativa de confirmar a alteração do endereço de email.
+    Notas:
+    - O processo é acionado através de um link enviado por email.
+    - Mostra uma mensagem de estado (sucesso ou erro).
+*@
+@page
 @model ConfirmEmailChangeModel
 @{
-    ViewData["Title"] = "Confirm email change";
+    ViewData["Title"] = "Confirm email change"; // Define o título da página
 }
 
+<!-- Título principal da página -->
 <h1>@ViewData["Title"]</h1>
+<!-- Renderiza uma mensagem de estado (sucesso/erro), definida no modelo -->
 <partial name="_StatusMessage" model="Model.StatusMessage" />

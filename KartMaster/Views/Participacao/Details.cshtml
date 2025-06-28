@@ -4,12 +4,15 @@
     ViewData["Title"] = "Details";
 }
 
+@* Título da página *@
 <h1>Detalhes</h1>
 
 <div>
     <h4>Participação</h4>
     <hr />
+    @* Lista de detalhes da participação selecionada *@
     <dl class="row">
+        @* Nome do utilizador associado à participação *@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Utilizador)
         </dt>
@@ -23,6 +26,7 @@
                 }
             }
         </dd>
+        @* Nome da corrida associada à participação *@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Corrida)
         </dt>
@@ -36,12 +40,14 @@
                 }
             }
         </dd>
+        @* Posição final do utilizador na corrida *@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PosicaoFinal)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PosicaoFinal)
         </dd>
+        @* Tempo final obtido na corrida *@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TempoFinal)
         </dt>
@@ -50,6 +56,7 @@
         </dd>
     </dl>
 </div>
+@* Links de ação: editar a participação ou voltar à lista *@
 <div>
     @Html.ActionLink("Editar", "Edit", new { id = Model.UtilizadorId, corridaId = Model.CorridaId }) |
     <a asp-action="Index">Voltar à lista</a>

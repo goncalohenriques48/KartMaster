@@ -4,38 +4,49 @@
     ViewData["Title"] = "Create";
 }
 
+@* Título principal da página *@
 <h1>Criar</h1>
 
+@* Subtítulo descritivo da entidade a ser criada *@
 <h4>Participação</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
+        @* Formulário para criação de uma nova participação *@
         <form asp-action="Create">
+            @* Apresenta mensagens de validação para o modelo, se existirem *@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @* Campo dropdown para seleção do Utilizador associado à participação *@
             <div class="form-group">
                 <label asp-for="UtilizadorId" class="control-label"></label>
                 <select asp-for="UtilizadorId" class ="form-control" asp-items="ViewBag.UtilizadorId"></select>
                 <span asp-validation-for="UtilizadorId" class="text-danger"></span>
-
             </div>
+
+            @* Campo dropdown para seleção da Corrida associada à participação *@
             <div class="form-group">
                 <label asp-for="CorridaId" class="control-label"></label>
                 <select asp-for="CorridaId" class ="form-control" asp-items="ViewBag.CorridaId"></select>
                 <span asp-validation-for="CorridaId" class="text-danger"></span>
-
             </div>
+
+            @* Campo para introduzir a posição final na corrida (com formatação automática para º) *@
             <div class="form-group">
                 <label asp-for="PosicaoFinal" class="control-label"></label>
                 <input asp-for="PosicaoFinal" class="form-control" oninput="formatPosicaoFinal(this)" pattern="^\d+º?$" title="Insira apenas números. O sistema adicionará o símbolo º automaticamente." />
                 <small class="form-text text-muted">Insira apenas números. O sistema adicionará o símbolo º automaticamente.</small>
                 <span asp-validation-for="PosicaoFinal" class="text-danger"></span>
             </div>
+
+            @* Campo para introduzir o tempo final no formato hh:mm:ss *@
             <div class="form-group">
                 <label asp-for="TempoFinal" class="control-label"></label>
                 <input asp-for="TempoFinal" class="form-control" placeholder="Exemplo: 10:30:45 (hh:mm:ss)" pattern="^([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$" title="Insira o tempo no formato hh:mm:ss (exemplo: 10:30:45)" />
                 <small class="form-text text-muted">Insira o tempo no formato hh:mm:ss (exemplo: 10:30:45).</small>
                 <span asp-validation-for="TempoFinal" class="text-danger"></span>
             </div>
+            @* Botão para submeter o formulário *@
             <div class="form-group">
                 <input type="submit" value="Criar" class="btn btn-primary" />
             </div>
@@ -43,14 +54,17 @@
     </div>
 </div>
 
+@* Link para voltar ao índice de participações *@
 <div>
     <a asp-action="Index">Voltar à lista</a>
 </div>
 
+@* Inclusão dos scripts de validação client-side *@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
+@* Script JavaScript que adiciona automaticamente o símbolo º à posição final *@
 <script>
     function formatPosicaoFinal(input) {
         // Remove qualquer caractere que não seja número

@@ -1,15 +1,19 @@
 ﻿@model IEnumerable<KartMaster.Models.Corrida>
 
 @{
+    // Define o título da página e uma classe de fundo específica para o layout
     ViewData["Title"] = "Corridas";
     ViewData["BodyClass"] = "bg-corrida";
 }
 
+@* Título principal da página *@
 <h1>Corridas</h1>
 
+@* Link para criar uma nova corrida *@
 <p>
     <a asp-action="Create">Criar Nova Corrida</a>
 </p>
+@* Tabela com o estilo personalizado para listar as corridas *@
 <table class="table-dark-custom">
     <thead>
         <tr>
@@ -18,17 +22,24 @@
             <th>@Html.DisplayNameFor(model => model.Hora)</th>
             <th>@Html.DisplayNameFor(model => model.Duracao)</th>
             <th>@Html.DisplayNameFor(model => model.Autodromo)</th>
-            <th></th>
+            <th></th> @* Coluna para ações *@
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
             <tr>
+                @* Nome da corrida *@
                 <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                @* Data formatada (ex: 26/06/2025) *@
                 <td>@item.Data.ToShortDateString()</td>
+                @* Hora formatada como hh:mm *@
                 <td>@item.Hora.ToString(@"hh\:mm")</td>
+                @* Duração formatada como hh:mm *@
                 <td>@item.Duracao.ToString(@"hh\:mm")</td>
+                @* Nome do autódromo associado *@
                 <td>@Html.DisplayFor(modelItem => item.Autodromo.Nome)</td>
+                
+            @* Ações disponíveis: Editar, Ver detalhes, Apagar *@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
