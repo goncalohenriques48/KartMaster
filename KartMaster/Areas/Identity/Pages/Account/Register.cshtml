@@ -1,11 +1,20 @@
-﻿@page
+﻿@* 
+    Página: Register.cshtml
+    Objetivo: Permite ao utilizador criar uma nova conta no sistema.
+    Notas:
+    - Recolhe nome de utilizador, email, password e confirmação.
+    - Inclui validação de dados e suporte visual para campos preenchidos automaticamente.
+    - Usa ícones e design visual com fundo escuro.
+*@
+@page
 @model RegisterModel
 
 @{
-    ViewData["Title"] = "Registo";
+    ViewData["Title"] = "Registo"; // Define o título da página
 }
 
 <style>
+    /* Fundo com imagem fixa centrada, cobre todo o ecrã */
     body {
         background: url('/images/Login_Registo.png') no-repeat center center fixed;
         background-size: cover;
@@ -15,21 +24,24 @@
         padding: 0;
     }
 
+    /* Container do formulário de registo, centrado */
     .register-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 50vh;
+        height: 70vh;
         text-align: center;
     }
 
+    /* Estilização de cada campo do formulário */
     .form-group {
         position: relative;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2.2rem; /* aumenta espaço entre inputs */
         width: 300px;
     }
 
+    /* Estilo dos inputs */
     .form-group input {
         width: 100%;
         padding: 10px 40px;
@@ -41,10 +53,12 @@
         text-align: center;
     }
 
+    /* Placeholder em cinzento claro */
     .form-group input::placeholder {
         color: #ccc;
     }
 
+    /* Ícone dentro do campo de input */
     .form-group i {
         position: absolute;
         top: 50%;
@@ -54,6 +68,7 @@
         font-size: 1.2rem;
     }
 
+    /* Agrupamento dos botões abaixo do formulário */
     .button-group {
         display: flex;
         justify-content: center;
@@ -61,6 +76,23 @@
         margin-top: 1.5rem;
     }
 
+    /* Mensagens de erro abaixo dos inputs */
+    .form-group .text-danger {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        font-size: 0.8rem;
+        margin-top: -1.5px;
+        margin-bottom: 3rem; /* dá espaço extra abaixo do último input */
+        color: red !important;
+        text-align: left;
+        padding-left: 10px;
+        font-weight: bold;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Estilo de botões e links */
     .button-group button,
     .button-group a {
         width: 120px;
@@ -68,6 +100,7 @@
         border: none;
         border-radius: 25px;
         background: rgba(0, 0, 0, 0.7);
+        margin-top: 14px;
         color: white;
         font-size: 1rem;
         text-align: center;
@@ -80,35 +113,54 @@
         background: rgba(0, 0, 0, 0.9);
     }
 
+    /* Título */
 	.register-container h1 {
 		color: black;
 	}
+
+    /* Força a estilização correta de campos preenchidos automaticamente (autofill) */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.3) inset !important;
+        -webkit-text-fill-color: white !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
 </style>
 
 <div class="register-container">
+    <!-- Título principal da página -->
     <h1>Registo</h1>
+    <!-- Formulário de registo -->
     <form method="post">
+        <!-- Campo: Nome de utilizador -->
         <div class="form-group">
            <i class="fas fa-user"></i>
-            <input asp-for="Input.UserName" placeholder="Nome de utilizador" class="form-control" />
+            <input asp-for="Input.UserName" placeholder="Nome de utilizador" />
             <span asp-validation-for="Input.UserName" class="text-danger"></span>
-
         </div>
+        <!-- Campo: Email -->
         <div class="form-group">
             <i class="fas fa-user"></i>
             <input asp-for="Input.Email" placeholder="E - Mail" type="email" required />
             <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>
+
+        <!-- Campo: Password -->
         <div class="form-group">
             <i class="fas fa-lock"></i>
-            <input asp-for="Input.Password" type="password" placeholder="Password" />
+            <input asp-for="Input.Password" type="password" placeholder="Password"  />
             <span asp-validation-for="Input.Password" class="text-danger"></span>
         </div>
+
+        <!-- Campo: Confirmar Password -->
         <div class="form-group">
             <i class="fas fa-lock"></i>
             <input asp-for="Input.ConfirmPassword" type="password" placeholder="Confirmar Password" />
             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
         </div>
+
+        <!-- Botões: Login (voltar) e Registar (submeter) -->
         <div class="button-group">
             <a asp-page="/Account/Login">Login</a>
             <button type="submit">Registar</button>

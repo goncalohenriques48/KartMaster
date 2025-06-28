@@ -1,20 +1,29 @@
-﻿@{
+﻿@* 
+    Ficheiro: _Layout.cshtml (para páginas da conta Identity)
+    Objetivo: Fornecer a estrutura visual comum a todas as páginas da área "Account Management" (ex: alterar password, dados pessoais, etc.).
+    Notas:
+    - Verifica se há um layout superior (ex: vindo do layout geral do site).
+    - Caso contrário, usa o layout local por defeito da área Identity.
+*@
+@{
     if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
     {
-        Layout = parentLayout.ToString();
+        Layout = parentLayout.ToString(); // Usa o layout do pai se fornecido
     }
     else
     {
-        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml"; // Usa o layout padrão da área de Identity
     }
 }
 
 <style>
+    /* Fundo escurecido com imagem */
     body {
         background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('/images/ResendEmailConfirmation.jpg') no-repeat center center fixed;
        
     }
 
+    /* Container geral das páginas da conta */
     .account-container {
         background-color: rgba(0, 0, 0, 0.75);
         border-radius: 1rem;
@@ -23,14 +32,17 @@
         margin-top: 2rem;
     }
 
+    /* Títulos principais */
     h1, h2 {
         color: #ffffff;
     }
 
+    /* Separadores (hr) */
     hr {
         border-top: 1px solid #555;
     }
 
+    /* Navegação lateral (pills) */
     .nav-pills .nav-link {
         background-color: #222;
         border: 1px solid #444;
@@ -38,41 +50,48 @@
         margin-bottom: 0.5rem;
     }
 
+        /* Estado ativo da navegação lateral */
         .nav-pills .nav-link.active {
             background-color: black;
             color: #fff;
             border-color: aquamarine;
         }
 
+    /* Inputs */
     .form-control, .form-control:focus {
         background-color: #2a2a2a;
         border: 1px solid #555;
         color: #fff;
     }
 
+    /* Erros de validação */
     .text-danger {
         color: #ff6b6b;
     }
 
 </style>
 
+<!-- Container visual que envolve todo o conteúdo da conta -->
 <div class="container account-container">
     <h1 class="text-center">Gerir Conta</h1>
 
     <div>
+        <!-- Secção de título e linha de separação -->
         <h2 class="mb-3">Definições da Conta</h2>
         <hr />
         <div class="row">
+            <!-- Navegação lateral com links (perfil, password, etc.) -->
             <div class="col-md-3">
                 <partial name="_ManageNav" />
             </div>
+            <!-- Corpo da página específica -->
             <div class="col-md-9">
-                @RenderBody()
+                @RenderBody() @* Insere o conteúdo da página atual (ex: PersonalData.cshtml) *@
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
-    @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false) @* Permite que páginas individuais injetem JS adicional *@
 }

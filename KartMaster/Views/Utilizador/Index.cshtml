@@ -7,9 +7,12 @@
 
 <h1>Utilizadores</h1>
 
+@* Link para criar um novo utilizador *@
 <p>
     <a asp-action="Create">Criar Novo Utilizador</a>
 </p>
+
+@* Tabela com a listagem de utilizadores *@
 <table class="table-dark-custom">
     <thead>
         <tr>
@@ -19,7 +22,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th></th>
+            <th></th> @* Coluna reservada para ações *@
         </tr>
     </thead>
     <tbody>
@@ -32,6 +35,7 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
+                @* Ações disponíveis para cada utilizador: Editar, Ver detalhes e Apagar *@
                 <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Apagar</a>

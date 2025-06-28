@@ -1,10 +1,18 @@
-﻿@page
+﻿@* 
+    Página: Logout.cshtml
+    Objetivo: Permite ao utilizador sair da conta de forma visualmente apelativa.
+    Notas:
+    - Mostra botão de logout se o utilizador estiver autenticado.
+    - Caso contrário, informa que o logout foi bem-sucedido e oferece link para a página inicial.
+*@
+@page
 @model LogoutModel
 @{
-    ViewData["Title"] = "Log out";
+    ViewData["Title"] = "Log out"; // Define o título da página
 }
 
 <style>
+    /* Estilo geral da página com fundo de imagem */
     body {
         background: url('/images/logout.jpg') no-repeat center center fixed;
         background-size: cover;
@@ -15,6 +23,7 @@
         text-align: center;
     }
 
+    /* Container do conteúdo, centrado e com fundo escurecido */
     .logout-container {
         display: flex;
         flex-direction: column;
@@ -26,12 +35,14 @@
         border-radius: 10px;
     }
 
+    /* Estilo do título */
     h1 {
         font-size: 2.5rem;
         margin-bottom: 1rem;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     }
 
+    /* Botão de logout ou link de redirecionamento */
     .logout-button {
         background-color: #ff4d4d;
         color: white;
@@ -47,20 +58,25 @@
             background-color: #ff1a1a;
         }
 
+    /* Texto informativo */
     p {
         font-size: 1.2rem;
         margin-top: 1rem;
     }
 </style>
 
+<!-- Container principal do conteúdo -->
 <div class="logout-container">
+    <!-- Título da página -->
     <h1>@ViewData["Title"]</h1>
     @if (User.Identity?.IsAuthenticated ?? false) {
+        <!-- Formulário POST para efetuar logout de forma segura -->
         <form asp-area="Identity" asp-page="/Account/Logout" method="post">
             <button type="submit" class="logout-button">Logout</button>
         </form>
     }
     else {
+        <!-- Mensagem mostrada após logout -->
         <p>You have successfully logged out of the application.</p>
         <a href="/" class="logout-button">Go to Home Page</a>
     }

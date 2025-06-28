@@ -1,15 +1,18 @@
 ﻿@model KartMaster.Models.Corrida
 
 @{
+    // Define o título da página
     ViewData["Title"] = "Details";
 }
 
+@* Cabeçalho da página *@
 <h1>Detalhes</h1>
 
 <div>
     <h4>Corrida</h4>
     <hr />
     <dl class="row">
+        @* Nome da corrida *@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nome)
         </dt>
@@ -17,6 +20,7 @@
             @Html.DisplayFor(model => model.Nome)
         </dd>
 
+        @* Data da corrida *@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Data)
         </dt>
@@ -24,6 +28,7 @@
             @Html.DisplayFor(model => model.Data)
         </dd>
 
+        @* Hora da corrida *@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Hora)
         </dt>
@@ -31,6 +36,7 @@
             @Html.DisplayFor(model => model.Hora)
         </dd>
 
+        @* Duração da corrida *@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Duracao)
         </dt>
@@ -38,6 +44,7 @@
             @Html.DisplayFor(model => model.Duracao)
         </dd>
 
+        @* Nome do autódromo associado *@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Autodromo)
         </dt>
@@ -47,6 +54,7 @@
     </dl>
 </div>
 
+@* Ações disponíveis: editar corrida ou voltar à listagem *@
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
     <a asp-action="Index">Voltar à lista</a>

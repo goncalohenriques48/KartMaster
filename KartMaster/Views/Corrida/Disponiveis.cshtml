@@ -1,15 +1,19 @@
 ﻿@model IEnumerable<KartMaster.Models.Corrida>
 
 @{
+    // Define o título da página
     ViewData["Title"] = "Corridas Disponíveis";
 }
 
+@* Título principal *@
 <h1 class="text-white text-center">Corridas Disponíveis</h1>
 
+@* Se não houver corridas disponíveis, mostra uma mensagem informativa *@
 @if (!Model.Any()) {
     <p class="text-white text-center">Não há corridas disponíveis de momento.</p>
 }
 else {
+    @* Tabela com a listagem das corridas *@
     <table class="table table-dark table-striped">
         <thead>
             <tr>
@@ -28,6 +32,7 @@ else {
                     <td>@corrida.Data.ToShortDateString()</td>
                     <td>@corrida.Hora.ToString(@"hh\:mm")</td>
                     <td>
+                        @* Formata a duração da corrida em horas, minutos e segundos *@
                         @{
                             var dur = corrida.Duracao;
                             var partes = new List<string>();
@@ -44,6 +49,7 @@ else {
     </table>
 }
 
+@* Estilo visual personalizado para fundo e tabela *@
 <style>
     body {
         background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('/images/fundoForgotPasswordConfirmation.jpg') no-repeat center center fixed;

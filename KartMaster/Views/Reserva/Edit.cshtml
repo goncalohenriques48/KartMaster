@@ -8,28 +8,34 @@
 <hr />
 <div class="row">
     <div class="col-md-6">
+        @* Formulário de edição da reserva *@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @* Campo oculto com o ID da reserva *@
             <input type="hidden" asp-for="Id" />
 
+            @* Campo para o nome do reservante *@
             <div class="form-group">
                 <label asp-for="NomeReservante" class="control-label"></label>
                 <input asp-for="NomeReservante" class="form-control" />
                 <span asp-validation-for="NomeReservante" class="text-danger"></span>
             </div>
 
+            @* Campo para o número de pessoas *@
             <div class="form-group">
                 <label asp-for="NumeroPessoas" class="control-label"></label>
                 <input asp-for="NumeroPessoas" class="form-control" />
                 <span asp-validation-for="NumeroPessoas" class="text-danger"></span>
             </div>
 
+            @* Campo de data da reserva *@
             <div class="form-group">
                 <label asp-for="Data" class="control-label"></label>
                 <input asp-for="Data" type="date" class="form-control" />
                 <span asp-validation-for="Data" class="text-danger"></span>
             </div>
 
+            @* Campo de hora da reserva (dropdowns para horas e minutos) *@
             <div class="form-group">
                 <label>Hora:</label>
                 <div class="form-inline">
@@ -52,6 +58,7 @@
                 </div>
             </div>
 
+            @* Campo de duração da reserva (dropdowns para horas, minutos e segundos) *@
             <div class="form-group">
                 <label>Duração:</label>
                 <div class="form-inline">
@@ -82,12 +89,14 @@
                 </div>
             </div>
 
+            @* Seleção do Autódromo associado à reserva *@
             <div class="form-group">
                 <label asp-for="AutodromoId" class="control-label"></label>
                 <select asp-for="AutodromoId" class="form-control" asp-items="ViewBag.AutodromoId"></select>
                 <span asp-validation-for="AutodromoId" class="text-danger"></span>
             </div>
 
+            @* Botões de submissão e cancelamento *@
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-success" />
                 <a asp-action="Index" class="btn btn-secondary ml-2">Cancelar</a>

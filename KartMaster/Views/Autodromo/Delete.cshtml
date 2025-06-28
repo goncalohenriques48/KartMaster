@@ -1,15 +1,21 @@
 ﻿@model KartMaster.Models.Autodromo
 
 @{
+    // Define o título da página
     ViewData["Title"] = "Delete";
 }
 
+@* Título principal *@
 <h1>Apagar</h1>
 
+@* Mensagem de confirmação *@
 <h3>Tem a certeza de que deseja excluir isto?</h3>
 <div>
+    @* Subtítulo da entidade a ser eliminada *@
     <h4>Autódromo</h4>
     <hr />
+
+    @* Tabela de dados com os detalhes do autódromo que será eliminado *@
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Nome)
@@ -43,7 +49,9 @@
         </dd>
     </dl>
     
+    @* Formulário de submissão da eliminação com botão de confirmação e link de voltar *@
     <form asp-action="Delete">
+        @* Campo oculto com o ID do autódromo a eliminar *@
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Apagar" class="btn btn-danger" /> |
         <a asp-action="Index">Voltar à lista</a>

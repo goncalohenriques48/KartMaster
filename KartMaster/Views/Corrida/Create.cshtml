@@ -1,33 +1,41 @@
 ﻿@model KartMaster.Models.Corrida
 
 @{
+    // Define o título da página para a barra do browser e layout principal
     ViewData["Title"] = "Create";
 }
 
+@* Título principal da página *@
 <h1>Criar</h1>
 
 <h4>Corrida</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
+        @* Formulário para criar uma nova corrida *@
         <form asp-action="Create">
+            @* Mostra mensagens de validação do modelo (ex: campos obrigatórios) *@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+            @* Campo para o nome da corrida *@
             <div class="form-group">
                 <label asp-for="Nome" class="control-label"></label>
                 <input asp-for="Nome" class="form-control" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
 
+            @* Campo para a data da corrida *@
             <div class="form-group">
                 <label asp-for="Data" class="control-label"></label>
                 <input asp-for="Data" class="form-control" id="dataCorrida" />
                 <span asp-validation-for="Data" class="text-danger"></span>
             </div>
 
+            @* Campo para selecionar a hora da corrida (hora e minutos separados) *@
             <div class="form-group">
                 <label for="Hora">Hora:</label>
                 <div style="display: flex; gap: 10px;">
+                    @* Seleção das horas (0–23) *@
                     <select id="horaHoras" name="HoraHoras" class="form-control">
                         @for (int h = 0; h < 24; h++)
                         {
@@ -35,6 +43,7 @@
                         }
                     </select>
 
+                    @* Seleção dos minutos (de 5 em 5) *@
                     <select id="horaMinutos" name="HoraMinutos" class="form-control">
                         @for (int m = 0; m < 60; m += 5)
                         {
@@ -44,9 +53,11 @@
                 </div>
             </div>
 
+            @* Campo para selecionar a duração (horas, minutos e segundos) *@
             <div class="form-group">
                 <label for="Duracao">Duração:</label>
                 <div style="display: flex; gap: 10px;">
+                    @* Seleção das horas (0–5) *@
                     <select id="duracaoHoras" name="DuracaoHoras" class="form-control">
                         @for (int h = 0; h < 6; h++)
                         {
@@ -54,6 +65,7 @@
                         }
                     </select>
 
+                    @* Seleção dos minutos (de 5 em 5) *@
                     <select id="duracaoMinutos" name="DuracaoMinutos" class="form-control">
                         @for (int m = 0; m < 60; m += 5)
                         {
@@ -61,6 +73,7 @@
                         }
                     </select>
 
+                    @* Seleção dos segundos (de 10 em 10) *@
                     <select id="duracaoSegundos" name="DuracaoSegundos" class="form-control">
                         @for (int s = 0; s < 60; s += 10)
                         {
@@ -70,12 +83,14 @@
                 </div>
             </div>
 
+            @* Dropdown para selecionar o autódromo associado à corrida *@
             <div class="form-group">
                 <label asp-for="AutodromoId" class="control-label"></label>
                 <select asp-for="AutodromoId" class="form-control" asp-items="ViewBag.AutodromoId"></select>
                 <span asp-validation-for="AutodromoId" class="text-danger"></span>
             </div>
 
+            @* Botão para submeter o formulário *@
             <div class="form-group">
                 <input type="submit" value="Criar" class="btn btn-primary" />
             </div>
@@ -83,10 +98,12 @@
     </div>
 </div>
 
+@* Link para voltar à listagem de corridas *@
 <div>
     <a asp-action="Index">Voltar à lista</a>
 </div>
 
+@* Inclusão dos scripts de validação do lado do cliente *@
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

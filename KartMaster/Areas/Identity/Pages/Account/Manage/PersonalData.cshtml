@@ -1,10 +1,19 @@
-﻿@page
+﻿@* 
+    Página: PersonalData.cshtml
+    Objetivo: Permite ao utilizador visualizar a opção de eliminar permanentemente a sua conta.
+    Notas:
+    - Mostra uma advertência sobre a irreversibilidade da ação.
+    - Inclui botão estilizado que redireciona para a página de confirmação de eliminação.
+    - Integra-se com a navegação do perfil do utilizador.
+*@
+@page
 @model PersonalDataModel
 @{
-    ViewData["Title"] = "Conta";
-    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+    ViewData["Title"] = "Conta"; // Título da página
+    ViewData["ActivePage"] = ManageNavPages.PersonalData; // Marca esta secção como ativa na navegação de gestão da conta
 }
 <style>
+    /* Estilo do botão de eliminação de conta */
     #delete {
         background-color: aquamarine;
         border: none;
@@ -18,20 +27,26 @@
         font-size: 1.1rem;
     }
 
+        /* Efeito visual no hover: brilho vermelho */
         #delete:hover {
             box-shadow: 0 6px 20px red;
         }
 
 </style>
 
+<!-- Título principal da secção -->
 <h3>@ViewData["Title"]</h3>
 
+<!-- Estrutura responsiva da página com Bootstrap -->
 <div class="row">
     <div class="col-md-6">
+        <!-- Mensagem introdutória -->
         <p>Queres eliminar a tua conta?</p>
+        <!-- Aviso sobre a irreversibilidade do processo -->
         <p>
             <strong>Irá remover a sua conta permanentemente, este processo não poderá ser revertido</strong>
         </p>
+        <!-- Botão que redireciona para a página DeletePersonalData -->
         <p>
             <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">Eliminar</a>
         </p>
@@ -39,5 +54,6 @@
 </div>
 
 @section Scripts {
+    <!-- Scripts de validação padrão (caso sejam necessários noutros elementos da página) -->
     <partial name="_ValidationScriptsPartial" />
 }

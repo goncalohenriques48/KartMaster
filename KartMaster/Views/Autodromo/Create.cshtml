@@ -1,42 +1,53 @@
 ﻿@model KartMaster.Models.Autodromo
 
 @{
+    // Define o título da página
     ViewData["Title"] = "Create";
 }
 
+@* Título da página *@
 <h1>Criar</h1>
 
+@* Subtítulo com a entidade que está a ser criada *@
 <h4>Autódromo</h4>
 <hr />
+@* Formulário para criação de um novo autódromo *@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
+            @* Mostra erros de validação no topo se existirem *@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @* Campo: Nome do autódromo *@
             <div class="form-group">
                 <label asp-for="Nome" class="control-label"></label>
                 <input asp-for="Nome" class="form-control" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
+            @* Campo: Localização do autódromo *@
             <div class="form-group">
                 <label asp-for="Localizacao" class="control-label"></label>
                 <input asp-for="Localizacao" class="form-control" />
                 <span asp-validation-for="Localizacao" class="text-danger"></span>
             </div>
+            @* Campo: Número de telemóvel *@
             <div class="form-group">
                 <label asp-for="Telemovel" class="control-label"></label>
                 <input asp-for="Telemovel" class="form-control" />
                 <span asp-validation-for="Telemovel" class="text-danger"></span>
             </div>
+            @* Campo: Email de contacto *@
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
+            @* Campo: Capacidade de pessoas *@
             <div class="form-group">
                 <label asp-for="Capacidade" class="control-label"></label>
                 <input asp-for="Capacidade" class="form-control" />
                 <span asp-validation-for="Capacidade" class="text-danger"></span>
             </div>
+            @* Botão de submissão do formulário *@
             <div class="form-group">
                 <input type="submit" value="Criar" class="btn btn-primary" />
             </div>
@@ -44,10 +55,12 @@
     </div>
 </div>
 
+@* Link para voltar à lista de autódromos *@
 <div>
     <a asp-action="Index">Voltar à lista</a>
 </div>
 
+@* Secção de scripts para validações do lado do cliente *@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

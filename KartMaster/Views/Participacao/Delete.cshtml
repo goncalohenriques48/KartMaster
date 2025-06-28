@@ -4,31 +4,38 @@
     ViewData["Title"] = "Delete";
 }
 
+@* Título principal da página *@
 <h1>Apagar</h1>
 
+@* Pergunta de confirmação ao utilizador *@
 <h3>Tem a certeza de que deseja excluir isto?</h3>
 <div>
     <h4>Participação</h4>
     <hr />
+    @* Tabela de dados da participação a ser eliminada *@
     <dl class="row">
+        @* Nome do utilizador associado à participação *@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Utilizador)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Utilizador.Nome)
         </dd>
+        @* Nome da corrida associada à participação *@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Corrida)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Corrida.Nome)
         </dd>
+        @* Posição final obtida pelo utilizador na corrida *@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.PosicaoFinal)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PosicaoFinal)
         </dd>
+        @* Tempo final obtido na corrida *@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.TempoFinal)
         </dt>
@@ -37,9 +44,12 @@
         </dd>
     </dl>
     
+    @* Formulário de submissão para confirmar a eliminação da participação *@
     <form asp-action="Delete">
+        @* Campos escondidos para identificar univocamente a participação *@
         <input type="hidden" asp-for="UtilizadorId" />
         <input type="hidden" asp-for="CorridaId" />
+        @* Botão de confirmação e link de retorno *@
         <input type="submit" value="Apagar" class="btn btn-danger" /> |
         <a asp-action="Index">Voltar à lista</a>
     </form>

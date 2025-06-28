@@ -4,26 +4,36 @@
     ViewData["Title"] = "Edit";
 }
 
+@* Título da página *@
 <h1>Editar</h1>
 
 <h4>Participação</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
+        @* Formulário para editar os dados de uma participação *@
         <form asp-action="Edit">
+            @* Resumo de validações de modelo (caso haja erros de submissão) *@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @* Campos ocultos para manter as chaves compostas da participação (UtilizadorId e CorridaId) *@
             <input type="hidden" asp-for="UtilizadorId" />
             <input type="hidden" asp-for="CorridaId" />
+
+            @* Campo para editar a posição final do participante *@
             <div class="form-group">
                 <label asp-for="PosicaoFinal" class="control-label"></label>
                 <input asp-for="PosicaoFinal" class="form-control" />
                 <span asp-validation-for="PosicaoFinal" class="text-danger"></span>
             </div>
+
+            @* Campo para editar o tempo final obtido na corrida *@
             <div class="form-group">
                 <label asp-for="TempoFinal" class="control-label"></label>
                 <input asp-for="TempoFinal" class="form-control" />
                 <span asp-validation-for="TempoFinal" class="text-danger"></span>
             </div>
+            @* Botão para submeter as alterações *@
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
@@ -31,10 +41,12 @@
     </div>
 </div>
 
+@* Link para voltar à lista de participações *@
 <div>
     <a asp-action="Index">Voltar à lista</a>
 </div>
 
+@* Inclusão dos scripts de validação de formulário (JS do lado do cliente) *@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -139,10 +139,10 @@ body {
   padding-top: 0;
 }
 
-.info-section h2 {
-  color: red;
-  margin-bottom: 55px;
-}
+    .info-section h2 {
+        color: #ff5555;
+        margin-bottom: 55px;
+    }
 
 .info-columns {
   display: flex;
@@ -239,28 +239,71 @@ body {
   font-size: 1.1em;
 }
 
-/* --- FESTAS E CONTACTOS --- */
-.festa-section, .team-section, .contact-section {
+/* --- Preços e Contactos --- */
+.preco-section, .team-section, .contact-section {
   padding: 40px 20px;
   color: white;
   text-align: center;
   background: transparent;
 }
 
-.festa-columns, .contact-methods {
+.preco-columns, .contact-methods {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
   gap: 20px;
 }
 
-.festa-columns div, .contact-methods div {
+.preco-columns div, .contact-methods div {
   background-color: transparent;
   padding: 20px;
   border-radius: 10px;
   width: 300px;
   color: white;
 }
+
+.preco-card {
+    background-color: #1f1f1f;
+    border: 1px solid #444;
+    border-radius: 15px;
+    padding: 25px;
+    width: 100%;
+    max-width: 350px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+}
+
+    .preco-card h3 {
+        margin-bottom: 10px;
+        color: #ff5555;
+    }
+
+    .preco-card p {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    .preco-card ul {
+        list-style-type: none;
+        padding: 0;
+        font-size: 1rem;
+    }
+
+    .preco-card li {
+        margin-bottom: 8px;
+    }
+
+.contact-methods a {
+    margin-left: 8px;
+    font-size: 1.2rem;
+    color: #ff5;
+    text-decoration: none;
+}
+
+    .contact-methods a:hover {
+        text-decoration: underline;
+    }
+
 
 /* --- FOOTER FIXADO --- */
 .footer {

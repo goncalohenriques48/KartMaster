@@ -6,6 +6,7 @@
 
 <h2 class="text-white text-center">Reservas</h2>
 
+@* Tabela com a listagem de todas as reservas *@
 <table class="table table-dark table-striped">
     <thead>
         <tr>
@@ -20,8 +21,10 @@
         </tr>
     </thead>
     <tbody>
+        @* Loop pelas reservas do modelo *@
         @foreach (var item in Model)
         {
+            @* Formata a duração para ~mostrar como "Xh Ymin Zs" *@
             var dur = item.Duracao;
             var partes = new List<string>();
             if (dur.Hours > 0) partes.Add($"{dur.Hours}h");
@@ -38,6 +41,7 @@
                 <td>@duracaoFormatada</td>
                 <td>@item.Utilizador?.Email</td>
                 <td>
+                    @* Botões de ação para editar, ver detalhes e apagar reserva *@
                     <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
                     <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
                     <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Apagar</a>

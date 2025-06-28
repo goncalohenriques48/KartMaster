@@ -1,10 +1,16 @@
-﻿@page
+﻿@* 
+    Página para gestão do email do utilizador.
+    Permite visualizar o email atual (confirmado ou não) e alterar para um novo email.
+    A ação pode enviar um email de verificação e requer validação do novo endereço.
+*@
+@page
 @model EmailModel
 @{
-    ViewData["Title"] = "Email";
-    ViewData["ActivePage"] = ManageNavPages.Email;
+    ViewData["Title"] = "Email"; // Título da página
+    ViewData["ActivePage"] = ManageNavPages.Email; // Define o separador ativo no menu lateral
 }
 <style>
+    /* Estilo para os campos de input */
     .form-control {
         background-color: transparent;
         border: 1px solid #444;
@@ -30,6 +36,7 @@
             box-shadow: none;
         }
 
+    /* Estilo para o botão de atualizar email */
     #change-email-button {
         background-color: aquamarine;
         border: none;
@@ -55,15 +62,21 @@
     }
 </style>
 
+<!-- Cabeçalho -->
 <h3>@ViewData["Title"]</h3>
+<!-- Mostra uma mensagem de estado (sucesso ou erro) -->
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">
+        <!-- Formulário principal para atualizar email -->
         <form id="email-form" method="post">
+            <!-- Validação de todos os erros do modelo -->
             <div asp-validation-summary="All" class="text-danger" role="alert"></div>
+            @* Se o email atual já estiver confirmado *@
             @if (Model.IsEmailConfirmed)
             {
                 <div class="form-floating mb-3 input-group">
+                    <!-- Campo com o email atual -->
                     <input asp-for="Email" class="form-control"/>
                         <div class="input-group-append">
                             <span class="h-100 input-group-text text-success font-weight-bold">✓</span>
@@ -73,22 +86,26 @@
             }
             else
             {
+                @* Se o email não estiver confirmado, mostrar botão para reenviar verificação *@
                 <div class="form-floating mb-3">
                     <input asp-for="Email" class="form-control"/>
                     <label asp-for="Email" class="form-label"></label>
                     <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>
                 </div>
             }
+            <!-- Campo para o novo email -->
             <div class="form-floating mb-3">
                 <input asp-for="Input.NewEmail" class="form-control" autocomplete="off" aria-required="true" placeholder="" />
                 <label asp-for="Input.NewEmail" class="form-label"></label>
                 <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
             </div>
+            <!-- Botão para atualizar email -->
             <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="w-100 btn btn-lg btn-primary">Atualizar Email</button>
         </form>
     </div>
 </div>
 
 @section Scripts {
+    <!-- Scripts de validação de formulários -->
     <partial name="_ValidationScriptsPartial" />
 }

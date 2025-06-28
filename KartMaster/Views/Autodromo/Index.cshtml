@@ -1,18 +1,24 @@
 ﻿@model IEnumerable<KartMaster.Models.Autodromo>
 
 @{
+    // Define o título da página e uma classe extra para o body (pode ser usada para estilização específica)
     ViewData["Title"] = "Autodromos";
     ViewData["BodyClass"] = "bg-autodromo";
 }
 
+@* Título principal da página *@
 <h1>Autódromos</h1>
 
+@* Link para criar um novo autódromo *@
 <p>
     <a asp-action="Create">Criar Novo Autódromo</a>
 </p>
+
+@* Tabela com a listagem de autódromos *@
 <table class="table-dark-custom">
     <thead>
         <tr>
+            @* Cabeçalhos com os nomes das propriedades *@
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
@@ -28,10 +34,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.Capacidade)
             </th>
-            <th></th>
+            <th></th> @* Coluna para ações (Editar, Detalhes, Apagar) *@
         </tr>
     </thead>
     <tbody>
+        @* Itera por cada autódromo da lista e mostra os seus dados numa linha *@
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -50,6 +57,7 @@
                 @Html.DisplayFor(modelItem => item.Capacidade)
             </td>
             <td>
+                    @* Ações para gerir o autódromo *@
                 <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Apagar</a>

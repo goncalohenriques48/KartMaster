@@ -1,11 +1,20 @@
-﻿@page
+﻿@* 
+    Página: Login.cshtml
+    Objetivo: Permite ao utilizador iniciar sessão com email e password.
+    Notas:
+    - Apresenta mensagens de erro customizadas.
+    - Inclui links para recuperação de password, registo e reenvio de email de confirmação.
+    - Design visual moderno com fundo e ícones.
+*@
+@page
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Login"; // Título da página
 }
 
 <style>
+    /* Fundo com imagem fixa, centrada e coberta */
     body {
         background: url('/images/Login_Registo.png') no-repeat center center fixed;
         background-size: cover;
@@ -15,21 +24,24 @@
         padding: 0;
     }
 
+    /* Container centralizado verticalmente */
     .login-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 50vh;
+        height: 70vh;
         text-align: center;
     }
 
+    /* Cada grupo de input */
     .form-group {
         position: relative;
         margin-bottom: 1.5rem;
         width: 300px;
     }
 
+    /* Estilo base dos inputs */
     .form-group input {
         width: 100%;
         padding: 10px 40px;
@@ -42,10 +54,12 @@
         line-height: normal;
     }
 
+            /* Placeholder em cinza */
             .form-group input::placeholder {
                 color: #ccc;
             }
 
+        /* Ícone dentro do input */
         .form-group i {
             position: absolute;
             top: 50%;
@@ -55,6 +69,7 @@
             font-size: 1.2rem;
         }
 
+    /* Links: "Esqueceu-se da password" e "Reenviar confirmação" */
     .forgot-password,
     .resend-confirmation {
         font-size: 1rem; /* Aumente o tamanho da fonte */
@@ -72,12 +87,13 @@
 
             .forgot-password a:hover,
             .resend-confirmation a:hover {
-                color: #ffcc00; /* Mude a cor ao passar o mouse */
-                text-decoration: none; /* Remova o sublinhado ao passar o mouse */
+                color: #ffcc00; /* Mude a cor ao passar o rato */
+                text-decoration: none; /* Remova o sublinhado ao passar o rato */
             }
 
-    
 
+
+    /* Botões de login/registo */
     .button-group {
         display: flex;
         justify-content: center;
@@ -104,10 +120,12 @@
         background: rgba(0, 0, 0, 0.9);
     }
 
+    /* Título da página */
 	.login-container h1 {
 		color: black;
 	}
 
+    /* Mensagem de erro geral customizada (ex: credenciais inválidas) */
     .custom-error {
         background-color: rgba(255, 0, 0, 0.1);
         color: #ff3333;
@@ -119,6 +137,7 @@
         text-align: center;
     }
 
+    /* Estilização de inputs com ícones à esquerda */
     .input-wrapper {
         position: relative;
         width: 100%;
@@ -146,21 +165,35 @@
         z-index: 1;
     }
 
+    /* Mensagens de validação por campo */
     .validation-message {
         display: block;
         margin-top: 5px;
         font-size: 0.85rem;
         text-align: left;
-        color: #ff6b6b;
+        color: red !important; /* amarelo vibrante */
+        font-weight: bold;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Estilização para inputs preenchidos automaticamente */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.3) inset !important;
+        -webkit-text-fill-color: white !important;
+        transition: background-color 5000s ease-in-out 0s;
     }
 </style>
 
 <div class="login-container">
     <h1>Login</h1>
+    @* Extrai erros gerais do ModelState (ex: credenciais inválidas) *@
     @{
         var generalErrors = ViewData.ModelState.TryGetValue(string.Empty, out var entry) ? entry : null;
     }
 
+    @* Mostra as mensagens de erro gerais *@
     @if (generalErrors?.Errors.Count > 0) {
         <div class="custom-error">
             @foreach (var error in generalErrors.Errors) {
@@ -168,9 +201,10 @@
             }
         </div>
     }
+    <!-- Início do formulário de login -->
     <form id="account" method="post">
   
-        
+        <!-- Campo: Email -->
         <div class="form-group">
             <div class="input-wrapper">
                 <i class="fas fa-envelope icon-left"></i>
@@ -178,18 +212,28 @@
             </div>
             <span asp-validation-for="Input.Email" class="text-danger validation-message"></span>
         </div>
+
+        <!-- Campo: Password -->
         <div class="form-group">
-            <i class="fas fa-lock"></i>
-            <input asp-for="Input.Password" type="password" placeholder="Password" />
-            <span asp-validation-for="Input.Password" class="text-danger"></span>
+            <div class="input-wrapper">
+                <i class="fas fa-lock icon-left"></i>
+                <input asp-for="Input.Password" type="password" placeholder="Password" class="input-field" />
+            </div>
+            <span asp-validation-for="Input.Password" class="text-danger validation-message"></span>
         </div>
+
+        <!-- Link para recuperar palavra-passe -->
         <div class="forgot-password">
             <a asp-page="./ForgotPassword">Esqueceu-se da palavra-passe?</a>
         </div>
+
+        <!-- Botões: Login (submeter) e Registo (ir para registo) -->
         <div class="button-group">
             <button type="submit">Login</button>
             <a asp-page="/Account/Register">Registo</a>
         </div>
+
+        <!-- Link para reenviar confirmação de email -->
         <div class="resend-confirmation">
             <a asp-page="./ResendEmailConfirmation">Reenviar confirmação de email</a>
         </div>
@@ -197,5 +241,6 @@
 </div>
 
 @section Scripts {
+    <!-- Scripts de validação do lado do cliente -->
     <partial name="_ValidationScriptsPartial" />
 }

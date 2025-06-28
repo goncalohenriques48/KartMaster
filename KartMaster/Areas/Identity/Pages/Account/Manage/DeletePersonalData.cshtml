@@ -1,10 +1,16 @@
-﻿@page
+﻿@* 
+    Página para eliminar definitivamente a conta do utilizador.
+    Utiliza o modelo `DeletePersonalDataModel` e faz parte das opções de gestão de conta.
+    A ação é irreversível e pode requerer password.
+*@
+@page
 @model DeletePersonalDataModel
 @{
-    ViewData["Title"] = "Delete Personal Data";
-    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+    ViewData["Title"] = "Delete Personal Data"; // Título da página
+    ViewData["ActivePage"] = ManageNavPages.PersonalData; // Marca esta página como ativa no menu lateral
 }
 <style>
+    /* Estilo base para os inputs */
     .form-control {
         background-color: transparent;
         border: 1px solid #444;
@@ -30,8 +36,11 @@
             box-shadow: none;
         }
 </style>
+
+<!-- Cabeçalho -->
 <h3>@ViewData["Title"]</h3>
 
+<!-- Alerta visual para reforçar a gravidade da ação -->
 <div class="alert alert-warning" role="alert">
     <p>
         <strong>ATENÇÃO! Ao eliminar a sua conta, perderá completamente o acesso à mesma. </strong>
@@ -39,20 +48,25 @@
 </div>
 
 <div>
+    <!-- Formulário de eliminação da conta -->
     <form id="delete-user" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        @* Se a conta requer confirmação com password antes da eliminação *@
         @if (Model.RequirePassword)
         {
             <div class="form-floating mb-3">
+                <!-- Campo para password atual -->
                 <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="" />
                 <label asp-for="Input.Password" class="form-label"></label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
         }
+        <!-- Botão de submissão com destaque visual -->
         <button class="w-100 btn btn-lg btn-danger" type="submit">Eliminar a minha conta</button>
     </form>
 </div>
 
 @section Scripts {
+    <!-- Scripts de validação (cliente) -->
     <partial name="_ValidationScriptsPartial" />
 }

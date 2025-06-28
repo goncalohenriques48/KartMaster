@@ -12,10 +12,17 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace KartMaster.Controllers
 {
+    /// <summary>
+    /// Controlador responsável pela gestão das participações em corridas.
+    /// </summary>
     public class ParticipacaoController : Controller
     {
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        /// Construtor que injeta o contexto da base de dados.
+        /// </summary>
+        /// <param name="context">Contexto da aplicação.</param>
         public ParticipacaoController(ApplicationDbContext context)
         {
             _context = context;
@@ -60,7 +67,10 @@ namespace KartMaster.Controllers
 
 
 
-
+        /// <summary>
+        /// Lista todas as participações registadas no sistema.
+        /// </summary>
+        /// <returns>Vista com a lista de participações.</returns>
         // GET: Participacao
         public async Task<IActionResult> Index()
         {
@@ -68,6 +78,12 @@ namespace KartMaster.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        /// <summary>
+        /// Mostra os detalhes de uma participação.
+        /// </summary>
+        /// <param name="id">ID do utilizador.</param>
+        /// <param name="corridaId">ID da corrida.</param>
+        /// <returns>Vista de detalhes ou erro 404 se não encontrada.</returns>
         // GET: Participacao/Details/5
         public async Task<IActionResult> Details(int? id, int? corridaId) {
             if (id == null || corridaId == null) {
@@ -85,6 +101,10 @@ namespace KartMaster.Controllers
             return View(participacao);
         }
 
+        /// <summary>
+        /// Apresenta o formulário de criação de uma nova participação.
+        /// </summary>
+        /// <returns>Vista com formulário de criação.</returns>
         // GET: Participacao/Create
         public IActionResult Create()
         {
@@ -93,9 +113,12 @@ namespace KartMaster.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Submete uma nova participação à base de dados.
+        /// </summary>
+        /// <param name="participacao">Objeto Participacao a criar.</param>
+        /// <returns>Redireciona ou vista com erros.</returns>
         // POST: Participacao/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UtilizadorId,CorridaId,PosicaoFinal,TempoFinal")] Participacao participacao)
@@ -121,6 +144,12 @@ namespace KartMaster.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Apresenta o formulário de edição de uma participação.
+        /// </summary>
+        /// <param name="id">ID do utilizador.</param>
+        /// <param name="corridaId">ID da corrida.</param>
+        /// <returns>Vista de edição ou erro 404 se não encontrada.</returns>
         // GET: Participacao/Edit/5
         public async Task<IActionResult> Edit(int? id, int? corridaId) {
             if (id == null || corridaId == null) {
@@ -138,9 +167,14 @@ namespace KartMaster.Controllers
             return View(participacao);
         }
 
+        /// <summary>
+        /// Submete as alterações de uma participação.
+        /// </summary>
+        /// <param name="id">ID do utilizador.</param>
+        /// <param name="corridaId">ID da corrida.</param>
+        /// <param name="participacao">Objeto Participacao atualizado.</param>
+        /// <returns>Redireciona ou vista de edição com erros.</returns>
         // POST: Participacao/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, int corridaId, [Bind("UtilizadorId,CorridaId,PosicaoFinal,TempoFinal")] Participacao participacao) {
@@ -173,6 +207,12 @@ namespace KartMaster.Controllers
             return _context.Participacoes.Any(e => e.UtilizadorId == id && e.CorridaId == corridaId);
         }
 
+        /// <summary>
+        /// Apresenta a vista de confirmação para eliminar uma participação.
+        /// </summary>
+        /// <param name="id">ID do utilizador.</param>
+        /// <param name="corridaId">ID da corrida.</param>
+        /// <returns>Vista de confirmação ou erro 404 se não encontrada.</returns>
         // GET: Participacao/Delete/5
         public async Task<IActionResult> Delete(int? id, int? corridaId) {
             if (id == null || corridaId == null) {
@@ -190,6 +230,12 @@ namespace KartMaster.Controllers
             return View(participacao);
         }
 
+        /// <summary>
+        /// Confirma e elimina uma participação da base de dados.
+        /// </summary>
+        /// <param name="id">ID do utilizador.</param>
+        /// <param name="corridaId">ID da corrida.</param>
+        /// <returns>Redireciona para a lista de participações.</returns>
         // POST: Participacao/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -204,6 +250,11 @@ namespace KartMaster.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Verifica se existe alguma participação para o utilizador.
+        /// </summary>
+        /// <param name="id">ID do utilizador.</param>
+        /// <returns>True se existir, false caso contrário.</returns>
         private bool ParticipacaoExists(int id)
         {
             return _context.Participacoes.Any(e => e.UtilizadorId == id);

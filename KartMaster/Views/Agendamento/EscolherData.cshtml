@@ -1,10 +1,13 @@
 ﻿@{
+    // Define o título da página
     ViewData["Title"] = "Escolher Data";
+    // Recupera os dados passados pela controller através de ViewBag
     var autodromo = ViewBag.Autodromo as KartMaster.Models.Autodromo;
     var corridas = ViewBag.Corridas as List<KartMaster.Models.Corrida>;
     var corridasReservadas = ViewBag.CorridasReservadas as List<int>;
 }
 
+@* Verifica se o autódromo foi encontrado. Caso contrário, mostra a mensagem de erro e interrompe a renderização *@
 @if (autodromo == null)
 {
     <p style="color:red;">Autódromo não encontrado.</p>
@@ -19,6 +22,7 @@
         <p><strong>Localização:</strong> @autodromo.Localizacao</p>
         <p><strong>Capacidade:</strong> @autodromo.Capacidade pessoas</p>
 
+        @* Mostra uma mensagem de erro, se houver, enviada via TempData *@
         @if (TempData["Erro"] != null)
         {
             <div class="alert alert-danger">
@@ -26,9 +30,12 @@
             </div>
         }
 
+        @* Formulário para submissão da reserva *@
         <form method="post" asp-action="ConfirmarReserva">
+            @* ID do autódromo (oculto) *@
             <input type="hidden" name="AutodromoId" value="@autodromo.Id" />
 
+            @* Se existirem corridas, mostra dropdown para seleção *@
             @if (corridas != null && corridas.Any())
             {
                 <div class="form-group">
@@ -42,33 +49,40 @@
                             if (dur.Minutes > 0) partes.Add($"{dur.Minutes}min");
                             if (dur.Seconds > 0) partes.Add($"{dur.Seconds}s");
                             var duracaoFormatada = string.Join(" ", partes);
+                            // Verifica se esta corrida já foi reservada
                             bool desativada = corridasReservadas != null && corridasReservadas.Contains(corrida.Id);
 
                             var disabledAttr = desativada ? "disabled=\"disabled\"" : "";
+                            // Texto visível no dropdown
                             var texto = $"{corrida.Nome} - {corrida.Data.ToShortDateString()} {corrida.Hora:hh\\:mm} - Duração: {duracaoFormatada}";
                             if (desativada) texto += " (já reservada)";
 
+                            // Renderiza a <option> com ou sem disabled
                             @Html.Raw($"<option value=\"{corrida.Id}\" {disabledAttr}>{texto}</option>")
                         }
                     </select>
                 </div>
             }
 
+            @* Campo para nome do utilizador que está a reservar *@
             <div class="form-group">
                 <label for="NomeReservante">Nome:</label>
                 <input type="text" name="NomeReservante" required class="form-control" />
             </div>
 
+            @* Campo para número de pessoas na reserva *@
             <div class="form-group">
                 <label for="NumeroPessoas">Número de Pessoas:</label>
                 <input type="number" name="NumeroPessoas" min="1" max="20" required class="form-control" />
             </div>
 
+            @* Botão para submeter a reserva *@
             <button type="submit" class="btn-confirmar">Confirmar Reserva</button>
         </form>
     </div>
 </div>
 
+@* Estilos específicos da página *@
 <style>
     .autodromo-reserva {
         color: white;

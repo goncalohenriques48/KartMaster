@@ -1,10 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Sobre o Projeto";
 }
+@* 
+    Página informativa do projeto KartMaster.
+    Apresenta o curso, disciplina, autores, tecnologias utilizadas e credenciais de teste.
+*@
 
 <div class="container mt-5 p-4 rounded shadow" style="background-color: rgba(0, 0, 0, 0.85); color: #f0f0f0;">
+    @* Título da página com ícone decorativo *@
     <h2 class="mb-4 text-info"><i class="fas fa-flag-checkered"></i> Sobre o Projeto <strong>KartMaster</strong></h2>
 
+    @* Informação académica associada ao projeto *@
     <div class="mb-4">
         <p><span class="fw-bold text-light">Curso:</span> Engenharia Informática</p>
         <p><span class="fw-bold text-light">Disciplina:</span> Desenvolvimento de Aplicações Web</p>
@@ -13,6 +19,7 @@
 
     <hr class="bg-secondary" />
 
+    @* Secção com os autores do projeto *@
     <h4 class="text-warning"><i class="fas fa-users"></i> Autores</h4>
     <ul class="mb-4">
         <li><strong class="text-light">Gonçalo Henriques</strong> – nº 21590</li>
@@ -21,6 +28,7 @@
 
     <hr class="bg-secondary" />
 
+    @* Lista de bibliotecas e frameworks usadas no desenvolvimento *@
     <h4 class="text-success"><i class="fas fa-toolbox"></i> Bibliotecas e Frameworks Utilizadas</h4>
     <ul class="mb-4">
         <li>ASP.NET Core MVC / Identity</li>
@@ -33,6 +41,7 @@
 
     <hr class="bg-secondary" />
 
+    @* Credenciais de teste para acesso à aplicação como Admin ou Utilizador *@
     <h4 class="text-danger"><i class="fas fa-user-lock"></i> Credenciais de Teste</h4>
     <ul>
         <li><span class="badge bg-danger">Admin</span>: kartmaster0717@gmail.com / <code>kartMASTER177*</code></li>
